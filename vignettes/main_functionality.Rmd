@@ -1,0 +1,36 @@
+---
+title: "Functionality of APCtools package"
+author: "Alexander Bauer, Maximilian Weigert, Pauline Hohenemser"
+date: "`r format(Sys.time(), '%d.%B %Y')`"
+output:
+  html_document:
+    toc: yes
+  vignette: >
+    %\VignetteIndexEntry{Functionality of TouristClust package}
+    %\usepackage[utf8]{inputenc}
+    %\VignetteEngine{knitr::rmarkdown}
+  rmarkdown::html_vignette: default
+editor_options:
+  chunk_output_type: console
+---
+
+This document gives an overview of the functionality provided by the R package
+`APCtools`.
+
+```{r packages, message = FALSE}
+library(APCtools)
+```
+
+### Prepare data
+
+```{r data preparation}
+data(data_RA)
+```
+
+### Ridgeline matrix
+
+```{r ridgeline matrix}
+plot_ridgeline(data_RA, y_var = "JS_HUR_Reisedistanz")
+plot_ridgelineMatrix(data_RA)
+```
+
