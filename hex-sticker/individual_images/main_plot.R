@@ -110,10 +110,10 @@ C_poly_dat <- C_dat[C_dat$group <= 3,] %>%
 
 # main plot ---------------------------------------------------------------
 ggplot() +
-  geom_line(data = mainRedLines_dat,    aes(x, y, group = group), size = 1.2, col = "firebrick3", arrow = arrow(angle = 15, ends = "last", type = "closed")) +
-  geom_line(data = furtherRedLines_dat, aes(x, y, group = group), lty = 2, size = 1, col = "firebrick3") +
-  geom_line(data = blueLines_dat,       aes(x, y, group = group), lty = 2, size = 1, col = "dodgerblue3") +
-  geom_line(data = greenLines_dat,      aes(x, y, group = group), lty = 2, size = 1, col = "chartreuse4") +
+  geom_line(data = mainRedLines_dat,    aes(x, y, group = group), size = 4, col = "#c7af21ff", arrow = arrow(angle = 15, ends = "last", type = "closed")) +
+  geom_line(data = furtherRedLines_dat, aes(x, y, group = group), lty = 2, size = 1, col = "#c7af21ff") +
+  geom_line(data = blueLines_dat,       aes(x, y, group = group), lty = 2, size = 1, col = "#c7af21ff") +
+  geom_line(data = greenLines_dat,      aes(x, y, group = group), lty = 2, size = 1, col = "#c7af21ff") +
   geom_line(data = A_dat, aes(x, y, group = group), size = 2, lineend = "square") +
   geom_line(data = P_dat, aes(x, y, group = group), size = 2, lineend = "square") +
   geom_line(data = C_dat, aes(x, y, group = group), size = 2, lineend = "square") +
