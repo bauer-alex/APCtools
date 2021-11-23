@@ -41,13 +41,19 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' effects) and for each marginal APC effect (no matter the specified value of
 #' the argument \code{variable}). Defaults to FALSE.
 #' 
-#' @import dplyr ggplot2
+#' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
 #' @export
 #' 
 plot_partialAPCeffects <- function(model, dat, variable = "age",
                                    hide_partialEffects = FALSE,
                                    return_plotData = FALSE) {
+  
+  checkmate::check_class(model, classes = "gam")
+  checkmate::check_data_frame(dat)
+  checkmate::check_choice(variable, choices = c("age","period","cohort"))
+  checkmate::check_logical(hide_partialEffects)
+  checkmate::check_logical(return_plotData)
   
   
   # create a dataset for predicting the values of the APC surface
@@ -59,17 +65,22 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   # add random values for all further covariates in the model,
   # necessary for calling mgcv:::predict.gam
   covars <- attr(model$terms, "term.labels")
-  covars <- covars[!(covars %in% c("age","period"))]
+  covars <- covars[!(covars %in% c("age","period","cohort"))]
   if (length(covars) > 0) {
-    dat_predictionGrid[,covars] <- dat[1, covars]
+    row <- which(apply(dat[,covars], 1, function(x) { all(!is.na(x)) }))[1]
+    dat_predictionGrid[,covars] <- dat[row, covars]
   }
   
   # create a dataset containing the estimated values of the APC surface
+  terms_model     <- sapply(model$smooth, function(x) { x$label })
+  terms_index_APC <- which(grepl("age", terms_model) | grepl("period", terms_model))
+  term_APCsurface <- terms_model[terms_index_APC]
+  
   dat_overallEffect <- dat_predictionGrid %>%
     mutate(effect = rowSums(predict(object  = model,
                                     newdata = .,
                                     type    = "terms",
-                                    terms   = c("te(period,age)")))) %>% 
+                                    terms   = term_APCsurface))) %>% 
     mutate(effect = effect - mean(effect))
   used_logLink <- model$family[[2]] %in% c("log","logit")
   if (used_logLink) {
@@ -93,15 +104,14 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   }
   
   # define the theme
-  theme <- theme_minimal() +
-    theme(text = element_text(size = 16), axis.title = element_text(size = 16),
-          axis.text = element_text(size = 16),
-          legend.text = element_text(size = 12),
-          plot.title = element_text(hjust = 0.5, size = 18, face = "bold"),
-          strip.text.y = element_text(size = 16), 
-          strip.placement = "outside", strip.background = element_blank(),
-          axis.title.y = element_text(margin = margin(0, 10, 0, 0)),
-          axis.title.x = element_text(margin = margin(10, 0, 0, 0))) 
+  theme <- theme(text = element_text(size = 16), axis.title = element_text(size = 16),
+                 axis.text = element_text(size = 16),
+                 legend.text = element_text(size = 12),
+                 plot.title = element_text(hjust = 0.5, size = 18, face = "bold"),
+                 strip.text.y = element_text(size = 16), 
+                 strip.placement = "outside", strip.background = element_blank(),
+                 axis.title.y = element_text(margin = margin(0, 10, 0, 0)),
+                 axis.title.x = element_text(margin = margin(10, 0, 0, 0))) 
   
   # final preparations
   if (used_logLink) {
@@ -242,4 +252,4 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   }
   
   return(gg_final)
-}
+  }

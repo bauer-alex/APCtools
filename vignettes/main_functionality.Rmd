@@ -19,18 +19,94 @@ This document gives an overview of the functionality provided by the R package
 
 ```{r packages, message = FALSE}
 library(APCtools)
+library(dplyr)
+library(mgcv)
 ```
 
 ### Prepare data
 
 ```{r data preparation}
 data(data_RA)
+
+data_RA <- data_RA %>% 
+  dplyr::rename(age    = S_Alter,
+                period = travel_year) %>% 
+  mutate(cohort = period - age)
 ```
 
-### Ridgeline matrix
+# Descriptive analyses
+
+### 1D visualization function for metric and categorical variables
+
+```{r}
+# TODO metric
+# TODO categorical
+```
+
+### Ridgeline matrix for metric and categorical variables
 
 ```{r ridgeline matrix}
-plot_ridgeline(data_RA, y_var = "JS_HUR_Reisedistanz")
-plot_ridgelineMatrix(data_RA)
+# TODO metric
+# TODO categorical
+
+# plot_ridgeline(data_RA, y_var = "JS_HUR_Reisedistanz")
+# plot_ridgelineMatrix(data_RA)
 ```
 
+
+# Model-based analyses
+
+### Wrapper function for the estimation of mgcv::gam
+
+```{r}
+# TODO
+
+model_pure <- gam(JS_HUR_Reisedistanz ~ te(age, period), data = data_RA)
+model_cov  <- gam(JS_HUR_Reisedistanz ~ te(age, period) +
+                    S_Herkunft + S_Haushaltsgroesse + s(S_Einkommen_HH), data = data_RA)
+```
+
+### Partial effect plots
+
+```{r}
+APCtools::plot_partialAPCeffects(model_pure, dat = data_RA, variable = "cohort")
+APCtools::plot_marginalAPCeffects(model_pure, dat = data_RA, variable = "period")
+APCtools::plot_jointMarginalAPCEffects(model_pure, model_cov, dat = data_RA)
+```
+
+### Heatmaps
+
+```{r}
+APCtools::plot_APCheatmap(model_pure, dat = data_RA)
+```
+
+### Hexamaps
+
+```{r}
+# TODO
+```
+
+### 3D plot of the heatmap
+
+```{r}
+# TODO
+```
+
+### Overview table
+
+```{r}
+# TODO
+```
+
+### Effect plots of linear and nonlinear effects
+
+```{r}
+APCtools::plot_linearEffects(model_cov)
+APCtools::plot_1Dsmooth(model_cov, select = 2)
+```
+
+### Model evaluation
+
+```{r}
+# TODO
+```

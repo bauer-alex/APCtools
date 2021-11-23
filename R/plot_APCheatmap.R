@@ -15,10 +15,16 @@
 #' @param plot_CI Indicator if the confidence intervals should be plotted.
 #' Defaults to TRUE.
 #' 
-#' @import dplyr
+#' @import checkmate dplyr
 #' @export
 #' 
 plot_APCheatmap <- function(model, dat, angle = 15, plot_CI = TRUE) {
+  
+  checkmate::check_class(model, classes = "gam")
+  checkmate::check_data_frame(dat)
+  checkmate::check_numeric(angle, len = 1)
+  checkmate::check_logical(plot_CI)
+  
   
   # create a dataset for predicting the values of the APC surface
   grid_age    <- min(dat$age):max(dat$age)
@@ -29,17 +35,21 @@ plot_APCheatmap <- function(model, dat, angle = 15, plot_CI = TRUE) {
   # add random values for all further covariates in the model,
   # necessary for calling mgcv:::predict.gam
   covars <- attr(model$terms, "term.labels")
-  covars <- covars[!(covars %in% c("age","period"))]
+  covars <- covars[!(covars %in% c("age","period","cohort"))]
   if (length(covars) > 0) {
     dat_predictionGrid[,covars] <- dat[1, covars]
   }
 
   # create a dataset containing the estimated values of the APC surface
+  terms_model     <- sapply(model$smooth, function(x) { x$label })
+  terms_index_APC <- which(grepl("age", terms_model) | grepl("period", terms_model))
+  term_APCsurface <- terms_model[terms_index_APC]
+  
   prediction <- dat_predictionGrid %>% 
     predict(object  = model,
             newdata = ,
             type    = "terms",
-            terms   = "te(period,age)",
+            terms   = term_APCsurface,
             se.fit  = TRUE) 
   plot_dat <- dat_predictionGrid %>%
     mutate(effect = prediction$fit, se = prediction$se.fit) %>% 
@@ -105,17 +115,16 @@ plot_APCheatmap <- function(model, dat, angle = 15, plot_CI = TRUE) {
   y4 <- cbind(1, x4) %*% beta4
 
   # define the theme
-  theme <- theme_minimal() +
-    theme(text = element_text(size = 12), axis.title = element_text(size = 20),
-          axis.text = element_text(size = 18),
-          legend.text = element_text(size = 15),
-          legend.title = element_text(size = 20),
-          plot.title = element_text(hjust = 0.5, size = 22, face = "bold"),
-          strip.text.y = element_text(size = 18),
-          strip.text.x = element_text(size = 18),
-          strip.placement = "outside", strip.background = element_blank(),
-          axis.title.y = element_text(margin = margin(0, 10, 0, 0)),
-          axis.title.x = element_text(margin = margin(10, 0, 0, 0)))
+  theme <- theme(text = element_text(size = 12), axis.title = element_text(size = 20),
+                 axis.text = element_text(size = 18),
+                 legend.text = element_text(size = 15),
+                 legend.title = element_text(size = 20),
+                 plot.title = element_text(hjust = 0.5, size = 22, face = "bold"),
+                 strip.text.y = element_text(size = 18),
+                 strip.text.x = element_text(size = 18),
+                 strip.placement = "outside", strip.background = element_blank(),
+                 axis.title.y = element_text(margin = margin(0, 10, 0, 0)),
+                 axis.title.x = element_text(margin = margin(10, 0, 0, 0)))
   
   # final preparations
   y_lab   <- ifelse(used_logLink, "Mean exp effect", "Mean effect")

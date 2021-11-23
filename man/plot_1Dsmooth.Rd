@@ -14,7 +14,7 @@ plot_1Dsmooth(model, plot_ci = TRUE, select, alpha = 0.05, ylim = NULL)
 \item{select}{Index of smooth term to be plotted.}
 
 \item{alpha}{\code{(1-alpha)} CIs are calculated. The default 0.05 leads to
-95\\% CIs.}
+95\% CIs.}
 
 \item{ylim}{Optional limits of the y-axis.}
 }

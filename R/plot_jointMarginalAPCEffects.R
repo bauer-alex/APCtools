@@ -13,12 +13,18 @@
 #' \code{\link[mgcv]{gam}}.
 #' @param model_labels Character vector containing the labels for the two models.
 #' 
-#' @import dplyr ggplot2
+#' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
 #' @export
 #' 
 plot_jointMarginalAPCEffects <- function(model1, model2, dat,
                                          model_labels = c("model 1", "model 2")) {
+  
+  checkmate::check_class(model1, classes = "gam")
+  checkmate::check_class(model2, classes = "gam")
+  checkmate::check_data_frame(dat)
+  checkmate::check_character(model_labels, len = 2)
+  
   
   # retrieve datasets with the marginal effects
   datList1 <- plot_marginalAPCeffects(model1, dat, return_plotData = TRUE)
@@ -50,7 +56,8 @@ plot_jointMarginalAPCEffects <- function(model1, model2, dat,
                        name  = ylab, limits = ylim) +
     theme(legend.title = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y  = element_blank())
+          axis.text.y  = element_blank(),
+          axis.ticks.y = element_blank())
   
   # marginal cohort effect
   dat_cohort2 <- datList2$dat_cohort %>% mutate(type = model_labels[2])
@@ -63,7 +70,8 @@ plot_jointMarginalAPCEffects <- function(model1, model2, dat,
                        name  = ylab, limits = ylim) +
     theme(legend.title = element_blank(),
           axis.title.y = element_blank(), 
-          axis.text.y  = element_blank())
+          axis.text.y  = element_blank(),
+          axis.ticks.y = element_blank())
   
   # joint plot
   ggpubr::ggarrange(plotlist = list(gg_age, gg_period, gg_cohort),

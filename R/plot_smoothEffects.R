@@ -9,20 +9,24 @@
 #' @param model GAM model fitted with \code{\link[mgcv]{gam}}.
 #' @param plot_ci If \code{TRUE} CIs are plotted. Only used if \code{plot_type = 1}.
 #' @param select Index of smooth term to be plotted.
-#' @param alpha \code{(1-alpha)} CIs are calculated. The default 0.05 leads to 
-#' 95\% CIs.
+#' @param alpha \code{(1-alpha)} CIs are calculated. The default 0.05 leads to
+#' 95% CIs.
 #' @param ylim Optional limits of the y-axis.
 #' 
 #' @importFrom grDevices gray
 #' @importFrom stats qnorm
-#' @import dplyr ggplot2
+#' @import checkmate dplyr ggplot2
 #' @export
 #' 
 plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
                           ylim = NULL) {
   
-  if(missing(select))
-    stop("Please specify which model term should be plotted using the 'select' argument!")
+  checkmate::check_class(model, classes = "gam")
+  checkmate::check_logical(plot_ci)
+  checkmate::check_numeric(select, lower = 1)
+  checkmate::check_numeric(alpha, lower = 0, upper = 1)
+  checkmate::check_numeric(ylim, len = 2, null.ok = TRUE)
+  
   
   used_logLink <- (model$family[[2]] == "log" | model$family[[2]] == "logit")
   ylab         <- ifelse(used_logLink, "Odds Ratio", "Effect")
@@ -66,7 +70,7 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
     gg <- gg + geom_polygon(data = poly_dat, aes(x = x, y = y), fill = gray(0.75))
   }
   gg <- gg + 
-    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2") +
+    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2", lty = 2) +
     geom_line() + xlab(plotObject$xlab) +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
                        name  = ylab, limits = ylim)
@@ -85,8 +89,12 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
 #' 
 #' @importFrom grDevices png dev.off
 #' @importFrom mgcv plot.gam
+#' @import checkmate
 #' 
 get_plotGAMobject <- function(model) {
+  
+  checkmate::check_class(model, classes = "gam")
+  
   
   # Idea: Save the plot in a temporal png file, which is deleted right
   #       afterwards.

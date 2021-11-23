@@ -9,10 +9,13 @@
 #' 
 #' @inheritParams extract_modelSummary
 
-#' @import colorspace dplyr
+#' @import checkmate colorspace dplyr
 #' @export
 #' 
 plot_linearEffects <- function(model) {
+  
+  checkmate::check_class(model, classes = "gam")
+  
   
   used_logLink <- (model$family[[2]] == "log" | model$family[[2]] == "logit")
   ylab         <- ifelse(used_logLink, "Odds Ratio", "Effect")
@@ -22,7 +25,7 @@ plot_linearEffects <- function(model) {
   
   # categorize the coefficients in groups (one for each variable)
   for (i in names(eval(model$call$data))) {
-    plot_dat$vargroup[str_detect(plot_dat$param, i)] <- i
+    plot_dat$vargroup[grepl(i, plot_dat$param)] <- i
   }
   # remove the intercept
   plot_dat <- plot_dat[-1,]
@@ -35,10 +38,16 @@ plot_linearEffects <- function(model) {
                                         100)
   }
   
+  # final preparations
+  if (used_logLink) {
+    plot_dat <- plot_dat %>% select(-coef, -CI_lower, -CI_upper) %>%
+      dplyr::rename(coef = coef_exp, CI_lower = CI_lower_exp, CI_upper = CI_upper_exp)
+  }
+  
   # create plot
-  gg <- ggplot(plot_dat, mapping = aes(x = param, y = coef_exp)) +
-    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2") +
-    geom_pointrange(mapping = aes(ymin = CI_lower_exp, ymax = CI_upper_exp, col = vargroup), size = 1) +
+  gg <- ggplot(plot_dat, mapping = aes(x = param, y = coef)) +
+    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2", lty = 2) +
+    geom_pointrange(mapping = aes(ymin = CI_lower, ymax = CI_upper, col = vargroup), size = 1) +
     geom_point(mapping = aes(col = vargroup), size = 1) +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
                        name  = ylab) +
@@ -62,11 +71,14 @@ plot_linearEffects <- function(model) {
 #' 
 #' @param model Model fitted with \code{\link[mgcv]{gam}}.
 #' 
-#' @import dplyr
+#' @import checkmate dplyr
 #' @importFrom mgcv summary.gam
 #' @export
 #' 
 extract_modelSummary <- function(model) {
+  
+  checkmate::check_class(model, classes = "gam")
+  
   
   used_logLink <- (model$family[[2]] == "log" | model$family[[2]] == "logit")
   

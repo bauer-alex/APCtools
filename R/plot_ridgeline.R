@@ -160,17 +160,16 @@ plot_ridgeline <- function(dat, y_var, apc_range = NULL, y_var_breaks = NULL,
   xlim <- range(dat_dens$x)
   
   # Actual plotting:
-  theme <- theme_minimal() +
-    theme(text = element_text(size = 18), axis.title = element_text(size = 18),
-          axis.text = element_text(size = 14),
-          legend.text = element_text(size = 16),
-          legend.title = element_text(size = 18),
-          plot.title = element_text(hjust = 0.5, size = 18, face = "bold"),
-          strip.text.y = element_text(size = 16),
-          strip.text.x = element_text(size = 16), legend.text.align = 0,
-          strip.placement = "outside", strip.background = element_blank(),
-          axis.title.y = element_text(margin = margin(0, 10, 0, 0)),
-          axis.title.x = element_text(margin = margin(10, 0, 0, 0)))
+  theme <- theme(text = element_text(size = 18), axis.title = element_text(size = 18),
+                 axis.text = element_text(size = 14),
+                 legend.text = element_text(size = 16),
+                 legend.title = element_text(size = 18),
+                 plot.title = element_text(hjust = 0.5, size = 18, face = "bold"),
+                 strip.text.y = element_text(size = 16),
+                 strip.text.x = element_text(size = 16), legend.text.align = 0,
+                 strip.placement = "outside", strip.background = element_blank(),
+                 axis.title.y = element_text(margin = margin(0, 10, 0, 0)),
+                 axis.title.x = element_text(margin = margin(10, 0, 0, 0)))
   if (multiple == FALSE) {
     plot <- ggplot(data = dat_dens, aes(x = x, y = y)) +
       geom_line() +
