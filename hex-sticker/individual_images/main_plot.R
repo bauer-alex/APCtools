@@ -19,25 +19,25 @@ get_ellipsePointsDat <- function(center_x, center_y, radius_x, radius_y,
 
 
 # define data.frame objects for drawing all lines -------------------------
-mainRedLines_dat <- data.frame(
+mainCoordinates_dat <- data.frame(
   x     = c(0,2.15, 0,0,    0,1.1),
   y     = c(0,0,    0,1.15, 0,1.1),
   group = c(1,1,    2,2,    3,3)
 )
 
-furtherRedLines_dat <- data.frame(
+diagonals_dat <- data.frame(
   x     = c(0,.6, 0,.2, .4,1.4, .8,1.8, 1.2,2, 1.6,2),
   y     = c(.4,1, .8,1, 0,1,    0,1,    0,.8,  0,.4),
   group = c(4,4,  5,5,  6,6,    7,7,    8,8,   9,9)
 )
 
-blueLines_dat <- data.frame(
+horizontals_dat <- data.frame(
   x     = rep(c(0,2),   times = 2),
   y     = rep(c(.4,.8), each = 2),
   group = rep(1:2,      each = 2)
 )
 
-greenLines_dat <- data.frame(
+verticals_dat <- data.frame(
   x     = rep(c(.4,.8,1.2,1.6,2), each = 2),
   y     = rep(c(0,1),             times = 5),
   group = rep(1:5,                each = 2)
@@ -110,19 +110,19 @@ C_poly_dat <- C_dat[C_dat$group <= 3,] %>%
 
 # main plot ---------------------------------------------------------------
 ggplot() +
-  geom_line(data = mainRedLines_dat,    aes(x, y, group = group), lineend = "round", size = 4, col = "#3E78B2", arrow = arrow(angle = 15, ends = "last", type = "closed")) +
-  geom_line(data = furtherRedLines_dat, aes(x, y, group = group), lineend = "round", lty = 2, size = 1, col = "#3E78B2") +
-  geom_line(data = blueLines_dat,       aes(x, y, group = group), lineend = "round", lty = 2, size = 1, col = "#3E78B2") +
-  geom_line(data = greenLines_dat,      aes(x, y, group = group), lineend = "round", lty = 2, size = 1, col = "#3E78B2") +
-  geom_line(data = A_dat, aes(x, y, group = group), size = 2, lineend = "round") +
+  geom_line(data = diagonals_dat,   aes(x, y, group = group), lineend = "round", lty = 2, size = 1, col = "#3E78B2") +
+  geom_line(data = horizontals_dat, aes(x, y, group = group), lineend = "round", lty = 2, size = 1, col = "#3E78B2") +
+  geom_line(data = verticals_dat,   aes(x, y, group = group), lineend = "round", lty = 2, size = 1, col = "#3E78B2") +
+  geom_line(data = A_dat,      aes(x, y, group = group), size = 2, lineend = "round") +
+  geom_line(data = A_hole_dat, aes(x, y, group = group), size = 2, lineend = "round") +
+  geom_polygon(data = A_poly_dat, aes(x, y, subgroup = type)) +
+  geom_line(data = mainCoordinates_dat,    aes(x, y, group = group), lineend = "round", size = 4, col = "#3E78B2", arrow = arrow(angle = 15, ends = "last", type = "closed")) +
   geom_line(data = P_dat, aes(x, y, group = group), size = 2, lineend = "round") +
   geom_line(data = C_dat, aes(x, y, group = group), size = 2, lineend = "round") +
-  geom_line(data = A_hole_dat, aes(x, y, group = group), size = 2, lineend = "round") +
   geom_path(data = P_outerCircle_dat, aes(x, y), size = 2, lineend = "round") +
   geom_path(data = P_innerCircle_dat, aes(x, y), size = 2, lineend = "round") +
   geom_path(data = C_outerCircle_dat, aes(x, y), size = 2, lineend = "round") +
   geom_path(data = C_innerCircle_dat, aes(x, y), size = 2, lineend = "round") +
-  geom_polygon(data = A_poly_dat, aes(x, y, subgroup = type)) +
   geom_polygon(data = P_poly_dat, aes(x, y, subgroup = type)) +
   geom_polygon(data = C_poly_dat, aes(x, y)) +
   theme(axis.title       = element_blank(),
