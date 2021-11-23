@@ -115,7 +115,7 @@ ggplot() +
   geom_line(data = verticals_dat,   aes(x, y, group = group), lineend = "round", lty = 2, size = 1, col = "#3E78B2") +
   geom_line(data = A_dat,      aes(x, y, group = group), size = 2, lineend = "round") +
   geom_line(data = A_hole_dat, aes(x, y, group = group), size = 2, lineend = "round") +
-  geom_polygon(data = A_poly_dat, aes(x, y, subgroup = type)) +
+  geom_polygon(data = A_poly_dat, aes(x, y, subgroup = type), fill = gray(0.3)) +
   geom_line(data = mainCoordinates_dat,    aes(x, y, group = group), lineend = "round", size = 4, col = "#3E78B2", arrow = arrow(angle = 15, ends = "last", type = "closed")) +
   geom_line(data = P_dat, aes(x, y, group = group), size = 2, lineend = "round") +
   geom_line(data = C_dat, aes(x, y, group = group), size = 2, lineend = "round") +
@@ -123,8 +123,8 @@ ggplot() +
   geom_path(data = P_innerCircle_dat, aes(x, y), size = 2, lineend = "round") +
   geom_path(data = C_outerCircle_dat, aes(x, y), size = 2, lineend = "round") +
   geom_path(data = C_innerCircle_dat, aes(x, y), size = 2, lineend = "round") +
-  geom_polygon(data = P_poly_dat, aes(x, y, subgroup = type)) +
-  geom_polygon(data = C_poly_dat, aes(x, y)) +
+  geom_polygon(data = P_poly_dat, aes(x, y, subgroup = type), fill = gray(0.3)) +
+  geom_polygon(data = C_poly_dat, aes(x, y), fill = gray(0.3)) +
   theme(axis.title       = element_blank(),
         axis.text        = element_blank(),
         axis.ticks       = element_blank(),
