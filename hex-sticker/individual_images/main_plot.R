@@ -110,18 +110,18 @@ C_poly_dat <- C_dat[C_dat$group <= 3,] %>%
 
 # main plot ---------------------------------------------------------------
 ggplot() +
-  geom_line(data = mainRedLines_dat,    aes(x, y, group = group), size = 4, col = "#c7af21ff", arrow = arrow(angle = 15, ends = "last", type = "closed")) +
-  geom_line(data = furtherRedLines_dat, aes(x, y, group = group), lty = 2, size = 1, col = "#c7af21ff") +
-  geom_line(data = blueLines_dat,       aes(x, y, group = group), lty = 2, size = 1, col = "#c7af21ff") +
-  geom_line(data = greenLines_dat,      aes(x, y, group = group), lty = 2, size = 1, col = "#c7af21ff") +
-  geom_line(data = A_dat, aes(x, y, group = group), size = 2, lineend = "square") +
-  geom_line(data = P_dat, aes(x, y, group = group), size = 2, lineend = "square") +
-  geom_line(data = C_dat, aes(x, y, group = group), size = 2, lineend = "square") +
-  geom_line(data = A_hole_dat, aes(x, y, group = group), size = 2, lineend = "square") +
-  geom_path(data = P_outerCircle_dat, aes(x, y), size = 2, lineend = "square") +
-  geom_path(data = P_innerCircle_dat, aes(x, y), size = 2, lineend = "square") +
-  geom_path(data = C_outerCircle_dat, aes(x, y), size = 2, lineend = "square") +
-  geom_path(data = C_innerCircle_dat, aes(x, y), size = 2, lineend = "square") +
+  geom_line(data = mainRedLines_dat,    aes(x, y, group = group), lineend = "round", size = 4, col = "#3E78B2", arrow = arrow(angle = 15, ends = "last", type = "closed")) +
+  geom_line(data = furtherRedLines_dat, aes(x, y, group = group), lineend = "round", lty = 2, size = 1, col = "#3E78B2") +
+  geom_line(data = blueLines_dat,       aes(x, y, group = group), lineend = "round", lty = 2, size = 1, col = "#3E78B2") +
+  geom_line(data = greenLines_dat,      aes(x, y, group = group), lineend = "round", lty = 2, size = 1, col = "#3E78B2") +
+  geom_line(data = A_dat, aes(x, y, group = group), size = 2, lineend = "round") +
+  geom_line(data = P_dat, aes(x, y, group = group), size = 2, lineend = "round") +
+  geom_line(data = C_dat, aes(x, y, group = group), size = 2, lineend = "round") +
+  geom_line(data = A_hole_dat, aes(x, y, group = group), size = 2, lineend = "round") +
+  geom_path(data = P_outerCircle_dat, aes(x, y), size = 2, lineend = "round") +
+  geom_path(data = P_innerCircle_dat, aes(x, y), size = 2, lineend = "round") +
+  geom_path(data = C_outerCircle_dat, aes(x, y), size = 2, lineend = "round") +
+  geom_path(data = C_innerCircle_dat, aes(x, y), size = 2, lineend = "round") +
   geom_polygon(data = A_poly_dat, aes(x, y, subgroup = type)) +
   geom_polygon(data = P_poly_dat, aes(x, y, subgroup = type)) +
   geom_polygon(data = C_poly_dat, aes(x, y)) +
@@ -132,4 +132,4 @@ ggplot() +
         legend.position  = "none",
         plot.background  = element_rect(fill = "transparent", color = NA),
         panel.grid       = element_blank())
-ggsave("main_plot.pdf", width = 7, height = 5)
+# ggsave("main_plot.pdf", width = 7, height = 5)
