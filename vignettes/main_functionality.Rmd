@@ -71,7 +71,10 @@ model_cov  <- gam(JS_HUR_Reisedistanz ~ te(age, period) +
 ```{r}
 APCtools::plot_partialAPCeffects(model_pure, dat = data_RA, variable = "cohort")
 APCtools::plot_marginalAPCeffects(model_pure, dat = data_RA, variable = "period")
-APCtools::plot_jointMarginalAPCEffects(model_pure, model_cov, dat = data_RA)
+
+model_list <- list("pure model"      = model_pure,
+                   "covariate model" = model_cov)
+APCtools::plot_jointMarginalAPCEffects(model_list, dat = data_RA)
 ```
 
 ### Heatmaps
