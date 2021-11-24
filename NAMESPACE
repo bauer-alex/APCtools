@@ -3,6 +3,7 @@
 export(extract_modelSummary)
 export(plot_1Dsmooth)
 export(plot_APCheatmap)
+export(plot_APChexamap)
 export(plot_jointMarginalAPCEffects)
 export(plot_linearEffects)
 export(plot_marginalAPCeffects)

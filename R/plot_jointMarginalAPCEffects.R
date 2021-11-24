@@ -1,44 +1,49 @@
 
-#' Joint plot to compare the marginal APC effects of two models
+#' Joint plot to compare the marginal APC effects of multiple models
 #' 
-#' This function creates a joint plot of the marginal APC effects of two
+#' This function creates a joint plot of the marginal APC effects of multiple
 #' estimated models. It creates a plot with one pane per age, period and
-#' cohort effect, each containing two lines for the two estimated models.
+#' cohort effect, each containing one lines for each estimated model.
 #' 
 #' If the model was estimated with a log link, the function automatically
 #' performs an exponential transformation of the effect.
 #' 
 #' @inheritParams plot_partialAPCeffects
-#' @param model1,model2 Two regression models estimated with
-#' \code{\link[mgcv]{gam}}.
-#' @param model_labels Character vector containing the labels for the two models.
+#' @param model_list A list of regression models estimated with
+#' \code{\link[mgcv]{gam}}. If the list is named, the names are used as legend
+#' labels.
 #' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
 #' @export
 #' 
-plot_jointMarginalAPCEffects <- function(model1, model2, dat,
-                                         model_labels = c("model 1", "model 2")) {
+plot_jointMarginalAPCEffects <- function(model_list, dat) {
   
-  checkmate::check_class(model1, classes = "gam")
-  checkmate::check_class(model2, classes = "gam")
+  checkmate::check_list(model_list, types = "gam")
   checkmate::check_data_frame(dat)
-  checkmate::check_character(model_labels, len = 2)
   
+  # save model labels
+  if (!is.null(names(model_list))) {
+    model_labels <- names(model_list)
+  } else {
+    model_labels <- paste("model", 1:length(model_list))
+  }
   
   # retrieve datasets with the marginal effects
-  datList1 <- plot_marginalAPCeffects(model1, dat, return_plotData = TRUE)
-  datList2 <- plot_marginalAPCeffects(model2, dat, return_plotData = TRUE)
+  datList_list <- lapply(model_list, function(x) {
+    plot_marginalAPCeffects(x, dat, return_plotData = TRUE)
+  })
   
-  ylim <- dplyr::bind_rows(c(datList1, datList2)) %>% pull(effect) %>% range()
-  used_logLink <- (model1$family[[2]] == "log" | model1$family[[2]] == "logit")
+  ylim <- lapply(datList_list, function(x) { dplyr::bind_rows(x) }) %>% 
+    dplyr::bind_rows() %>% pull(effect) %>% range()
+  used_logLink <- (model_list[[1]]$family[[2]] == "log" | model_list[[1]]$family[[2]] == "logit")
   ylab <- ifelse(used_logLink, "Odds Ratio", "Effect")
   
   # marginal age effect
-  dat_age2 <- datList2$dat_age %>% mutate(type = model_labels[2])
-  dat_age  <- datList1$dat_age %>% mutate(type = model_labels[1]) %>% 
-    dplyr::bind_rows(dat_age2)
-  gg_age <- ggplot(dat_age, aes(x = value, y = effect, lty = type)) +
+  dat_age <- lapply(1:length(datList_list), function(i) {
+    datList_list[[i]]$dat_age %>% mutate(type = model_labels[i])
+  }) %>% dplyr::bind_rows()
+  gg_age <- ggplot(dat_age, aes(x = value, y = effect, col = type)) +
     geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2", lty = 2) +
     geom_line() + xlab("Age") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
@@ -46,10 +51,10 @@ plot_jointMarginalAPCEffects <- function(model1, model2, dat,
     theme(legend.title = element_blank())
   
   # marginal period effect
-  dat_period2 <- datList2$dat_period %>% mutate(type = model_labels[2])
-  dat_period  <- datList1$dat_period %>% mutate(type = model_labels[1]) %>% 
-    dplyr::bind_rows(dat_period2)
-  gg_period <- ggplot(dat_period, aes(x = value, y = effect, lty = type)) +
+  dat_period <- lapply(1:length(datList_list), function(i) {
+    datList_list[[i]]$dat_period %>% mutate(type = model_labels[i])
+  }) %>% dplyr::bind_rows()
+  gg_period <- ggplot(dat_period, aes(x = value, y = effect, col = type)) +
     geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2", lty = 2) +
     geom_line() + xlab("Period") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
@@ -60,10 +65,10 @@ plot_jointMarginalAPCEffects <- function(model1, model2, dat,
           axis.ticks.y = element_blank())
   
   # marginal cohort effect
-  dat_cohort2 <- datList2$dat_cohort %>% mutate(type = model_labels[2])
-  dat_cohort  <- datList1$dat_cohort %>% mutate(type = model_labels[1]) %>% 
-    dplyr::bind_rows(dat_cohort2)
-  gg_cohort <- ggplot(dat_cohort, aes(x = value, y = effect, lty = type)) +
+  dat_cohort <- lapply(1:length(datList_list), function(i) {
+    datList_list[[i]]$dat_cohort %>% mutate(type = model_labels[i])
+  }) %>% dplyr::bind_rows()
+  gg_cohort <- ggplot(dat_cohort, aes(x = value, y = effect, col = type)) +
     geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2", lty = 2) +
     geom_line() + xlab("Cohort") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),

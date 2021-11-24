@@ -2,28 +2,22 @@
 % Please edit documentation in R/plot_jointMarginalAPCEffects.R
 \name{plot_jointMarginalAPCEffects}
 \alias{plot_jointMarginalAPCEffects}
-\title{Joint plot to compare the marginal APC effects of two models}
+\title{Joint plot to compare the marginal APC effects of multiple models}
 \usage{
-plot_jointMarginalAPCEffects(
-  model1,
-  model2,
-  dat,
-  model_labels = c("model 1", "model 2")
-)
+plot_jointMarginalAPCEffects(model_list, dat)
 }
 \arguments{
-\item{model1, model2}{Two regression models estimated with
-\code{\link[mgcv]{gam}}.}
+\item{model_list}{A list of regression models estimated with
+\code{\link[mgcv]{gam}}. If the list is named, the names are used as legend
+labels.}
 
 \item{dat}{Dataset as passed to \code{gam} for model estimation, containing
 columns \code{period} and \code{age}.}
-
-\item{model_labels}{Character vector containing the labels for the two models.}
 }
 \description{
-This function creates a joint plot of the marginal APC effects of two
+This function creates a joint plot of the marginal APC effects of multiple
 estimated models. It creates a plot with one pane per age, period and
-cohort effect, each containing two lines for the two estimated models.
+cohort effect, each containing one lines for each estimated model.
 }
 \details{
 If the model was estimated with a log link, the function automatically
