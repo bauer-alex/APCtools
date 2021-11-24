@@ -44,7 +44,7 @@ plot_jointMarginalAPCEffects <- function(model_list, dat) {
     datList_list[[i]]$dat_age %>% mutate(type = model_labels[i])
   }) %>% dplyr::bind_rows()
   gg_age <- ggplot(dat_age, aes(x = value, y = effect, col = type)) +
-    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2", lty = 2) +
+    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
     geom_line() + xlab("Age") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
                        name  = ylab, limits = ylim) +
@@ -55,7 +55,7 @@ plot_jointMarginalAPCEffects <- function(model_list, dat) {
     datList_list[[i]]$dat_period %>% mutate(type = model_labels[i])
   }) %>% dplyr::bind_rows()
   gg_period <- ggplot(dat_period, aes(x = value, y = effect, col = type)) +
-    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2", lty = 2) +
+    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
     geom_line() + xlab("Period") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
                        name  = ylab, limits = ylim) +
@@ -69,7 +69,7 @@ plot_jointMarginalAPCEffects <- function(model_list, dat) {
     datList_list[[i]]$dat_cohort %>% mutate(type = model_labels[i])
   }) %>% dplyr::bind_rows()
   gg_cohort <- ggplot(dat_cohort, aes(x = value, y = effect, col = type)) +
-    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2", lty = 2) +
+    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
     geom_line() + xlab("Cohort") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
                        name  = ylab, limits = ylim) +
