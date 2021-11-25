@@ -18,7 +18,8 @@ RoxygenNote: 7.1.2
 Imports: 
     ggpubr,
     checkmate,
-    knitr
+    knitr,
+    ggplot2
 Suggests: 
     rmarkdown
 VignetteBuilder: knitr

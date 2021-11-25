@@ -21,6 +21,10 @@ This document gives an overview of the functionality provided by the R package
 library(APCtools)
 library(dplyr)
 library(mgcv)
+
+# set the global theme of all plots
+library(ggplot2)
+theme_set(theme_minimal())
 ```
 
 ### Prepare data
@@ -39,8 +43,11 @@ data_RA <- data_RA %>%
 ### 1D visualization function for metric and categorical variables
 
 ```{r}
-# TODO metric
-# TODO categorical
+# plot a metric variable
+plot_variable(dat = data_RA, variable = "JS_HUR_Reisedistanz", apc_dimension = "period")
+
+# plot a categorical variable
+plot_variable(dat = data_RA, variable = "S_Haushaltsgroesse", apc_dimension = "period")
 ```
 
 ### Ridgeline matrix for metric and categorical variables
