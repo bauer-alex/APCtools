@@ -98,7 +98,7 @@ APCtools::plot_APCheatmap(model_pure, dat = data_RA)
 ### Overview table
 
 ```{r}
-# TODO
+create_APCsummary(model_list, dat = data_RA)
 ```
 
 ### Effect plots of linear and nonlinear effects
@@ -107,6 +107,13 @@ APCtools::plot_APCheatmap(model_pure, dat = data_RA)
 APCtools::plot_linearEffects(model_cov)
 APCtools::plot_1Dsmooth(model_cov, select = 2)
 ```
+
+### Overview tables of linear and nonlinear effects
+
+```{r}
+# TODO Best return a list with one overview table each for linear and nonlinear effects
+```
+
 
 ### Model evaluation
 
