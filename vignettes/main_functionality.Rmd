@@ -111,7 +111,9 @@ APCtools::plot_1Dsmooth(model_cov, select = 2)
 ### Overview tables of linear and nonlinear effects
 
 ```{r}
-# TODO Best return a list with one overview table each for linear and nonlinear effects
+summary_list <- create_covariateSummary(model_list)
+summary_list[[1]]
+summary_list[[2]]
 ```
 
 

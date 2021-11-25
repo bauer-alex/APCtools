@@ -17,10 +17,10 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
     ggpubr,
-    checkmate
-Suggests: 
-    rmarkdown,
+    checkmate,
     knitr
+Suggests: 
+    rmarkdown
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)

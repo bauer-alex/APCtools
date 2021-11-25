@@ -4,10 +4,10 @@
 #' Create an effect plot of linear effects of a model fitted with
 #' \code{\link[mgcv]{gam}}.
 #' 
-#' If the model was estimated with a log link, the function automatically
-#' performs an exponential transformation of the effects.
+#' If the model was estimated with a log or logit link, the function
+#' automatically performs an exponential transformation of the effect.
 #' 
-#' @inheritParams extract_modelSummary
+#' @inheritParams extract_summary_linearEffects
 
 #' @import checkmate colorspace dplyr
 #' @export
@@ -17,11 +17,11 @@ plot_linearEffects <- function(model) {
   checkmate::check_class(model, classes = "gam")
   
   
-  used_logLink <- (model$family[[2]] == "log" | model$family[[2]] == "logit")
+  used_logLink <- model$family[[2]] %in% c("log","logit")
   ylab         <- ifelse(used_logLink, "Odds Ratio", "Effect")
   
   # extract model information
-  plot_dat <- extract_modelSummary(model)
+  plot_dat <- extract_summary_linearEffects(model)
   
   # categorize the coefficients in groups (one for each variable)
   for (i in names(eval(model$call$data))) {
@@ -58,50 +58,4 @@ plot_linearEffects <- function(model) {
           axis.text.x     = element_text(angle = 45, hjust = 1))
     
   return(gg)
-}
-
-
-#' Extract summary of linear effects in a gam model
-#' 
-#' Creates a \code{data.frame} containing the linear effects summary of a 
-#' model fitted with \code{\link[mgcv]{gam}}.
-#' 
-#' If the model was estimated with a log link, the function automatically
-#' performs an exponential transformation of the effects.
-#' 
-#' @param model Model fitted with \code{\link[mgcv]{gam}}.
-#' 
-#' @import checkmate dplyr
-#' @importFrom mgcv summary.gam
-#' @export
-#' 
-extract_modelSummary <- function(model) {
-  
-  checkmate::check_class(model, classes = "gam")
-  
-  
-  used_logLink <- (model$family[[2]] == "log" | model$family[[2]] == "logit")
-  
-  x <- mgcv::summary.gam(model)$p.table
-  dat <- data.frame(param    = row.names(x),
-                    coef     = unname(x[,1]),
-                    se       = unname(x[,2]),
-                    CI_lower = unname(x[,1] - qnorm(0.975) * x[,2]),
-                    CI_upper = unname(x[,1] + qnorm(0.975) * x[,2]),
-                    pvalue   = unname(x[,4]),
-                    stringsAsFactors = FALSE) %>%
-    mutate(param = factor(param, levels = row.names(x)))
-  
-  if (used_logLink) {
-    # confidence intervals on exp scale are computed based on delta method
-    dat <- dat %>%
-      mutate(coef_exp = exp(coef),
-             se_exp = sqrt(se^2 * exp(coef)^2)) %>%
-      mutate(CI_lower_exp = coef_exp - qnorm(0.975) * se_exp,
-             CI_upper_exp = coef_exp + qnorm(0.975) * se_exp) %>%
-      select(param, coef, se, CI_lower, CI_upper,
-             coef_exp, se_exp, CI_lower_exp, CI_upper_exp, pvalue)
-  }
-  
-  return(dat)
 }
