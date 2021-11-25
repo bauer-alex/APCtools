@@ -4,8 +4,8 @@
 #' Plot the heatmap of the two-dimensional tensor product surface for the
 #' APC effect, based on a model estimated with \code{\link[mgcv]{gam}}.
 #' 
-#' If the model was estimated with a log link, the function automatically
-#' performs an exponential transformation of the effect.
+#' If the model was estimated with a log or logit link, the function
+#' automatically performs an exponential transformation of the effect.
 #' 
 #' @param model Regression model estimated with \code{\link[mgcv]{gam}}.
 #' @param dat Dataset as passed to \code{gam} for model estimation, containing

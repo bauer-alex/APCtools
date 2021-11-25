@@ -3,8 +3,8 @@
 #'
 #' Plots 1D smooth effects for a GAM model fitted with \code{\link[mgcv]{gam}}.
 #'
-#' If the model was estimated with a log link, the function automatically
-#' performs an exponential transformation of the effect.
+#' If the model was estimated with a log or logit link, the function
+#' automatically performs an exponential transformation of the effect.
 #' 
 #' @param model GAM model fitted with \code{\link[mgcv]{gam}}.
 #' @param plot_ci If \code{TRUE} CIs are plotted. Only used if \code{plot_type = 1}.
@@ -28,7 +28,7 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
   checkmate::check_numeric(ylim, len = 2, null.ok = TRUE)
   
   
-  used_logLink <- (model$family[[2]] == "log" | model$family[[2]] == "logit")
+  used_logLink <- model$family[[2]] %in% c("log","logit")
   ylab         <- ifelse(used_logLink, "Odds Ratio", "Effect")
   
   plotObject <- get_plotGAMobject(model)

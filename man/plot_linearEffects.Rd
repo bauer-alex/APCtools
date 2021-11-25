@@ -14,6 +14,6 @@ Create an effect plot of linear effects of a model fitted with
 \code{\link[mgcv]{gam}}.
 }
 \details{
-If the model was estimated with a log link, the function automatically
-performs an exponential transformation of the effects.
+If the model was estimated with a log or logit link, the function
+automatically performs an exponential transformation of the effect.
 }

@@ -35,6 +35,6 @@ Create the partial APC plots based on an APC model estimated as a semiparametric
 additive regression model with \code{\link[mgcv]{gam}}.
 }
 \details{
-If the model was estimated with a log link, the function automatically
-performs an exponential transformation of the effect.
+If the model was estimated with a log or logit link, the function
+automatically performs an exponential transformation of the effect.
 }

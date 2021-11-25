@@ -23,8 +23,50 @@ plot_APChexamap(
 )
 }
 \arguments{
-\item{wrap_cohort_labels}{}
+\item{data}{TODO}
+
+\item{first_age}{TODO}
+
+\item{first_period}{TODO}
+
+\item{interval}{TODO}
+
+\item{first_age_isoline}{TODO}
+
+\item{first_period_isoline}{TODO}
+
+\item{isoline_interval}{TODO}
+
+\item{color_scale}{TODO}
+
+\item{color_map}{TODO}
+
+\item{line_width}{TODO}
+
+\item{line_color}{TODO}
+
+\item{label_size}{TODO}
+
+\item{label_color}{TODO}
+
+\item{scale_units}{TODO}
+
+\item{wrap_cohort_labels}{TODO}
 }
 \description{
 TEXT
+}
+\examples{
+# Hexamap for Overdose Deaths among White Men in the United States from 1999 through 2018
+data.df <- read.csv("overdose_deaths_white_men_1999_2018.csv") #data can be downloaded from CDC Wonder.
+data <- as.matrix(data.df) # convert to a matrix and exclude the row names
+create_hexamap(data = data,  #matrix: age as rows, period as columns
+               first_age = 15,
+               first_period = 1999,
+               interval = 1, 
+               first_age_isoline = 20,
+               first_period_isoline = 2000,
+               isoline_interval = 10, 
+               color_scale = c(0,40))
+
 }

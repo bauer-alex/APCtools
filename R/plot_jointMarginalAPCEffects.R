@@ -5,13 +5,12 @@
 #' estimated models. It creates a plot with one pane per age, period and
 #' cohort effect, each containing one lines for each estimated model.
 #' 
-#' If the model was estimated with a log link, the function automatically
-#' performs an exponential transformation of the effect.
+#' If the model was estimated with a log or logit link, the function
+#' automatically performs an exponential transformation of the effect.
 #' 
-#' @inheritParams plot_partialAPCeffects
+#' @inheritParams plot_APCheatmap
 #' @param model_list A list of regression models estimated with
-#' \code{\link[mgcv]{gam}}. If the list is named, the names are used as legend
-#' labels.
+#' \code{\link[mgcv]{gam}}. If the list is named, the names are used as labels.
 #' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
@@ -22,7 +21,8 @@ plot_jointMarginalAPCEffects <- function(model_list, dat) {
   checkmate::check_list(model_list, types = "gam")
   checkmate::check_data_frame(dat)
   
-  # save model labels
+  
+  # retrieve model labels
   if (!is.null(names(model_list))) {
     model_labels <- names(model_list)
   } else {
@@ -36,7 +36,7 @@ plot_jointMarginalAPCEffects <- function(model_list, dat) {
   
   ylim <- lapply(datList_list, function(x) { dplyr::bind_rows(x) }) %>% 
     dplyr::bind_rows() %>% pull(effect) %>% range()
-  used_logLink <- (model_list[[1]]$family[[2]] == "log" | model_list[[1]]$family[[2]] == "logit")
+  used_logLink <- model_list[[1]]$family[[2]] %in% c("log","logit")
   ylab <- ifelse(used_logLink, "Odds Ratio", "Effect")
   
   # marginal age effect

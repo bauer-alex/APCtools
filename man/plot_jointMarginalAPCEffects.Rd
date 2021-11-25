@@ -8,8 +8,7 @@ plot_jointMarginalAPCEffects(model_list, dat)
 }
 \arguments{
 \item{model_list}{A list of regression models estimated with
-\code{\link[mgcv]{gam}}. If the list is named, the names are used as legend
-labels.}
+\code{\link[mgcv]{gam}}. If the list is named, the names are used as labels.}
 
 \item{dat}{Dataset as passed to \code{gam} for model estimation, containing
 columns \code{period} and \code{age}.}
@@ -20,6 +19,6 @@ estimated models. It creates a plot with one pane per age, period and
 cohort effect, each containing one lines for each estimated model.
 }
 \details{
-If the model was estimated with a log link, the function automatically
-performs an exponential transformation of the effect.
+If the model was estimated with a log or logit link, the function
+automatically performs an exponential transformation of the effect.
 }

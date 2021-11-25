@@ -19,8 +19,9 @@ columns \code{period} and \code{age}.}
 }
 \description{
 Create a table to summarize the overall effect strengths of the age, period
-and cohort effects. The output format can be adjusted by passing arguments
-to \code{\link[knitr]{kable}} via the \code{...} argument.
+and cohort effects for models fitted with \code{\link[mgcv]{gam}}. The output
+format can be adjusted by passing arguments to \code{\link[knitr]{kable}} via
+the \code{...} argument.
 }
 \details{
 If the model was estimated with a log or logit link, the function

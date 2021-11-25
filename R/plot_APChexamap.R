@@ -3,26 +3,26 @@
 #' 
 #' TEXT
 #' 
-#' @param data
-#' @param first_age
-#' @param first_period
-#' @param interval
-#' @param first_age_isoline
-#' @param first_period_isoline
-#' @param isoline_interval
-#' @param color_scale
-#' @param color_map
-#' @param line_width
-#' @param line_color
-#' @param label_size
-#' @param label_color
-#' @param scale_units
-#' @param wrap_cohort_labels
+#' @param data TODO
+#' @param first_age TODO
+#' @param first_period TODO
+#' @param interval TODO
+#' @param first_age_isoline TODO
+#' @param first_period_isoline TODO
+#' @param isoline_interval TODO
+#' @param color_scale TODO
+#' @param color_map TODO
+#' @param line_width TODO
+#' @param line_color TODO
+#' @param label_size TODO
+#' @param label_color TODO
+#' @param scale_units TODO
+#' @param wrap_cohort_labels TODO
 #' 
 #' @import checkmate
 #' @export
 #' 
-#' @example 
+#' @examples
 #' # Hexamap for Overdose Deaths among White Men in the United States from 1999 through 2018
 #' data.df <- read.csv("overdose_deaths_white_men_1999_2018.csv") #data can be downloaded from CDC Wonder.
 #' data <- as.matrix(data.df) # convert to a matrix and exclude the row names
