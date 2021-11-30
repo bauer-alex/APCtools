@@ -20,10 +20,10 @@
 #' 
 plot_APCheatmap <- function(model, dat, angle = 15, plot_CI = TRUE) {
   
-  checkmate::check_class(model, classes = "gam")
-  checkmate::check_data_frame(dat)
-  checkmate::check_numeric(angle, len = 1)
-  checkmate::check_logical(plot_CI)
+  checkmate::assert_class(model, classes = "gam")
+  checkmate::assert_data_frame(dat)
+  checkmate::assert_numeric(angle, len = 1)
+  checkmate::assert_logical(plot_CI)
   
   
   # create a dataset for predicting the values of the APC surface

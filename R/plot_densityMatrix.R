@@ -26,20 +26,20 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
                                y_var_breaks = NULL, weights_var = NULL,
                                log_scale = TRUE, ...) {
   
-  checkmate::check_data_frame(dat)
-  checkmate::check_character(dimensions, len = 2)
-  checkmate::check_choice(dimensions, choices = c("age","period","cohort"))
+  checkmate::assert_data_frame(dat)
+  checkmate::assert_character(dimensions, len = 2)
+  checkmate::assert_choice(dimensions, choices = c("age","period","cohort"))
   if ("age" %in% dimensions) {
-    checkmate::check_list(age_groups, null.ok = FALSE)
+    checkmate::assert_list(age_groups, null.ok = FALSE)
   }
   if ("period" %in% dimensions) {
-    checkmate::check_list(period_groups, null.ok = FALSE)
+    checkmate::assert_list(period_groups, null.ok = FALSE)
   }
   if ("cohort" %in% dimensions) {
-    checkmate::check_list(cohort_groups, null.ok = FALSE)
+    checkmate::assert_list(cohort_groups, null.ok = FALSE)
   }
-  checkmate::check_character(y_var, len = 1)
-  checkmate::check_logical(log_scale)
+  checkmate::assert_character(y_var, len = 1)
+  checkmate::assert_logical(log_scale)
   
   
   dat$cohort <- dat$period - dat$age

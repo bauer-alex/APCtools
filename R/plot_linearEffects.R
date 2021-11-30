@@ -14,7 +14,7 @@
 #' 
 plot_linearEffects <- function(model) {
   
-  checkmate::check_class(model, classes = "gam")
+  checkmate::assert_class(model, classes = "gam")
   
   
   used_logLink <- model$family[[2]] %in% c("log","logit")

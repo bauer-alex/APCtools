@@ -18,8 +18,8 @@
 #' 
 plot_jointMarginalAPCEffects <- function(model_list, dat) {
   
-  checkmate::check_list(model_list, types = "gam")
-  checkmate::check_data_frame(dat)
+  checkmate::assert_list(model_list, types = "gam")
+  checkmate::assert_data_frame(dat)
   
   
   # retrieve model labels

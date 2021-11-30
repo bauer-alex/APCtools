@@ -38,21 +38,21 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
                          log_scale = FALSE, xlab = NULL, ylab = "Density",
                          legend_title = NULL, ...) {
   
-  checkmate::check_data_frame(dat)
-  checkmate::check_character(y_var, len = 1)
-  checkmate::check_choice(plot_type, choices = c("density","boxplot"))
-  checkmate::check_list(apc_range, types = "character", max.len = 3,
-                        null.ok = TRUE, any.missing = FALSE)
-  checkmate::check_subset(names(apc_range), choices = c("age","period","cohort"))
-  checkmate::check_list(age_groups)
-  checkmate::check_list(period_groups)
-  checkmate::check_list(cohort_groups)
-  checkmate::check_numeric(y_var_breaks, lower = 1, null.ok = TRUE)
-  checkmate::check_character(weights_var, max.len = 1, null.ok = TRUE)
-  checkmate::check_logical(log_scale, len = 1)
-  checkmate::check_character(xlab, len = 1, null.ok = TRUE)
-  checkmate::check_character(ylab, len = 1, null.ok = TRUE)
-  checkmate::check_character(legend_title, max.len = 1, null.ok = TRUE)
+  checkmate::assert_data_frame(dat)
+  checkmate::assert_character(y_var, len = 1)
+  checkmate::assert_choice(plot_type, choices = c("density","boxplot"))
+  checkmate::assert_list(apc_range, types = "character", max.len = 3,
+                         null.ok = TRUE, any.missing = FALSE)
+  checkmate::assert_subset(names(apc_range), choices = c("age","period","cohort"))
+  checkmate::assert_list(age_groups)
+  checkmate::assert_list(period_groups)
+  checkmate::assert_list(cohort_groups)
+  checkmate::assert_numeric(y_var_breaks, lower = 1, null.ok = TRUE)
+  checkmate::assert_character(weights_var, max.len = 1, null.ok = TRUE)
+  checkmate::assert_logical(log_scale, len = 1)
+  checkmate::assert_character(xlab, len = 1, null.ok = TRUE)
+  checkmate::assert_character(ylab, len = 1, null.ok = TRUE)
+  checkmate::assert_character(legend_title, max.len = 1, null.ok = TRUE)
   
   dat$cohort <- dat$period - dat$age
   

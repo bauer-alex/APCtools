@@ -8,6 +8,9 @@ plot_density_metric(
   dat,
   y_var,
   plot_type = "density",
+  age_groups = NULL,
+  period_groups = NULL,
+  cohort_groups = NULL,
   y_var_breaks = NULL,
   weights_var = NULL,
   log_scale = FALSE,
@@ -25,6 +28,24 @@ main variable specified through argument \code{y_var}.}
 
 \item{plot_type}{One of \code{c("density","boxplot")}. Only used if the
 \code{y_var} column is metric.}
+
+\item{age_groups}{Arguments to create a density
+matrix based on \code{plot_density}. See \code{\link{plot_densityMatrix}}
+for details. If specified, the final plot will be created based on a dataset
+for which the age, period and/or cohort groups were first created, s.t.
+faceting can eventually be applied in \code{plot_densityMatrix}.}
+
+\item{period_groups}{Arguments to create a density
+matrix based on \code{plot_density}. See \code{\link{plot_densityMatrix}}
+for details. If specified, the final plot will be created based on a dataset
+for which the age, period and/or cohort groups were first created, s.t.
+faceting can eventually be applied in \code{plot_densityMatrix}.}
+
+\item{cohort_groups}{Arguments to create a density
+matrix based on \code{plot_density}. See \code{\link{plot_densityMatrix}}
+for details. If specified, the final plot will be created based on a dataset
+for which the age, period and/or cohort groups were first created, s.t.
+faceting can eventually be applied in \code{plot_densityMatrix}.}
 
 \item{y_var_breaks}{Optional numeric vector of breaks to categorize
 \code{y_var} based on calling function \code{\link{cut}}. Only used to

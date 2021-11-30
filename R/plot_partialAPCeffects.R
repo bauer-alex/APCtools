@@ -49,11 +49,11 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
                                    hide_partialEffects = FALSE,
                                    return_plotData = FALSE) {
   
-  checkmate::check_class(model, classes = "gam")
-  checkmate::check_data_frame(dat)
-  checkmate::check_choice(variable, choices = c("age","period","cohort"))
-  checkmate::check_logical(hide_partialEffects)
-  checkmate::check_logical(return_plotData)
+  checkmate::assert_class(model, classes = "gam")
+  checkmate::assert_data_frame(dat)
+  checkmate::assert_choice(variable, choices = c("age","period","cohort"))
+  checkmate::assert_logical(hide_partialEffects)
+  checkmate::assert_logical(return_plotData)
   
   
   # create a dataset for predicting the values of the APC surface

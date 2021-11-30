@@ -16,9 +16,9 @@
 #' 
 plot_variable <- function(dat, variable, apc_dimension = "period") {
   
-  checkmate::check_data_frame(dat)
-  checkmate::check_choice(variable, choices = names(dat))
-  checkmate::check_choice(apc_dimension, choices = c("age","period","cohort"))
+  checkmate::assert_data_frame(dat)
+  checkmate::assert_choice(variable, choices = names(dat))
+  checkmate::assert_choice(apc_dimension, choices = c("age","period","cohort"))
   
   
   var_class <- ifelse(class(dat[[variable]]) %in% c("character","factor"),

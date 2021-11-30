@@ -17,8 +17,8 @@
 #' 
 create_covariateSummary <- function(model_list, digits = 2, ...) {
   
-  checkmate::check_list(model_list, types = "gam")
-  checkmate::check_number(digits, lower = 0)
+  checkmate::assert_list(model_list, types = "gam")
+  checkmate::assert_number(digits, lower = 0)
   
   
   # retrieve model labels
@@ -80,7 +80,7 @@ create_covariateSummary <- function(model_list, digits = 2, ...) {
 #' 
 extract_summary_linearEffects <- function(model) {
   
-  checkmate::check_class(model, classes = "gam")
+  checkmate::assert_class(model, classes = "gam")
   
   
   used_logLink <- model$family[[2]] %in% c("log","logit")

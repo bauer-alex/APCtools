@@ -9,6 +9,9 @@ plot_density(
   y_var,
   plot_type = "density",
   apc_range = NULL,
+  age_groups = NULL,
+  period_groups = NULL,
+  cohort_groups = NULL,
   y_var_breaks = NULL,
   weights_var = NULL,
   log_scale = FALSE,
@@ -31,6 +34,12 @@ main variable specified through argument \code{y_var}.}
 \code{"age","period","cohort"} to filter the data. Each element should
 contain a numeric vector of values for the respective variable that should
 be kept in the data. All other values are deleted.}
+
+\item{age_groups, period_groups, cohort_groups}{Arguments to create a density
+matrix based on \code{plot_density}. See \code{\link{plot_densityMatrix}}
+for details. If specified, the final plot will be created based on a dataset
+for which the age, period and/or cohort groups were first created, s.t.
+faceting can eventually be applied in \code{plot_densityMatrix}.}
 
 \item{y_var_breaks}{Optional numeric vector of breaks to categorize
 \code{y_var} based on calling function \code{\link{cut}}. Only used to

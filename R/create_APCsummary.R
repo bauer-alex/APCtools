@@ -19,9 +19,9 @@
 #' 
 create_APCsummary <- function(model_list, dat, digits = 2, ...) {
   
-  checkmate::check_list(model_list, types = "gam")
-  checkmate::check_data_frame(dat)
-  checkmate::check_number(digits, lower = 0)
+  checkmate::assert_list(model_list, types = "gam")
+  checkmate::assert_data_frame(dat)
+  checkmate::assert_number(digits, lower = 0)
   
   
   # retrieve model labels
@@ -59,8 +59,8 @@ create_APCsummary <- function(model_list, dat, digits = 2, ...) {
 #' 
 create_oneAPCsummaryTable <- function(model, dat) {
   
-  checkmate::check_class(model, classes = "gam")
-  checkmate::check_data_frame(dat)
+  checkmate::assert_class(model, classes = "gam")
+  checkmate::assert_data_frame(dat)
   
   # retrieve datasets with the marginal effects
   dat_list <- plot_marginalAPCeffects(model, dat, return_plotData = TRUE)

@@ -21,11 +21,11 @@
 plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
                           ylim = NULL) {
   
-  checkmate::check_class(model, classes = "gam")
-  checkmate::check_logical(plot_ci)
-  checkmate::check_numeric(select, lower = 1)
-  checkmate::check_numeric(alpha, lower = 0, upper = 1)
-  checkmate::check_numeric(ylim, len = 2, null.ok = TRUE)
+  checkmate::assert_class(model, classes = "gam")
+  checkmate::assert_logical(plot_ci)
+  checkmate::assert_numeric(select, lower = 1)
+  checkmate::assert_numeric(alpha, lower = 0, upper = 1)
+  checkmate::assert_numeric(ylim, len = 2, null.ok = TRUE)
   
   
   used_logLink <- model$family[[2]] %in% c("log","logit")
@@ -93,7 +93,7 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
 #' 
 get_plotGAMobject <- function(model) {
   
-  checkmate::check_class(model, classes = "gam")
+  checkmate::assert_class(model, classes = "gam")
   
   
   # Idea: Save the plot in a temporal png file, which is deleted right
