@@ -8,13 +8,13 @@ plot_density_categorical(
   dat,
   y_var,
   weights_var = NULL,
-  xlab = y_var,
+  xlab = NULL,
   ylab = "Density"
 )
 }
 \arguments{
 \item{dat}{Dataset with columns \code{period} and \code{age} and the
-main variable specified through argument \code{yvar}.}
+main variable specified through argument \code{y_var}.}
 
 \item{y_var}{Character name of the main variable to be plotted.}
 

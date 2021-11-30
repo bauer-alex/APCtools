@@ -7,10 +7,11 @@
 plot_density_metric(
   dat,
   y_var,
+  plot_type = "density",
   y_var_breaks = NULL,
   weights_var = NULL,
   log_scale = FALSE,
-  xlab = y_var,
+  xlab = NULL,
   ylab = "Density",
   legend_title = NULL,
   ...
@@ -18,9 +19,12 @@ plot_density_metric(
 }
 \arguments{
 \item{dat}{Dataset with columns \code{period} and \code{age} and the
-main variable specified through argument \code{yvar}.}
+main variable specified through argument \code{y_var}.}
 
 \item{y_var}{Character name of the main variable to be plotted.}
+
+\item{plot_type}{One of \code{c("density","boxplot")}. Only used if the
+\code{y_var} column is metric.}
 
 \item{y_var_breaks}{Optional numeric vector of breaks to categorize
 \code{y_var} based on calling function \code{\link{cut}}. Only used to

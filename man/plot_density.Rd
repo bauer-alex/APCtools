@@ -7,11 +7,12 @@
 plot_density(
   dat,
   y_var,
+  plot_type = "density",
   apc_range = NULL,
   y_var_breaks = NULL,
   weights_var = NULL,
   log_scale = FALSE,
-  xlab = y_var,
+  xlab = NULL,
   ylab = "Density",
   legend_title = NULL,
   ...
@@ -19,9 +20,12 @@ plot_density(
 }
 \arguments{
 \item{dat}{Dataset with columns \code{period} and \code{age} and the
-main variable specified through argument \code{yvar}.}
+main variable specified through argument \code{y_var}.}
 
 \item{y_var}{Character name of the main variable to be plotted.}
+
+\item{plot_type}{One of \code{c("density","boxplot")}. Only used if the
+\code{y_var} column is metric.}
 
 \item{apc_range}{Optional list with one or multiple elements with names
 \code{"age","period","cohort"} to filter the data. Each element should
@@ -44,6 +48,6 @@ Only used if the \code{y_var} column is numeric.}
 \item{...}{Additional arguments passed to \code{\link[stats]{density}}.}
 }
 \description{
-Create a density plot of one metric or categorical variable, based on a
-specific subset of the data.
+Create a density plot or a boxplot of one metric variable or a barplot
+of one categorical variable, based on a specific subset of the data.
 }

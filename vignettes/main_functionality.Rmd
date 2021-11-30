@@ -53,18 +53,24 @@ plot_variable(dat = data_RA, variable = "S_Haushaltsgroesse", apc_dimension = "p
 ### Ridgeline matrix for metric and categorical variables
 
 ```{r ridgeline matrix}
-load_all()
-plot_density(data_RA, y_var = "JS_HUR_Reisedistanz", log_scale = TRUE)
+plot_density(data_RA, y_var = "JS_HUR_Reisedistanz", log_scale = TRUE, weights_var = "G_Gewichtung")
 plot_density(data_RA, y_var = "JS_HUR_Reisedistanz",
-             y_var_breaks = c(1,1000,5000,20000),
+             y_var_breaks = c(1,1000,5000,25000),
              weights_var = "G_Gewichtung", log_scale = TRUE)
+plot_density(data_RA, y_var = "JS_HUR_Reisedistanz", log_scale = TRUE, plot_type = "boxplot", weights_var = "G_Gewichtung")
+
 plot_density(data_RA, y_var = "S_Haushaltsgroesse")
 plot_density(data_RA, y_var = "S_Haushaltsgroesse", weights_var = "G_Gewichtung")
 
-# plot_ridgeline(data_RA, y_var = "JS_HUR_Reisedistanz")
-# plot_ridgelineMatrix(data_RA)
-# TODO metric
-# TODO categorical
+plot_densityMatrix(data_RA, y_var = "JS_HUR_Reisedistanz",
+                   age_groups     = list("jung" = c(20,29), "mittelalt" = c(30,39), "alt" = c(40,49)),
+                   period_groups  = list(c(1990,1999), c(2000,2009), c(2010,2019)))
+plot_densityMatrix(data_RA, y_var = "JS_HUR_Reisedistanz", plot_type = "boxplot",
+                   age_groups     = list("jung" = c(20,29), "mittelalt" = c(30,39), "alt" = c(40,49)),
+                   period_groups  = list(c(1990,1999), c(2000,2009), c(2010,2019)))
+plot_densityMatrix(data_RA, y_var = "S_Haushaltsgroesse",
+                   age_groups     = list("jung" = c(20,29), "mittelalt" = c(30,39), "alt" = c(40,49)),
+                   period_groups  = list(c(1990,1999), c(2000,2009), c(2010,2019)))
 ```
 
 
