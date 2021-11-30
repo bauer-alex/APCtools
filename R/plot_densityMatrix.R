@@ -14,7 +14,9 @@
 #' specifying the borders of one row or column in the density matrix. E.g., if
 #' the period should be visualized in decade columns from 1980 to 2009, specify
 #' \code{period_groups = list(c(1980,1989), c(1990,1999), c(2000,2009))}.
-#' The list can be named to specify labels for the categories.
+#' The list can be named to specify labels for the categories. Only the two
+#' arguments should be passed that were specified by the \code{dimensions}
+#' argument.
 #' @param ... Additional arguments passed to \code{\link{plot_density}}.
 #' 
 #' @import checkmate dplyr ggplot2
@@ -24,20 +26,20 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
                                age_groups = NULL, period_groups = NULL,
                                cohort_groups = NULL, y_var, plot_type = "density",
                                y_var_breaks = NULL, weights_var = NULL,
-                               log_scale = TRUE, ...) {
+                               log_scale = FALSE, ...) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_character(dimensions, len = 2)
-  checkmate::assert_choice(dimensions, choices = c("age","period","cohort"))
+  checkmate::assert_subset(dimensions, choices = c("age","period","cohort"))
   if ("age" %in% dimensions) {
     checkmate::assert_list(age_groups, null.ok = FALSE)
-  }
+  } else { checkmate::assert_null(age_groups) }
   if ("period" %in% dimensions) {
     checkmate::assert_list(period_groups, null.ok = FALSE)
-  }
+  } else { checkmate::assert_null(period_groups) }
   if ("cohort" %in% dimensions) {
     checkmate::assert_list(cohort_groups, null.ok = FALSE)
-  }
+  } else { checkmate::assert_null(cohort_groups) }
   checkmate::assert_character(y_var, len = 1)
   checkmate::assert_logical(log_scale)
   
@@ -74,18 +76,16 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
   gg <- plot_density(dat           = dat,
                      y_var         = y_var,
                      plot_type     = plot_type,
-                     age_groups    = age_groups,
-                     period_groups = period_groups,
-                     cohort_groups = cohort_groups,
                      y_var_breaks  = y_var_breaks,
                      weights_var   = weights_var,
                      log_scale     = log_scale,
                      ...) +
     facet_grid(facets = facet_formula, switch = "y") +
     labs(subtitle = xlab, x = main_lab, y = ylab) +
-    theme(axis.text.y   = element_blank(),
-          axis.ticks.y  = element_blank(),
-          plot.subtitle = element_text(hjust = 0.5))
+    theme(axis.text.y       = element_blank(),
+          axis.ticks.y      = element_blank(),
+          plot.subtitle     = element_text(hjust = 0.5),
+          strip.text.y.left = element_text(angle = 0))
   
   return(gg)
 }

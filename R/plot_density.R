@@ -4,6 +4,11 @@
 #' Create a density plot or a boxplot of one metric variable or a barplot
 #' of one categorical variable, based on a specific subset of the data.
 #' 
+#' If \code{plot_density} is called internally from within
+#' \code{\link{plot_densityMatrix}} (i.e., if the dataset contains some of the
+#' columns \code{c("age_group","period_group","cohort_group")}), this function
+#' will calculate the metric densities individually for these groups.
+#' 
 #' @param dat Dataset with columns \code{period} and \code{age} and the
 #' main variable specified through argument \code{y_var}.
 #' @param y_var Character name of the main variable to be plotted.
@@ -13,11 +18,6 @@
 #' \code{"age","period","cohort"} to filter the data. Each element should
 #' contain a numeric vector of values for the respective variable that should
 #' be kept in the data. All other values are deleted.
-#' @param age_groups,period_groups,cohort_groups Arguments to create a density
-#' matrix based on \code{plot_density}. See \code{\link{plot_densityMatrix}}
-#' for details. If specified, the final plot will be created based on a dataset
-#' for which the age, period and/or cohort groups were first created, s.t.
-#' faceting can eventually be applied in \code{plot_densityMatrix}.
 #' @param y_var_breaks Optional numeric vector of breaks to categorize
 #' \code{y_var} based on calling function \code{\link{cut}}. Only used to
 #' highlight the categories based on different colors. And only used if the
@@ -33,7 +33,6 @@
 #' @export
 #' 
 plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
-                         age_groups = NULL, period_groups = NULL, cohort_groups = NULL,
                          y_var_breaks = NULL, weights_var = NULL,
                          log_scale = FALSE, xlab = NULL, ylab = "Density",
                          legend_title = NULL, ...) {
@@ -44,15 +43,13 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
   checkmate::assert_list(apc_range, types = "character", max.len = 3,
                          null.ok = TRUE, any.missing = FALSE)
   checkmate::assert_subset(names(apc_range), choices = c("age","period","cohort"))
-  checkmate::assert_list(age_groups)
-  checkmate::assert_list(period_groups)
-  checkmate::assert_list(cohort_groups)
   checkmate::assert_numeric(y_var_breaks, lower = 1, null.ok = TRUE)
   checkmate::assert_character(weights_var, max.len = 1, null.ok = TRUE)
   checkmate::assert_logical(log_scale, len = 1)
   checkmate::assert_character(xlab, len = 1, null.ok = TRUE)
   checkmate::assert_character(ylab, len = 1, null.ok = TRUE)
   checkmate::assert_character(legend_title, max.len = 1, null.ok = TRUE)
+  
   
   dat$cohort <- dat$period - dat$age
   
@@ -77,18 +74,15 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
   
   # main plot
   if (is.numeric(dat[[y_var]])) { # metric variable
-    gg <- plot_density_metric(dat           = dat,
-                              y_var         = y_var,
-                              plot_type     = plot_type,
-                              age_groups    = age_groups, 
-                              period_groups = period_groups,
-                              cohort_groups = cohort_groups,
-                              y_var_breaks  = y_var_breaks,
-                              weights_var   = weights_var,
-                              log_scale     = log_scale,
-                              xlab          = xlab,
-                              ylab          = ylab,
-                              legend_title  = legend_title,
+    gg <- plot_density_metric(dat          = dat,
+                              y_var        = y_var,
+                              plot_type    = plot_type,
+                              y_var_breaks = y_var_breaks,
+                              weights_var  = weights_var,
+                              log_scale    = log_scale,
+                              xlab         = xlab,
+                              ylab         = ylab,
+                              legend_title = legend_title,
                               ...)
     
   } else { # categorical variable
@@ -115,7 +109,6 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
 #' @import dplyr ggplot2
 #' 
 plot_density_metric <- function(dat, y_var, plot_type = "density", 
-                                age_groups = NULL, period_groups = NULL, cohort_groups = NULL,
                                 y_var_breaks = NULL, weights_var = NULL,
                                 log_scale = FALSE,  xlab = NULL,
                                 ylab = "Density", legend_title = NULL, ...) {
@@ -141,20 +134,11 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
   
   # final plot type-specific preparations
   if (plot_type == "density") {
-    # calculate the density
-    weights_vector <- NULL
-    if (!is.null(weights_var)) {
-      # make sure the weights are not NA
-      if (any(is.na(dat[[weights_var]]))) {
-        warning("Deleting ",sum(is.na(dat[[weights_var]])), " observations where the weights variable is NA.")
-        dat <- dat[!is.na(dat[[weights_var]]),]
-      }
-      
-      weights_vector <- dat[[weights_var]]
-    }
-    dens <- stats::density(x       = dat[[y_var]],
-                           weights = weights_vector, ...)
-    dat_dens <- data.frame(x = dens$x, y = dens$y)
+    
+    dat_dens <- calc_density(dat         = dat,
+                             y_var       = y_var,
+                             weights_var = weights_var,
+                             ...)
     
     # categorize y_var
     if (!is.null(y_var_breaks)) {
@@ -241,4 +225,84 @@ plot_density_categorical <- function(dat, y_var, weights_var = NULL,
     xlab(xlab) + ylab(ylab)
   
   return(gg)
+}
+
+
+
+#' Internal helper to calculate the (group-specific) density of a variable
+#' 
+#' Internal helper function that is called in \code{\link{plot_density}} to
+#' calculate the density of a metric variable. If \code{plot_density} is called
+#' from within \code{\link{plot_densityMatrix}} (i.e., when some of the columns
+#' \code{c("age_group","period_group","cohort_group")} are part of the dataset,
+#' the density is computed individually for all respective APC groups.
+#' 
+#' @inheritParams plot_density
+#' 
+#' @return Dataset with the calculated densities.
+#' 
+#' @import dplyr
+#' @importFrom stats density
+#' 
+calc_density <- function(dat, y_var, weights_var = NULL, ...) {
+
+  # retrieve the weights vector
+  weights_vector <- NULL
+  if (!is.null(weights_var)) {
+    # make sure the weights are not NA
+    if (any(is.na(dat[[weights_var]]))) {
+      warning("Deleting ",sum(is.na(dat[[weights_var]])), " observations where the weights variable is NA.")
+      dat <- dat[!is.na(dat[[weights_var]]),]
+    }
+    
+    weights_vector <- dat[[weights_var]]
+  }
+
+  
+  # calculate the densities
+  if (all(!(c("age_group","period_group","cohort_group") %in% names(dat)))) { # calculate one global density
+    
+    dens <- stats::density(x       = dat[[y_var]],
+                           weights = weights_vector, ...)
+    dat_dens <- data.frame(x = dens$x, y = dens$y)
+    
+  } else { # calculate one density for each APC subgroup
+    
+    dimensions <- c()
+    if ("age_group" %in% names(dat)) {    dimensions <- append(dimensions, "age_group") }
+    if ("period_group" %in% names(dat)) { dimensions <- append(dimensions, "period_group") }
+    if ("cohort_group" %in% names(dat)) { dimensions <- append(dimensions, "cohort_group") }
+    
+    # 'dimensions' always has two elements only when called from within 'plot_densityMatrix'
+    dim1_categories <- unique(dat[[dimensions[1]]])
+    dim2_categories <- unique(dat[[dimensions[2]]])
+    
+    dat_list1 <- lapply(dim1_categories, function(dim1_cat) {
+      
+      dat_list12 <- lapply(dim2_categories, function(dim2_cat) {
+        dim12_rows <- which(dat[[dimensions[1]]] == dim1_cat &
+                              dat[[dimensions[2]]] == dim2_cat)
+        
+        if (length(dim12_rows) < 2) { # return nothing if the combination is not part of the data
+          return(NULL)
+        }
+        
+        dens <- stats::density(x       = dat[dim12_rows, y_var, drop = TRUE],
+                               weights = weights_vector[dim12_rows], ...)
+        dat_dens12 <- data.frame(x = dens$x, y = dens$y, dim1 = dim1_cat, dim2 = dim2_cat)
+        
+        return(dat_dens12)
+      })
+      
+      dat_dens1 <- dplyr::bind_rows(dat_list12)
+      
+      return(dat_dens1)
+    })
+    
+    dat_dens <- dplyr::bind_rows(dat_list1)
+    colnames(dat_dens)[colnames(dat_dens) == "dim1"] <- dimensions[1]
+    colnames(dat_dens)[colnames(dat_dens) == "dim2"] <- dimensions[2]
+  }
+  
+  return(dat_dens)
 }

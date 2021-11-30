@@ -14,7 +14,7 @@ plot_densityMatrix(
   plot_type = "density",
   y_var_breaks = NULL,
   weights_var = NULL,
-  log_scale = TRUE,
+  log_scale = FALSE,
   ...
 )
 }
@@ -30,7 +30,9 @@ should be visualized along the x-axis and y-axis. Defaults to
 specifying the borders of one row or column in the density matrix. E.g., if
 the period should be visualized in decade columns from 1980 to 2009, specify
 \code{period_groups = list(c(1980,1989), c(1990,1999), c(2000,2009))}.
-The list can be named to specify labels for the categories.}
+The list can be named to specify labels for the categories. Only the two
+arguments should be passed that were specified by the \code{dimensions}
+argument.}
 
 \item{y_var}{Character name of the main variable to be plotted.}
 

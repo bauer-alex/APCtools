@@ -9,9 +9,6 @@ plot_density(
   y_var,
   plot_type = "density",
   apc_range = NULL,
-  age_groups = NULL,
-  period_groups = NULL,
-  cohort_groups = NULL,
   y_var_breaks = NULL,
   weights_var = NULL,
   log_scale = FALSE,
@@ -35,12 +32,6 @@ main variable specified through argument \code{y_var}.}
 contain a numeric vector of values for the respective variable that should
 be kept in the data. All other values are deleted.}
 
-\item{age_groups, period_groups, cohort_groups}{Arguments to create a density
-matrix based on \code{plot_density}. See \code{\link{plot_densityMatrix}}
-for details. If specified, the final plot will be created based on a dataset
-for which the age, period and/or cohort groups were first created, s.t.
-faceting can eventually be applied in \code{plot_densityMatrix}.}
-
 \item{y_var_breaks}{Optional numeric vector of breaks to categorize
 \code{y_var} based on calling function \code{\link{cut}}. Only used to
 highlight the categories based on different colors. And only used if the
@@ -59,4 +50,10 @@ Only used if the \code{y_var} column is numeric.}
 \description{
 Create a density plot or a boxplot of one metric variable or a barplot
 of one categorical variable, based on a specific subset of the data.
+}
+\details{
+If \code{plot_density} is called internally from within
+\code{\link{plot_densityMatrix}} (i.e., if the dataset contains some of the
+columns \code{c("age_group","period_group","cohort_group")}), this function
+will calculate the metric densities individually for these groups.
 }
