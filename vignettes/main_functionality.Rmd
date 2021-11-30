@@ -113,12 +113,6 @@ APCtools::plot_APCheatmap(model_pure, dat = data_RA)
 # TODO
 ```
 
-### 3D plot of the heatmap
-
-```{r}
-# TODO
-```
-
 ### Overview table
 
 ```{r}

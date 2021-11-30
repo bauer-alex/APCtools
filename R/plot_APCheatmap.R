@@ -47,14 +47,15 @@ plot_APCheatmap <- function(model, dat, angle = 15, plot_CI = TRUE) {
   
   prediction <- dat_predictionGrid %>% 
     predict(object  = model,
-            newdata = ,
+            newdata = .,
             type    = "terms",
             terms   = term_APCsurface,
             se.fit  = TRUE) 
   plot_dat <- dat_predictionGrid %>%
     mutate(effect = prediction$fit, se = prediction$se.fit) %>% 
     mutate(effect = effect - mean(effect)) %>% 
-    mutate(upper = effect + qnorm(0.95) * se, lower = effect - qnorm(0.95) * se)
+    mutate(upper  = effect + qnorm(0.95) * se,
+           lower  = effect - qnorm(0.95) * se)
   
   used_logLink <- model$family[[2]] %in% c("log","logit")
   if (used_logLink) {
