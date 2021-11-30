@@ -36,9 +36,12 @@ plot_variable <- function(dat, variable, apc_dimension = "period") {
   } else { # var_class == "metric"
     
     gg <- ggplot(dat, aes_string(x = apc_dimension, y = variable)) + 
-      geom_boxplot() +
-      theme(axis.text.x = element_text(angle = 90))
+      geom_boxplot()
   }
+  
+  # final edits
+  gg <- gg +
+    theme(axis.text.x = element_text(angle = 90))
   
   return(gg)
 }
