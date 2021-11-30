@@ -9,6 +9,7 @@ plot_density_metric(
   y_var,
   y_var_breaks = NULL,
   weights_var = NULL,
+  log_scale = FALSE,
   xlab = y_var,
   ylab = "Density",
   legend_title = NULL,
@@ -28,6 +29,9 @@ highlight the categories based on different colors. And only used if the
 
 \item{weights_var}{Optional character name of a weights variable used to
 project the results in the sample to some population.}
+
+\item{log_scale}{Indicator if the main variable should be log10 transformed.
+Only used if the \code{y_var} column is numeric.}
 
 \item{xlab}{Optional plot annotations.}
 

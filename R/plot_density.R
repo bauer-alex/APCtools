@@ -17,6 +17,8 @@
 #' \code{y_var} column is numeric.
 #' @param weights_var Optional character name of a weights variable used to
 #' project the results in the sample to some population.
+#' @param log_scale Indicator if the main variable should be log10 transformed.
+#' Only used if the \code{y_var} column is numeric.
 #' @param xlab,ylab,legend_title Optional plot annotations.
 #' @param ... Additional arguments passed to \code{\link[stats]{density}}.
 #' 
@@ -24,7 +26,7 @@
 #' @export
 #' 
 plot_density <- function(dat, y_var, apc_range = NULL, y_var_breaks = NULL,
-                         weights_var = NULL, xlab = y_var,
+                         weights_var = NULL, log_scale = FALSE, xlab = NULL,
                          ylab = "Density", legend_title = NULL, ...) {
   
   checkmate::check_data_frame(dat)
@@ -34,8 +36,9 @@ plot_density <- function(dat, y_var, apc_range = NULL, y_var_breaks = NULL,
   checkmate::check_subset(names(apc_range), choices = c("age","period","cohort"))
   checkmate::check_numeric(y_var_breaks, lower = 1, null.ok = TRUE)
   checkmate::check_character(weights_var, max.len = 1, null.ok = TRUE)
-  checkmate::check_character(xlab, max.len = 1)
-  checkmate::check_character(ylab, max.len = 1)
+  checkmate::check_logical(log_scale, len = 1)
+  checkmate::check_character(xlab, len = 1, null.ok = TRUE)
+  checkmate::check_character(ylab, len = 1, null.ok = TRUE)
   checkmate::check_character(legend_title, max.len = 1, null.ok = TRUE)
   
   dat$cohort <- dat$period - dat$age
@@ -149,8 +152,8 @@ plot_density <- function(dat, y_var, apc_range = NULL, y_var_breaks = NULL,
   #                axis.title.x = element_text(margin = margin(10, 0, 0, 0)))
   
   if (is.numeric(dat[[y_var]])) { # metric variable
-    gg <- plot_density_metric(dat, y_var, y_var_breaks, weights_var, xlab, ylab,
-                              legend_title, ...)
+    gg <- plot_density_metric(dat, y_var, y_var_breaks, weights_var, log_scale,
+                              xlab, ylab, legend_title, ...)
   } else { # categorical variable
     gg <- plot_density_categorical(dat, y_var, weights_var, xlab, ylab, ...)
   }
@@ -193,8 +196,23 @@ plot_density <- function(dat, y_var, apc_range = NULL, y_var_breaks = NULL,
 #' @import dplyr ggplot2
 #' 
 plot_density_metric <- function(dat, y_var, y_var_breaks = NULL,
-                                weights_var = NULL, xlab = y_var,
-                                ylab = "Density", legend_title = NULL, ...) {
+                                weights_var = NULL, log_scale = FALSE, 
+                                xlab = NULL, ylab = "Density",
+                                legend_title = NULL, ...) {
+  
+  # log10 transform the main variable, and create a function to accordingly
+  # adjust the labels on the x axis (the function is passed to scale_x_continuous())
+  if (log_scale) {
+    dat[[y_var]] <- log10(dat[[y_var]])
+    if (!is.null(y_var_breaks)) {
+      y_var_breaks <- log10(y_var_breaks)
+    }
+    
+    label_function <- function(x) { paste0("10^",x) }
+    
+  } else { # no log transformation
+    label_function <- function(x) { x } # identity function
+  }
   
   # calculate the density
   weights_vector <- NULL
@@ -214,10 +232,14 @@ plot_density_metric <- function(dat, y_var, y_var_breaks = NULL,
   # categorize y_var
   if (!is.null(y_var_breaks)) {
     dat_dens <- dat_dens %>% 
-      mutate(x_cat = cut(x, breaks = y_var_breaks, dig.lab = 10))
+      mutate(x_cat = cut(x, breaks = y_var_breaks, dig.lab = 6))
   }
   
+  # final plot preparations
   xlim <- range(dat_dens$x)
+  if (is.null(xlab)) {
+    xlab <- ifelse(!log_scale, y_var, paste(y_var, "on log10 scale"))
+  }
   
   # main plot
   gg <- ggplot(data = dat_dens, aes(x = x, y = y)) +
@@ -231,9 +253,9 @@ plot_density_metric <- function(dat, y_var, y_var_breaks = NULL,
   
   gg <- gg +
     xlab(xlab) + ylab(ylab) + labs(fill = legend_title) + xlim(xlim) +
-    scale_fill_brewer(palette = "Blues", direction = -1) + #theme +
+    scale_fill_brewer(palette = "Blues", direction = -1) +
+    scale_x_continuous(labels = label_function) +
     theme(axis.text.y = element_blank(), axis.ticks.y = element_blank()) +
-    # guides(fill = guide_legend(nrow = 2)) +
     theme(legend.position = "bottom")
   
   return(gg)
@@ -251,7 +273,7 @@ plot_density_metric <- function(dat, y_var, y_var_breaks = NULL,
 #' @import dplyr ggplot2
 #' 
 plot_density_categorical <- function(dat, y_var, weights_var = NULL,
-                                     xlab = y_var, ylab = "Density") {
+                                     xlab = NULL, ylab = "Density") {
   
   # make sure the main variable is encoded as factor
   dat <- dat %>% dplyr::rename(x = y_var) %>% mutate(x = factor(x))
@@ -261,6 +283,11 @@ plot_density_categorical <- function(dat, y_var, weights_var = NULL,
     dat <- dat %>% dplyr::rename(weight = weights_var)
   } else {
     dat$weight <- 1
+  }
+  
+  # final plot preparations
+  if (is.null(xlab)) {
+    xlab <- y_var
   }
   
   # main plot
