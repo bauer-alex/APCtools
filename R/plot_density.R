@@ -18,10 +18,14 @@
 #' \code{"age","period","cohort"} to filter the data. Each element should
 #' contain a numeric vector of values for the respective variable that should
 #' be kept in the data. All other values are deleted.
-#' @param y_var_breaks Optional numeric vector of breaks to categorize
+#' @param y_var_cat_breaks Optional numeric vector of breaks to categorize
 #' \code{y_var} based on calling function \code{\link{cut}}. Only used to
 #' highlight the categories based on different colors. And only used if the
 #' \code{y_var} column is numeric.
+#' @param y_var_cat_labels Optional character vector for the names of the
+#' categories that were defined based on \code{y_var_cat_breaks}. The length of
+#' this vector must be one shorter than \code{length(y_var_cat_breaks)}. Only
+#' used if the \code{y_var} column is numeric.
 #' @param weights_var Optional character name of a weights variable used to
 #' project the results in the sample to some population.
 #' @param log_scale Indicator if the main variable should be log10 transformed.
@@ -33,9 +37,9 @@
 #' @export
 #' 
 plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
-                         y_var_breaks = NULL, weights_var = NULL,
-                         log_scale = FALSE, xlab = NULL, ylab = "Density",
-                         legend_title = NULL, ...) {
+                         y_var_cat_breaks = NULL, y_var_cat_labels = NULL,
+                         weights_var = NULL, log_scale = FALSE, xlab = NULL,
+                         ylab = "Density", legend_title = NULL, ...) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_character(y_var, len = 1)
@@ -43,7 +47,9 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
   checkmate::assert_list(apc_range, types = "character", max.len = 3,
                          null.ok = TRUE, any.missing = FALSE)
   checkmate::assert_subset(names(apc_range), choices = c("age","period","cohort"))
-  checkmate::assert_numeric(y_var_breaks, lower = 1, null.ok = TRUE)
+  checkmate::assert_numeric(y_var_cat_breaks, null.ok = TRUE)
+  checkmate::assert_character(y_var_cat_labels, len = length(y_var_cat_breaks) - 1,
+                              null.ok = TRUE)
   checkmate::assert_character(weights_var, max.len = 1, null.ok = TRUE)
   checkmate::assert_logical(log_scale, len = 1)
   checkmate::assert_character(xlab, len = 1, null.ok = TRUE)
@@ -54,8 +60,8 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
   dat$cohort <- dat$period - dat$age
   
   # categorize the numeric response variable
-  if (!is.null(y_var_breaks) & is.numeric(dat[,y_var])) {
-    dat[,paste0(y_var, "_cat")] <- cut(dat[,y_var], breaks = y_var_breaks)
+  if (!is.null(y_var_cat_breaks) & is.numeric(dat[,y_var])) {
+    dat[,paste0(y_var, "_cat")] <- cut(dat[,y_var], breaks = y_var_cat_breaks)
   }
   
   # filter the dataset
@@ -74,15 +80,16 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
   
   # main plot
   if (is.numeric(dat[[y_var]])) { # metric variable
-    gg <- plot_density_metric(dat          = dat,
-                              y_var        = y_var,
-                              plot_type    = plot_type,
-                              y_var_breaks = y_var_breaks,
-                              weights_var  = weights_var,
-                              log_scale    = log_scale,
-                              xlab         = xlab,
-                              ylab         = ylab,
-                              legend_title = legend_title,
+    gg <- plot_density_metric(dat              = dat,
+                              y_var            = y_var,
+                              plot_type        = plot_type,
+                              y_var_cat_breaks = y_var_cat_breaks,
+                              y_var_cat_labels = y_var_cat_labels,
+                              weights_var      = weights_var,
+                              log_scale        = log_scale,
+                              xlab             = xlab,
+                              ylab             = ylab,
+                              legend_title     = legend_title,
                               ...)
     
   } else { # categorical variable
@@ -109,16 +116,16 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
 #' @import dplyr ggplot2
 #' 
 plot_density_metric <- function(dat, y_var, plot_type = "density", 
-                                y_var_breaks = NULL, weights_var = NULL,
-                                log_scale = FALSE,  xlab = NULL,
+                                y_var_cat_breaks = NULL, y_var_cat_labels = NULL,
+                                weights_var = NULL, log_scale = FALSE, xlab = NULL,
                                 ylab = "Density", legend_title = NULL, ...) {
   
   # log10 transform the main variable, and create a function to accordingly
   # adjust the labels on the x axis (the function is passed to scale_x_continuous())
   if (log_scale) {
     dat[[y_var]] <- log10(dat[[y_var]])
-    if (!is.null(y_var_breaks)) {
-      y_var_breaks <- log10(y_var_breaks)
+    if (!is.null(y_var_cat_breaks)) {
+      y_var_cat_breaks <- log10(y_var_cat_breaks)
     }
     
     label_function <- function(x) { paste0("10^",x) }
@@ -141,9 +148,10 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
                              ...)
     
     # categorize y_var
-    if (!is.null(y_var_breaks)) {
+    if (!is.null(y_var_cat_breaks)) {
       dat_dens <- dat_dens %>% 
-        mutate(x_cat = cut(x, breaks = y_var_breaks, dig.lab = 6))
+        mutate(x_cat = cut(x, breaks = y_var_cat_breaks,
+                           labels = y_var_cat_labels, dig.lab = 6))
     }
     
     # final plot preparations
@@ -153,7 +161,7 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     gg <- ggplot(data = dat_dens, aes(x = x, y = y)) +
       geom_line(col = gray(0.3))
     
-    if (!is.null(y_var_breaks)) {
+    if (!is.null(y_var_cat_breaks)) {
       gg <- gg + geom_ribbon(aes(ymin = 0, ymax = y, fill = x_cat))
     } else {
       gg <- gg + geom_ribbon(aes(ymin = 0, ymax = y), fill = gray(0.3))

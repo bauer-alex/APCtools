@@ -25,8 +25,8 @@
 plot_densityMatrix <- function(dat, dimensions = c("period","age"),
                                age_groups = NULL, period_groups = NULL,
                                cohort_groups = NULL, y_var, plot_type = "density",
-                               y_var_breaks = NULL, weights_var = NULL,
-                               log_scale = FALSE, ...) {
+                               y_var_cat_breaks = NULL, y_var_cat_labels = NULL,
+                               weights_var = NULL, log_scale = FALSE, ...) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_character(dimensions, len = 2)
@@ -41,6 +41,11 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
     checkmate::assert_list(cohort_groups, null.ok = FALSE)
   } else { checkmate::assert_null(cohort_groups) }
   checkmate::assert_character(y_var, len = 1)
+  checkmate::assert_choice(plot_type, choices = c("density","boxplot"))
+  checkmate::assert_numeric(y_var_cat_breaks, null.ok = TRUE)
+  checkmate::assert_character(y_var_cat_labels, len = length(y_var_cat_breaks) - 1,
+                              null.ok = TRUE)
+  checkmate::assert_character(weights_var, max.len = 1, null.ok = TRUE)
   checkmate::assert_logical(log_scale)
   
   
@@ -73,12 +78,13 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
                                     paste0(dimensions[1],"_group")))
   
   # create density matrix
-  gg <- plot_density(dat           = dat,
-                     y_var         = y_var,
-                     plot_type     = plot_type,
-                     y_var_breaks  = y_var_breaks,
-                     weights_var   = weights_var,
-                     log_scale     = log_scale,
+  gg <- plot_density(dat              = dat,
+                     y_var            = y_var,
+                     plot_type        = plot_type,
+                     y_var_cat_breaks = y_var_cat_breaks,
+                     y_var_cat_labels = y_var_cat_labels,
+                     weights_var      = weights_var,
+                     log_scale        = log_scale,
                      ...) +
     facet_grid(facets = facet_formula, switch = "y") +
     labs(subtitle = xlab, x = main_lab, y = ylab) +
