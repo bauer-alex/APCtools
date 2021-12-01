@@ -170,7 +170,7 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     if (!is.null(y_var_cat_breaks)) {
       gg <- gg + geom_ribbon(aes(ymin = 0, ymax = y, fill = x_cat))
     } else {
-      gg <- gg + geom_ribbon(aes(ymin = 0, ymax = y), fill = gray(0.3))
+      gg <- gg + geom_ribbon(aes(ymin = 0, ymax = y, fill = col_group))
     }
     
     gg <- gg +
@@ -289,6 +289,9 @@ calc_density <- function(dat, y_var, highlight_diagonals = NULL,
     if ("age_group" %in% names(dat)) {    dimensions <- append(dimensions, "age_group") }
     if ("period_group" %in% names(dat)) { dimensions <- append(dimensions, "period_group") }
     if ("cohort_group" %in% names(dat)) { dimensions <- append(dimensions, "cohort_group") }
+    diag_dimension <- ifelse(!("age_group" %in% names(dat)), "age groups",
+                             ifelse(!("period_group" %in% names(dat)), "periods",
+                                    "cohorts"))
     
     # create a data.frame from 'highlight_diagonals' for easier handling
     if (!is.null(highlight_diagonals)) {
@@ -316,13 +319,17 @@ calc_density <- function(dat, y_var, highlight_diagonals = NULL,
         
         dens <- stats::density(x       = dat[dim12_rows, y_var, drop = TRUE],
                                weights = weights_vector[dim12_rows], ...)
-        dat_dens12 <- data.frame(x    = dens$x,   y    = dens$y,
-                                 dim1 = dim1_categories[i1],
-                                 dim2 = dim2_categories[i2])
+        dat_dens12 <- data.frame(x         = dens$x,
+                                 y         = dens$y,
+                                 dim1      = dim1_categories[i1],
+                                 dim2      = dim2_categories[i2],
+                                 col_group = paste("other",diag_dimension)) # for 'highlight_diagonals'
         
         if (!is.null(highlight_diagonals)) {
-          # TODO create a column in dat_dens that marks the diagonals
-          stop("highlight_diagonals is still to implement")
+          col_group_row <- match(i1 + i2, diag_dat$diagonal)
+          if (!is.na(col_group_row)) {
+            dat_dens12$col_group <- diag_dat$label[col_group_row]
+          }
         }
         
         return(dat_dens12)
@@ -334,6 +341,8 @@ calc_density <- function(dat, y_var, highlight_diagonals = NULL,
     })
     
     dat_dens <- dplyr::bind_rows(dat_list1)
+    dat_dens$dim1 <- factor(dat_dens$dim1, levels = dim1_categories)
+    dat_dens$dim2 <- factor(dat_dens$dim2, levels = dim2_categories)
     colnames(dat_dens)[colnames(dat_dens) == "dim1"] <- dimensions[1]
     colnames(dat_dens)[colnames(dat_dens) == "dim2"] <- dimensions[2]
   }

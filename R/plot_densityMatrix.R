@@ -103,7 +103,8 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
     theme(axis.text.y       = element_blank(),
           axis.ticks.y      = element_blank(),
           plot.subtitle     = element_text(hjust = 0.5),
-          strip.text.y.left = element_text(angle = 0))
+          strip.text.y.left = element_text(angle = 0),
+          legend.position   = ifelse(is.null(highlight_diagonals), "none", "right"))
   
   return(gg)
 }
