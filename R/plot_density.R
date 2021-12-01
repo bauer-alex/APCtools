@@ -257,9 +257,11 @@ plot_density_categorical <- function(dat, y_var, dat_highlightDiagonals = NULL,
   
   # main plot
   gg <- gg +
-    geom_bar(data = dat, aes(x = x, y = ..count../sum(..count..), weight = weight),
-             fill = gray(0.3)) +
-    xlab(xlab) + ylab(ylab)
+    geom_bar(data = dat, aes(x = x, y = ..count../sum(..count..),
+                             weight = weight, fill = x)) +
+    scale_fill_brewer(capitalize_firstLetter(y_var), palette = "Set2") +
+    xlab(xlab) + ylab(ylab) +
+    theme(axis.text.x = element_blank())
   
   return(gg)
 }
