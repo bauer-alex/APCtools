@@ -81,6 +81,8 @@ plot_densityMatrix(dat              = data_RA,
                    log_scale        = TRUE,
                    y_var_cat_breaks = dist_cat_breaks,
                    y_var_cat_labels = dist_cat_labels,
+                   highlight_diagonals = list("born 1950 - 1959" = 8,
+                                              "born 1970 - 1979" = 10),
                    legend_title     = "Distance category")
 
 plot_densityMatrix(dat              = data_RA,
@@ -98,12 +100,16 @@ plot_densityMatrix(dat           = data_RA,
                    plot_type     = "boxplot",
                    age_groups    = age_groups,
                    period_groups = period_groups,
-                   log_scale     = TRUE)
+                   log_scale     = TRUE,
+                   highlight_diagonals = list("born 1950 - 1959" = 8,
+                                              "born 1970 - 1979" = 10))
 
-plot_densityMatrix(dat           = data_RA,
-                   y_var         = "S_Haushaltsgroesse",
-                   age_groups    = age_groups,
-                   period_groups = period_groups)
+plot_densityMatrix(dat                 = data_RA,
+                   y_var               = "S_Haushaltsgroesse",
+                   age_groups          = age_groups,
+                   period_groups       = period_groups,
+                   highlight_diagonals = list("born 1950 - 1959" = 8,
+                                              "born 1970 - 1979" = 10))
 ```
 
 

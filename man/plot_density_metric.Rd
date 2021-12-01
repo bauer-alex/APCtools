@@ -8,7 +8,7 @@ plot_density_metric(
   dat,
   y_var,
   plot_type = "density",
-  highlight_diagonals = NULL,
+  dat_highlightDiagonals = NULL,
   y_var_cat_breaks = NULL,
   y_var_cat_labels = NULL,
   weights_var = NULL,
@@ -28,9 +28,9 @@ main variable specified through argument \code{y_var}.}
 \item{plot_type}{One of \code{c("density","boxplot")}. Only used if the
 \code{y_var} column is metric.}
 
-\item{highlight_diagonals}{Optional internal parameter which is only
-specified when \code{plot_density} is called from within
-\code{plot_densityMatrix}. See \code{\link{plot_densityMatrix}} for details.}
+\item{dat_highlightDiagonals}{Optional dataset created by
+\code{\link{create_highlightDiagonalData}} to highlight specific diagonals
+in a density matrix.}
 
 \item{y_var_cat_breaks}{Optional numeric vector of breaks to categorize
 \code{y_var} based on calling function \code{\link{cut}}. Only used to

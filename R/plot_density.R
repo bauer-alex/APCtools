@@ -77,29 +77,33 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
     }
   }
 
+  # create a dataset to highlight specific diagonals
+  if (!is.null(highlight_diagonals)) {
+    dat_diag <- create_highlightDiagonalData(dat, highlight_diagonals)
+  } else { dat_diag <- NULL }
   
   # main plot
   if (is.numeric(dat[[y_var]])) { # metric variable
-    gg <- plot_density_metric(dat                 = dat,
-                              y_var               = y_var,
-                              plot_type           = plot_type,
-                              highlight_diagonals = highlight_diagonals,
-                              y_var_cat_breaks    = y_var_cat_breaks,
-                              y_var_cat_labels    = y_var_cat_labels,
-                              weights_var         = weights_var,
-                              log_scale           = log_scale,
-                              xlab                = xlab,
-                              ylab                = ylab,
-                              legend_title        = legend_title,
+    gg <- plot_density_metric(dat                    = dat,
+                              y_var                  = y_var,
+                              plot_type              = plot_type,
+                              dat_highlightDiagonals = dat_diag,
+                              y_var_cat_breaks       = y_var_cat_breaks,
+                              y_var_cat_labels       = y_var_cat_labels,
+                              weights_var            = weights_var,
+                              log_scale              = log_scale,
+                              xlab                   = xlab,
+                              ylab                   = ylab,
+                              legend_title           = legend_title,
                               ...)
     
   } else { # categorical variable
-    gg <- plot_density_categorical(dat                 = dat,
-                                   y_var               = y_var,
-                                   highlight_diagonals = highlight_diagonals,
-                                   weights_var         = weights_var,
-                                   xlab                = xlab,
-                                   ylab                = ylab,
+    gg <- plot_density_categorical(dat                    = dat,
+                                   y_var                  = y_var,
+                                   dat_highlightDiagonals = dat_diag,
+                                   weights_var            = weights_var,
+                                   xlab                   = xlab,
+                                   ylab                   = ylab,
                                    ...)
   }
   
@@ -114,11 +118,14 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
 #' \code{\link{plot_density}}.
 #' 
 #' @inheritParams plot_density
+#' @param dat_highlightDiagonals Optional dataset created by
+#' \code{\link{create_highlightDiagonalData}} to highlight specific diagonals
+#' in a density matrix.
 #' 
 #' @import dplyr ggplot2
 #' 
 plot_density_metric <- function(dat, y_var, plot_type = "density", 
-                                highlight_diagonals = NULL,
+                                dat_highlightDiagonals = NULL,
                                 y_var_cat_breaks = NULL, y_var_cat_labels = NULL,
                                 weights_var = NULL, log_scale = FALSE, xlab = NULL,
                                 ylab = "Density", legend_title = NULL, ...) {
@@ -144,13 +151,19 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     xlab      <- ifelse(!log_scale, y_var_cap, paste(y_var_cap, "on log10 scale"))
   }
   
+  # base plot
+  gg <- ggplot()
+  
+  if (!is.null(dat_highlightDiagonals)) {
+    gg <- gg_highlightDiagonals(gg, dat, dat_highlightDiagonals)
+  }
+  
   # final plot type-specific preparations
   if (plot_type == "density") {
     
-    dat_dens <- calc_density(dat                 = dat,
-                             y_var               = y_var,
-                             highlight_diagonals = highlight_diagonals,
-                             weights_var         = weights_var,
+    dat_dens <- calc_density(dat         = dat,
+                             y_var       = y_var,
+                             weights_var = weights_var,
                              ...)
     
     # categorize y_var
@@ -164,18 +177,17 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     xlim <- range(dat_dens$x)
     
     # main plot
-    gg <- ggplot(data = dat_dens, aes(x = x, y = y)) +
-      geom_line(col = gray(0.3))
-    
+    gg <- gg + geom_line(data = dat_dens, aes(x = x, y = y), col = gray(0.3))
+
     if (!is.null(y_var_cat_breaks)) {
-      gg <- gg + geom_ribbon(aes(ymin = 0, ymax = y, fill = x_cat))
+      gg <- gg + geom_ribbon(data = dat_dens, aes(x = x, ymin = 0, ymax = y, fill = x_cat)) +
+        scale_fill_brewer(palette = "Blues", direction = -1)
     } else {
-      gg <- gg + geom_ribbon(aes(ymin = 0, ymax = y, fill = col_group))
+      gg <- gg + geom_ribbon(data = dat_dens, aes(x = x, ymin = 0, ymax = y), fill = gray(0.3))
     }
     
     gg <- gg +
       ylab(ylab) + labs(fill = legend_title) + xlim(xlim) +
-      scale_fill_brewer(palette = "Blues", direction = -1) +
       theme(legend.position = "bottom")
     
   } else { # plot_type == "boxplot"
@@ -191,7 +203,8 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     dat <- dat %>% dplyr::rename(x = y_var)
     
     # main plot
-    gg <- ggplot(dat, aes(x, weight = weight)) + geom_boxplot()
+    gg <- gg + geom_boxplot(data = dat, aes(x = x, weight = weight))
+    
   }
   
   
@@ -211,11 +224,11 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
 #' Internal helper function to plot one categorical density, to be called from
 #' within \code{\link{plot_density}}.
 #' 
-#' @inheritParams plot_density
+#' @inheritParams plot_density_metric
 #' 
 #' @import dplyr ggplot2
 #' 
-plot_density_categorical <- function(dat, y_var, highlight_diagonals = NULL,
+plot_density_categorical <- function(dat, y_var, dat_highlightDiagonals = NULL,
                                      weights_var = NULL, xlab = NULL,
                                      ylab = "Density") {
   
@@ -235,117 +248,18 @@ plot_density_categorical <- function(dat, y_var, highlight_diagonals = NULL,
     xlab <- capitalize_firstLetter(y_var)
   }
   
+  # base plot
+  gg <- ggplot()
+  
+  if (!is.null(dat_highlightDiagonals)) {
+    gg <- gg_highlightDiagonals(gg, dat, dat_highlightDiagonals)
+  }
+  
   # main plot
-  gg <- ggplot(data = dat, aes(x = x, y = ..count../sum(..count..), weight = weight)) +
-    geom_bar(fill = gray(0.3)) +
+  gg <- gg +
+    geom_bar(data = dat, aes(x = x, y = ..count../sum(..count..), weight = weight),
+             fill = gray(0.3)) +
     xlab(xlab) + ylab(ylab)
   
   return(gg)
-}
-
-
-
-#' Internal helper to calculate the (group-specific) density of a variable
-#' 
-#' Internal helper function that is called in \code{\link{plot_density}} to
-#' calculate the density of a metric variable. If \code{plot_density} is called
-#' from within \code{\link{plot_densityMatrix}} (i.e., when some of the columns
-#' \code{c("age_group","period_group","cohort_group")} are part of the dataset,
-#' the density is computed individually for all respective APC groups.
-#' 
-#' @inheritParams plot_density
-#' 
-#' @return Dataset with the calculated densities.
-#' 
-#' @import dplyr
-#' @importFrom stats density
-#' 
-calc_density <- function(dat, y_var, highlight_diagonals = NULL,
-                         weights_var = NULL, ...) {
-
-  # retrieve the weights vector
-  weights_vector <- NULL
-  if (!is.null(weights_var)) {
-    # make sure the weights are not NA
-    if (any(is.na(dat[[weights_var]]))) {
-      warning("Deleting ",sum(is.na(dat[[weights_var]])), " observations where the weights variable is NA.")
-      dat <- dat[!is.na(dat[[weights_var]]),]
-    }
-    
-    weights_vector <- dat[[weights_var]]
-  }
-
-  
-  # calculate the densities
-  if (all(!(c("age_group","period_group","cohort_group") %in% names(dat)))) { # calculate one global density
-    
-    dens <- stats::density(x       = dat[[y_var]],
-                           weights = weights_vector, ...)
-    dat_dens <- data.frame(x = dens$x, y = dens$y)
-    
-  } else { # calculate one density for each APC subgroup
-    
-    dimensions <- c()
-    if ("age_group" %in% names(dat)) {    dimensions <- append(dimensions, "age_group") }
-    if ("period_group" %in% names(dat)) { dimensions <- append(dimensions, "period_group") }
-    if ("cohort_group" %in% names(dat)) { dimensions <- append(dimensions, "cohort_group") }
-    diag_dimension <- ifelse(!("age_group" %in% names(dat)), "age groups",
-                             ifelse(!("period_group" %in% names(dat)), "periods",
-                                    "cohorts"))
-    
-    # create a data.frame from 'highlight_diagonals' for easier handling
-    if (!is.null(highlight_diagonals)) {
-      diag_dat <- data.frame(diagonal = unlist(highlight_diagonals, use.names = FALSE))
-      diag_dat$label <- sapply(1:length(highlight_diagonals), function(i) {
-        label <- ifelse(!is.null(names(highlight_diagonals)),
-                        names(highlight_diagonals)[i], paste("Diagonal",LETTERS[i]))
-        return(rep(label, times = length(highlight_diagonals[[i]])))
-      }) %>% unlist()
-    }
-    
-    # 'dimensions' always has two elements only when called from within 'plot_densityMatrix'
-    dim1_categories <- levels(dat[[dimensions[1]]])
-    dim2_categories <- levels(dat[[dimensions[2]]])
-    
-    dat_list1 <- lapply(1:length(dim1_categories), function(i1) {
-      
-      dat_list12 <- lapply(1:length(dim2_categories), function(i2) {
-        dim12_rows <- which(dat[[dimensions[1]]] == dim1_categories[i1] &
-                              dat[[dimensions[2]]] == dim2_categories[i2])
-        
-        if (length(dim12_rows) < 2) { # return nothing if the combination is not part of the data
-          return(NULL)
-        }
-        
-        dens <- stats::density(x       = dat[dim12_rows, y_var, drop = TRUE],
-                               weights = weights_vector[dim12_rows], ...)
-        dat_dens12 <- data.frame(x         = dens$x,
-                                 y         = dens$y,
-                                 dim1      = dim1_categories[i1],
-                                 dim2      = dim2_categories[i2],
-                                 col_group = paste("other",diag_dimension)) # for 'highlight_diagonals'
-        
-        if (!is.null(highlight_diagonals)) {
-          col_group_row <- match(i1 + i2, diag_dat$diagonal)
-          if (!is.na(col_group_row)) {
-            dat_dens12$col_group <- diag_dat$label[col_group_row]
-          }
-        }
-        
-        return(dat_dens12)
-      })
-      
-      dat_dens1 <- dplyr::bind_rows(dat_list12)
-      
-      return(dat_dens1)
-    })
-    
-    dat_dens <- dplyr::bind_rows(dat_list1)
-    dat_dens$dim1 <- factor(dat_dens$dim1, levels = dim1_categories)
-    dat_dens$dim2 <- factor(dat_dens$dim2, levels = dim2_categories)
-    colnames(dat_dens)[colnames(dat_dens) == "dim1"] <- dimensions[1]
-    colnames(dat_dens)[colnames(dat_dens) == "dim2"] <- dimensions[2]
-  }
-  
-  return(dat_dens)
 }
