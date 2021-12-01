@@ -44,10 +44,11 @@ data_RA <- data_RA %>%
 
 ```{r}
 # plot a metric variable
-plot_variable(dat = data_RA, variable = "JS_HUR_Reisedistanz", apc_dimension = "period")
+plot_variable(dat = data_RA, variable = "JS_HUR_Reisedistanz", apc_dimension = "period", log_scale = TRUE)
 
 # plot a categorical variable
 plot_variable(dat = data_RA, variable = "S_Haushaltsgroesse", apc_dimension = "period")
+plot_variable(dat = data_RA, variable = "S_Haushaltsgroesse", apc_dimension = "period", geomBar_position = "stack")
 ```
 
 ### Ridgeline matrix for metric and categorical variables

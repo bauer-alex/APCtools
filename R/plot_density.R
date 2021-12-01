@@ -32,7 +32,7 @@
 #' @param weights_var Optional character name of a weights variable used to
 #' project the results in the sample to some population.
 #' @param log_scale Indicator if the main variable should be log10 transformed.
-#' Only used if the \code{y_var} column is numeric.
+#' Only used if the \code{y_var} column is numeric. Defaults to FALSE.
 #' @param xlab,ylab,legend_title Optional plot annotations.
 #' @param ... Additional arguments passed to \code{\link[stats]{density}}.
 #' 

@@ -62,7 +62,7 @@ used if the \code{y_var} column is numeric.}
 project the results in the sample to some population.}
 
 \item{log_scale}{Indicator if the main variable should be log10 transformed.
-Only used if the \code{y_var} column is numeric.}
+Only used if the \code{y_var} column is numeric. Defaults to FALSE.}
 
 \item{legend_title}{Optional plot annotations.}
 

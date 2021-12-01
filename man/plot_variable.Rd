@@ -4,7 +4,13 @@
 \alias{plot_variable}
 \title{Distribution plot of one variable against one APC dimension}
 \usage{
-plot_variable(dat, variable, apc_dimension = "period")
+plot_variable(
+  dat,
+  variable,
+  apc_dimension = "period",
+  log_scale = FALSE,
+  geomBar_position = "fill"
+)
 }
 \arguments{
 \item{dat}{Dataset containing columns \code{age}, \code{period} and
@@ -14,6 +20,13 @@ plot_variable(dat, variable, apc_dimension = "period")
 
 \item{apc_dimension}{One of \code{c("age","period","cohort")}. Defaults to
 \code{"period"}.}
+
+\item{log_scale}{Indicator if the visualized variable should be log10
+transformed. Only used if the variable is numeric. Defaults to FALSE.}
+
+\item{geomBar_position}{Value passed to \code{\link[ggplot2]{geom_bar}} as
+\code{position} argument. Only used if the visualized variable is categorical.
+Defaults to \code{"fill"}.}
 }
 \description{
 Plot the distribution of one variable in the data against age, period or
