@@ -204,8 +204,10 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     dat <- dat %>% dplyr::rename(x = y_var)
     
     # main plot
-    gg <- gg + geom_boxplot(data = dat, aes(x = x, weight = weight)) +
-      scale_x_continuous(xlab, labels = label_function)
+    gg <- gg + geom_boxplot(data = dat, aes(x = x, weight = weight), col = gray(0.3),
+                            outlier.color = gray(0.3), outlier.alpha = 0.2) +
+      scale_x_continuous(xlab, labels = label_function) +
+      ylim(c(-1,1))
     
   }
   
