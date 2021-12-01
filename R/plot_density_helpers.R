@@ -107,7 +107,7 @@ gg_highlightDiagonals <- function(gg, dat, dat_highlightDiagonals) {
                                   "Cohorts"))
   
   ncols_highlight <- length(unique(dat_highlightDiagonals$col_group)) - 1
-  col_vector <- c(scales::hue_pal()(ncols_highlight), "transparent")
+  col_vector <- c(scales::hue_pal()(ncols_highlight), gray(0.9))
   
   gg <- gg +
     geom_rect(data = dat_highlightDiagonals, aes(col = col_group),

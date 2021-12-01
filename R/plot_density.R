@@ -177,18 +177,19 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     xlim <- range(dat_dens$x)
     
     # main plot
-    gg <- gg + geom_line(data = dat_dens, aes(x = x, y = y), col = gray(0.3))
+    gg <- gg + geom_line(data = dat_dens, aes(x = x, y = y), col = gray(0.4))
 
     if (!is.null(y_var_cat_breaks)) {
       gg <- gg + geom_ribbon(data = dat_dens, aes(x = x, ymin = 0, ymax = y, fill = x_cat)) +
         scale_fill_brewer(palette = "Blues", direction = -1)
     } else {
-      gg <- gg + geom_ribbon(data = dat_dens, aes(x = x, ymin = 0, ymax = y), fill = gray(0.3))
+      gg <- gg + geom_ribbon(data = dat_dens, aes(x = x, ymin = 0, ymax = y), fill = gray(0.4))
     }
     
     gg <- gg +
       ylab(ylab) + labs(fill = legend_title) +
-      scale_x_continuous(xlab, labels = label_function, limits = xlim) +
+      scale_x_continuous(xlab, labels = label_function, limits = xlim,
+                         guide = guide_axis(check.overlap = TRUE)) +
       theme(legend.position = "bottom")
     
   } else { # plot_type == "boxplot"
@@ -206,7 +207,8 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     # main plot
     gg <- gg + geom_boxplot(data = dat, aes(x = x, weight = weight), col = gray(0.3),
                             outlier.color = gray(0.3), outlier.alpha = 0.2) +
-      scale_x_continuous(xlab, labels = label_function) +
+      scale_x_continuous(xlab, labels = label_function,
+                         guide = guide_axis(check.overlap = TRUE)) +
       ylim(c(-1,1))
     
   }
