@@ -66,12 +66,12 @@ plot_densityMatrix(dat              = data_RA,
                    period_groups    = period_groups,
                    log_scale        = TRUE)
 
-plot_densityMatrix(dat                 = data_RA,
-                   y_var               = "JS_HUR_Reisedistanz",
-                   age_groups          = age_groups,
-                   period_groups       = period_groups,
-                   highlight_diagonals = list("Cohort A" = 2, "Cohorts B" = 4:5),
-                   log_scale           = TRUE)
+# plot_densityMatrix(dat                 = data_RA,
+#                    y_var               = "JS_HUR_Reisedistanz",
+#                    age_groups          = age_groups,
+#                    period_groups       = period_groups,
+#                    highlight_diagonals = list("Cohort A" = 2, "Cohorts B" = 4:5),
+#                    log_scale           = TRUE)
 
 plot_densityMatrix(dat              = data_RA,
                    y_var            = "JS_HUR_Reisedistanz",
