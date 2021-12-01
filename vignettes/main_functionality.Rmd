@@ -51,9 +51,9 @@ plot_variable(dat = data_RA, variable = "S_Haushaltsgroesse", apc_dimension = "p
 plot_variable(dat = data_RA, variable = "S_Haushaltsgroesse", apc_dimension = "period", geomBar_position = "stack")
 ```
 
-### Ridgeline matrix for metric and categorical variables
+### Density matrix for metric and categorical variables
 
-```{r ridgeline matrix}
+```{r density matrix}
 dist_cat_breaks <- c(1,500,1000,2000,6000,100000)
 dist_cat_labels <- c("< 500 km","500 - 1,000 km", "1,000 - 2,000 km", "2,000 - 6,000 km", "> 6,000 km")
 
@@ -95,7 +95,10 @@ plot_densityMatrix(dat              = data_RA,
                    y_var_cat_breaks = dist_cat_breaks,
                    y_var_cat_labels = dist_cat_labels,
                    legend_title     = "Distance category")
+```
 
+
+```{r density matrix boxplot, warning = FALSE}
 plot_densityMatrix(dat           = data_RA,
                    y_var         = "JS_HUR_Reisedistanz",
                    plot_type     = "boxplot",
@@ -104,7 +107,10 @@ plot_densityMatrix(dat           = data_RA,
                    log_scale     = TRUE,
                    highlight_diagonals = list("born 1950 - 1959" = 8,
                                               "born 1970 - 1979" = 10))
+```
 
+
+```{r density matrix categorical}
 plot_densityMatrix(dat                 = data_RA,
                    y_var               = "S_Haushaltsgroesse",
                    age_groups          = age_groups,
