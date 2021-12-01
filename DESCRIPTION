@@ -21,7 +21,9 @@ Imports:
     knitr,
     ggplot2
 Suggests: 
+    testthat (>= 3.0.0),
     rmarkdown
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
+Config/testthat/edition: 3
