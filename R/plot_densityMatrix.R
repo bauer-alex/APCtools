@@ -17,6 +17,11 @@
 #' The list can be named to specify labels for the categories. Only the two
 #' arguments should be passed that were specified by the \code{dimensions}
 #' argument.
+#' @param highlight_diagonals Optional list to define diagonals in the density
+#' that should be highlighted with different colors. Each list element should be
+#' a numeric vector stating the index of the diagonals (counted from the top
+#' left) that should be highlighted in the same color. If the list is named, the
+#' names are used as legend labels.
 #' @param ... Additional arguments passed to \code{\link{plot_density}}.
 #' 
 #' @import checkmate dplyr ggplot2
@@ -25,8 +30,10 @@
 plot_densityMatrix <- function(dat, dimensions = c("period","age"),
                                age_groups = NULL, period_groups = NULL,
                                cohort_groups = NULL, y_var, plot_type = "density",
+                               highlight_diagonals = NULL,
                                y_var_cat_breaks = NULL, y_var_cat_labels = NULL,
-                               weights_var = NULL, log_scale = FALSE, ...) {
+                               weights_var = NULL, log_scale = FALSE,
+                               legend_title = NULL, ...) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_character(dimensions, len = 2)
@@ -42,11 +49,13 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
   } else { checkmate::assert_null(cohort_groups) }
   checkmate::assert_character(y_var, len = 1)
   checkmate::assert_choice(plot_type, choices = c("density","boxplot"))
+  checkmate::assert_list(highlight_diagonals, types = "numeric", null.ok = TRUE)
   checkmate::assert_numeric(y_var_cat_breaks, null.ok = TRUE)
   checkmate::assert_character(y_var_cat_labels, len = length(y_var_cat_breaks) - 1,
                               null.ok = TRUE)
   checkmate::assert_character(weights_var, max.len = 1, null.ok = TRUE)
   checkmate::assert_logical(log_scale)
+  checkmate::assert_character(legend_title, len = 1, null.ok = TRUE)
   
   
   dat$cohort <- dat$period - dat$age
@@ -71,20 +80,23 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
   
   
   # define axis labels and facets
-  main_lab <- ifelse(!log_scale, y_var, paste(y_var, "on log10 scale"))
-  xlab     <- dimensions[1]
-  ylab     <- dimensions[2]
+  y_var_cap <- capitalize_firstLetter(y_var)
+  main_lab  <- ifelse(!log_scale, y_var_cap, paste(y_var_cap, "on log10 scale"))
+  xlab      <- capitalize_firstLetter(dimensions[1])
+  ylab      <- capitalize_firstLetter(dimensions[2])
   facet_formula <- as.formula(paste(paste0(dimensions[2],"_group"), "~",
                                     paste0(dimensions[1],"_group")))
   
   # create density matrix
-  gg <- plot_density(dat              = dat,
-                     y_var            = y_var,
-                     plot_type        = plot_type,
-                     y_var_cat_breaks = y_var_cat_breaks,
-                     y_var_cat_labels = y_var_cat_labels,
-                     weights_var      = weights_var,
-                     log_scale        = log_scale,
+  gg <- plot_density(dat                 = dat,
+                     y_var               = y_var,
+                     plot_type           = plot_type,
+                     highlight_diagonals = highlight_diagonals,
+                     y_var_cat_breaks    = y_var_cat_breaks,
+                     y_var_cat_labels    = y_var_cat_labels,
+                     weights_var         = weights_var,
+                     log_scale           = log_scale,
+                     legend_title        = legend_title,
                      ...) +
     facet_grid(facets = facet_formula, switch = "y") +
     labs(subtitle = xlab, x = main_lab, y = ylab) +

@@ -7,6 +7,7 @@
 plot_density_categorical(
   dat,
   y_var,
+  highlight_diagonals = NULL,
   weights_var = NULL,
   xlab = NULL,
   ylab = "Density"
@@ -17,6 +18,10 @@ plot_density_categorical(
 main variable specified through argument \code{y_var}.}
 
 \item{y_var}{Character name of the main variable to be plotted.}
+
+\item{highlight_diagonals}{Optional internal parameter which is only
+specified when \code{plot_density} is called from within
+\code{plot_densityMatrix}. See \code{\link{plot_densityMatrix}} for details.}
 
 \item{weights_var}{Optional character name of a weights variable used to
 project the results in the sample to some population.}

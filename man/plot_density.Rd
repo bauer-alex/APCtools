@@ -9,7 +9,9 @@ plot_density(
   y_var,
   plot_type = "density",
   apc_range = NULL,
-  y_var_breaks = NULL,
+  highlight_diagonals = NULL,
+  y_var_cat_breaks = NULL,
+  y_var_cat_labels = NULL,
   weights_var = NULL,
   log_scale = FALSE,
   xlab = NULL,
@@ -32,10 +34,19 @@ main variable specified through argument \code{y_var}.}
 contain a numeric vector of values for the respective variable that should
 be kept in the data. All other values are deleted.}
 
-\item{y_var_breaks}{Optional numeric vector of breaks to categorize
+\item{highlight_diagonals}{Optional internal parameter which is only
+specified when \code{plot_density} is called from within
+\code{plot_densityMatrix}. See \code{\link{plot_densityMatrix}} for details.}
+
+\item{y_var_cat_breaks}{Optional numeric vector of breaks to categorize
 \code{y_var} based on calling function \code{\link{cut}}. Only used to
 highlight the categories based on different colors. And only used if the
 \code{y_var} column is numeric.}
+
+\item{y_var_cat_labels}{Optional character vector for the names of the
+categories that were defined based on \code{y_var_cat_breaks}. The length of
+this vector must be one shorter than \code{length(y_var_cat_breaks)}. Only
+used if the \code{y_var} column is numeric.}
 
 \item{weights_var}{Optional character name of a weights variable used to
 project the results in the sample to some population.}

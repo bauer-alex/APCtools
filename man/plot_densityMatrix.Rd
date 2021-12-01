@@ -12,9 +12,12 @@ plot_densityMatrix(
   cohort_groups = NULL,
   y_var,
   plot_type = "density",
-  y_var_breaks = NULL,
+  highlight_diagonals = NULL,
+  y_var_cat_breaks = NULL,
+  y_var_cat_labels = NULL,
   weights_var = NULL,
   log_scale = FALSE,
+  legend_title = NULL,
   ...
 )
 }
@@ -39,16 +42,29 @@ argument.}
 \item{plot_type}{One of \code{c("density","boxplot")}. Only used if the
 \code{y_var} column is metric.}
 
-\item{y_var_breaks}{Optional numeric vector of breaks to categorize
+\item{highlight_diagonals}{Optional list to define diagonals in the density
+that should be highlighted with different colors. Each list element should be
+a numeric vector stating the index of the diagonals (counted from the top
+left) that should be highlighted in the same color. If the list is named, the
+names are used as legend labels.}
+
+\item{y_var_cat_breaks}{Optional numeric vector of breaks to categorize
 \code{y_var} based on calling function \code{\link{cut}}. Only used to
 highlight the categories based on different colors. And only used if the
 \code{y_var} column is numeric.}
+
+\item{y_var_cat_labels}{Optional character vector for the names of the
+categories that were defined based on \code{y_var_cat_breaks}. The length of
+this vector must be one shorter than \code{length(y_var_cat_breaks)}. Only
+used if the \code{y_var} column is numeric.}
 
 \item{weights_var}{Optional character name of a weights variable used to
 project the results in the sample to some population.}
 
 \item{log_scale}{Indicator if the main variable should be log10 transformed.
 Only used if the \code{y_var} column is numeric.}
+
+\item{legend_title}{Optional plot annotations.}
 
 \item{...}{Additional arguments passed to \code{\link{plot_density}}.}
 }
