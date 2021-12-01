@@ -187,7 +187,8 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     }
     
     gg <- gg +
-      ylab(ylab) + labs(fill = legend_title) + xlim(xlim) +
+      ylab(ylab) + labs(fill = legend_title) +
+      scale_x_continuous(xlab, labels = label_function, limits = xlim) +
       theme(legend.position = "bottom")
     
   } else { # plot_type == "boxplot"
@@ -203,16 +204,15 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     dat <- dat %>% dplyr::rename(x = y_var)
     
     # main plot
-    gg <- gg + geom_boxplot(data = dat, aes(x = x, weight = weight))
+    gg <- gg + geom_boxplot(data = dat, aes(x = x, weight = weight)) +
+      scale_x_continuous(xlab, labels = label_function)
     
   }
   
   
   # general theme
   gg <- gg +
-    xlab(xlab) +
-    theme(axis.text.y = element_blank(), axis.ticks.y = element_blank()) +
-    scale_x_continuous(labels = label_function)
+    theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
   
   return(gg)
 }
