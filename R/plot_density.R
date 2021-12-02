@@ -48,7 +48,7 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
   checkmate::assert_data_frame(dat)
   checkmate::assert_character(y_var, len = 1)
   checkmate::assert_choice(plot_type, choices = c("density","boxplot"))
-  checkmate::assert_list(apc_range, types = "character", max.len = 3,
+  checkmate::assert_list(apc_range, types = "numeric", max.len = 3,
                          null.ok = TRUE, any.missing = FALSE)
   checkmate::assert_subset(names(apc_range), choices = c("age","period","cohort"))
   checkmate::assert_list(highlight_diagonals, types = "numeric", null.ok = TRUE)

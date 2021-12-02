@@ -11,17 +11,25 @@
 #' 
 #' @inheritParams plot_jointMarginalAPCEffects
 #' @param digits Number of digits for numeric columns. Defaults to 2.
+#' @param apc_range Optional list with one or multiple elements with names
+#' \code{"age","period","cohort"} to filter the data. Each element should
+#' contain a numeric vector of values for the respective variable that should
+#' be kept in the data. All other values are deleted before producing the table.
 #' @param ... Optional additional arguments passed to \code{\link[knitr]{kable}}.
 #' 
 #' @import checkmate dplyr
 #' @importFrom knitr kable
 #' @export
 #' 
-create_APCsummary <- function(model_list, dat, digits = 2, ...) {
+create_APCsummary <- function(model_list, dat, digits = 2, apc_range = NULL,
+                              ...) {
   
   checkmate::assert_list(model_list, types = "gam")
   checkmate::assert_data_frame(dat)
   checkmate::assert_number(digits, lower = 0)
+  checkmate::assert_list(apc_range, types = "numeric", max.len = 3,
+                         null.ok = TRUE, any.missing = FALSE)
+  checkmate::assert_subset(names(apc_range), choices = c("age","period","cohort"))
   
   
   # retrieve model labels
@@ -34,7 +42,7 @@ create_APCsummary <- function(model_list, dat, digits = 2, ...) {
   # create the summary table
   tab <- lapply(1:length(model_list), function(i) {
     
-    create_oneAPCsummaryTable(model_list[[i]], dat) %>% 
+    create_oneAPCsummaryTable(model_list[[i]], dat, apc_range) %>% 
       mutate(model = model_labels[i]) %>% 
       select(model, everything())
     
@@ -52,15 +60,20 @@ create_APCsummary <- function(model_list, dat, digits = 2, ...) {
 #' \code{\link[mgcv]{gam}}.
 #' 
 #' @inheritParams plot_APCheatmap
+#' @inheritParams create_APCsummary
 #' @return \code{data.frame} containing aggregated information on the
 #' individual effects.
 #' 
 #' @import checkmate dplyr
 #' 
-create_oneAPCsummaryTable <- function(model, dat) {
+create_oneAPCsummaryTable <- function(model, dat, apc_range = NULL) {
   
   checkmate::assert_class(model, classes = "gam")
   checkmate::assert_data_frame(dat)
+  checkmate::assert_list(apc_range, types = "numeric", max.len = 3,
+                         null.ok = TRUE, any.missing = FALSE)
+  checkmate::assert_subset(names(apc_range), choices = c("age","period","cohort"))
+  
   
   # retrieve datasets with the marginal effects
   dat_list <- plot_marginalAPCeffects(model, dat, return_plotData = TRUE)
@@ -71,6 +84,11 @@ create_oneAPCsummaryTable <- function(model, dat) {
   
   summary_tab <- lapply(vars, function(var) {
     dat_var <- dat_list[[paste0("dat_",var)]]
+    
+    if (var %in% names(apc_range)) { # filter the dataset
+      dat_var <- dat_var %>% filter(value %in% apc_range[[var]])
+    }
+    
     tab <- data.frame(effect              = var,
                       value_withMaxEffect = dat_var$value[which.max(dat_var$effect)],
                       value_withMinEffect = dat_var$value[which.min(dat_var$effect)],

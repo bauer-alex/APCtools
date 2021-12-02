@@ -4,13 +4,18 @@
 \alias{create_oneAPCsummaryTable}
 \title{Internal helper to create a summary table for one estimated GAM model}
 \usage{
-create_oneAPCsummaryTable(model, dat)
+create_oneAPCsummaryTable(model, dat, apc_range = NULL)
 }
 \arguments{
 \item{model}{Regression model estimated with \code{\link[mgcv]{gam}}.}
 
 \item{dat}{Dataset as passed to \code{gam} for model estimation, containing
 columns \code{period} and \code{age}.}
+
+\item{apc_range}{Optional list with one or multiple elements with names
+\code{"age","period","cohort"} to filter the data. Each element should
+contain a numeric vector of values for the respective variable that should
+be kept in the data. All other values are deleted before producing the table.}
 }
 \value{
 \code{data.frame} containing aggregated information on the
