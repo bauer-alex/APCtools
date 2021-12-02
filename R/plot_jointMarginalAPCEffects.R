@@ -29,6 +29,7 @@ plot_jointMarginalAPCEffects <- function(model_list, dat, vlines_list = NULL,
   checkmate::assert_data_frame(dat)
   checkmate::assert_list(vlines_list, min.len = 1, max.len = 3,
                          types = "numeric", null.ok = TRUE)
+  checkmate::assert_subset(names(vlines_list), choices = c("age","period","cohort"))
   checkmate::assert_character(ylab, len = 1, null.ok = TRUE)
   
   
