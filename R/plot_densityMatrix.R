@@ -106,7 +106,8 @@ plot_densityMatrix <- function(dat, y_var, dimensions = c("period","age"),
           axis.ticks.y      = element_blank(),
           plot.subtitle     = element_text(hjust = 0.5),
           strip.text.y.left = element_text(angle = 0),
-          legend.position   = legend.position)
+          legend.position   = legend.position,
+          panel.grid.minor  = element_blank())
   
   return(gg)
 }
