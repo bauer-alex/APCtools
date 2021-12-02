@@ -52,7 +52,7 @@ plot_jointMarginalAPCEffects <- function(model_list, dat, vlines_list = NULL) {
   # marginal age effect
   dat_age <- lapply(1:length(datList_list), function(i) {
     datList_list[[i]]$dat_age %>% mutate(type = model_labels[i])
-  }) %>% dplyr::bind_rows()
+  }) %>% dplyr::bind_rows() %>% mutate(type = factor(type, levels = model_labels))
   
   if ("age" %in% names(vlines_list)) {
     gg_age <- gg_age + 
@@ -70,7 +70,7 @@ plot_jointMarginalAPCEffects <- function(model_list, dat, vlines_list = NULL) {
   # marginal period effect
   dat_period <- lapply(1:length(datList_list), function(i) {
     datList_list[[i]]$dat_period %>% mutate(type = model_labels[i])
-  }) %>% dplyr::bind_rows()
+  }) %>% dplyr::bind_rows() %>% mutate(type = factor(type, levels = model_labels))
   
   if ("period" %in% names(vlines_list)) {
     gg_period <- gg_period + 
@@ -91,7 +91,7 @@ plot_jointMarginalAPCEffects <- function(model_list, dat, vlines_list = NULL) {
   # marginal cohort effect
   dat_cohort <- lapply(1:length(datList_list), function(i) {
     datList_list[[i]]$dat_cohort %>% mutate(type = model_labels[i])
-  }) %>% dplyr::bind_rows()
+  }) %>% dplyr::bind_rows() %>% mutate(type = factor(type, levels = model_labels))
   
   if ("cohort" %in% names(vlines_list)) {
     gg_cohort <- gg_cohort + 
