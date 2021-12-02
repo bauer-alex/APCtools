@@ -27,15 +27,16 @@
 #' @import checkmate dplyr ggplot2
 #' @export
 #' 
-plot_densityMatrix <- function(dat, dimensions = c("period","age"),
+plot_densityMatrix <- function(dat, y_var, dimensions = c("period","age"),
                                age_groups = NULL, period_groups = NULL,
-                               cohort_groups = NULL, y_var, plot_type = "density",
+                               cohort_groups = NULL, plot_type = "density",
                                highlight_diagonals = NULL,
                                y_var_cat_breaks = NULL, y_var_cat_labels = NULL,
                                weights_var = NULL, log_scale = FALSE,
                                legend_title = NULL, ...) {
   
   checkmate::assert_data_frame(dat)
+  checkmate::assert_character(y_var, len = 1)
   checkmate::assert_character(dimensions, len = 2)
   checkmate::assert_subset(dimensions, choices = c("age","period","cohort"))
   if ("age" %in% dimensions) {
@@ -47,7 +48,6 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
   if ("cohort" %in% dimensions) {
     checkmate::assert_list(cohort_groups, null.ok = FALSE)
   } else { checkmate::assert_null(cohort_groups) }
-  checkmate::assert_character(y_var, len = 1)
   checkmate::assert_choice(plot_type, choices = c("density","boxplot"))
   checkmate::assert_list(highlight_diagonals, types = "numeric", null.ok = TRUE)
   checkmate::assert_numeric(y_var_cat_breaks, null.ok = TRUE)
@@ -84,8 +84,10 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
   main_lab  <- ifelse(!log_scale, y_var_cap, paste(y_var_cap, "on log10 scale"))
   xlab      <- capitalize_firstLetter(dimensions[1])
   ylab      <- capitalize_firstLetter(dimensions[2])
-  facet_formula <- as.formula(paste(paste0(dimensions[2],"_group"), "~",
-                                    paste0(dimensions[1],"_group")))
+  facet_formula   <- as.formula(paste(paste0(dimensions[2],"_group"), "~",
+                                      paste0(dimensions[1],"_group")))
+  legend.position <- ifelse(is.numeric(dat[[y_var]]) & is.null(highlight_diagonals),
+                            "none", "right")
   
   # create density matrix
   gg <- plot_density(dat                 = dat,
@@ -104,7 +106,7 @@ plot_densityMatrix <- function(dat, dimensions = c("period","age"),
           axis.ticks.y      = element_blank(),
           plot.subtitle     = element_text(hjust = 0.5),
           strip.text.y.left = element_text(angle = 0),
-          legend.position   = ifelse(is.null(highlight_diagonals), "none", "right"))
+          legend.position   = legend.position)
   
   return(gg)
 }

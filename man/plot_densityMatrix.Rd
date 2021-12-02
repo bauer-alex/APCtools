@@ -6,11 +6,11 @@
 \usage{
 plot_densityMatrix(
   dat,
+  y_var,
   dimensions = c("period", "age"),
   age_groups = NULL,
   period_groups = NULL,
   cohort_groups = NULL,
-  y_var,
   plot_type = "density",
   highlight_diagonals = NULL,
   y_var_cat_breaks = NULL,
@@ -25,6 +25,8 @@ plot_densityMatrix(
 \item{dat}{Dataset with columns \code{period} and \code{age} and the
 main variable specified through argument \code{y_var}.}
 
+\item{y_var}{Character name of the main variable to be plotted.}
+
 \item{dimensions}{Character vector specifying the two APC dimensions that
 should be visualized along the x-axis and y-axis. Defaults to
 \code{c("period","age")}.}
@@ -36,8 +38,6 @@ the period should be visualized in decade columns from 1980 to 2009, specify
 The list can be named to specify labels for the categories. Only the two
 arguments should be passed that were specified by the \code{dimensions}
 argument.}
-
-\item{y_var}{Character name of the main variable to be plotted.}
 
 \item{plot_type}{One of \code{c("density","boxplot")}. Only used if the
 \code{y_var} column is metric.}
