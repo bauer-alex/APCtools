@@ -11,12 +11,13 @@
 #' @export
 #' 
 plot_marginalAPCeffects <- function(model, dat, variable = "age",
-                                    return_plotData = FALSE) {
+                                    vlines_vec = NULL, return_plotData = FALSE) {
   
-  plot_partialAPCeffects(model    = model,
-                         dat      = dat,
-                         variable = variable,
+  plot_partialAPCeffects(model               = model,
+                         dat                 = dat,
+                         variable            = variable,
                          hide_partialEffects = TRUE,
+                         vlines_vec          = vlines_vec,
                          return_plotData     = return_plotData)
   
 }
@@ -35,6 +36,9 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' temporal dimension for which the partial effect plots should be created.
 #' @param hide_partialEffects If TRUE, only the marginal effect will be plotted.
 #' Defaults to FALSE.
+#' @param vlines_vec Optional numeric vector of values on the x-axis where
+#' vertical lines should be drawn. Can be used to highlight the borders of
+#' specific age groups, time intervals or cohorts.
 #' @param return_plotData If TRUE, a list of the datasets prepared for plotting
 #' is returned instead of the ggplot object. The list contains one dataset each
 #' for the overall effect (= evaluations of the APC surface to plot the partial
@@ -47,12 +51,13 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' 
 plot_partialAPCeffects <- function(model, dat, variable = "age",
                                    hide_partialEffects = FALSE,
-                                   return_plotData = FALSE) {
+                                   vlines_vec = NULL, return_plotData = FALSE) {
   
   checkmate::assert_class(model, classes = "gam")
   checkmate::assert_data_frame(dat)
   checkmate::assert_choice(variable, choices = c("age","period","cohort"))
   checkmate::assert_logical(hide_partialEffects)
+  checkmate::assert_numeric(vlines_vec, min.len = 1, null.ok = TRUE)
   checkmate::assert_logical(return_plotData)
   
   
@@ -130,19 +135,28 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
                 "dat_cohort"        = dat_cohort))
   }
   
+  # base plot
+  gg <- ggplot()
   
+  if (!is.null(vlines_vec)) {
+    gg <- gg +
+      geom_vline(xintercept = vlines_vec, col = gray(0.5), lty = 2)
+  }
+  
+  
+  # main plot
   if (variable == "age") {
     
     if (hide_partialEffects) { # plot with only the marginal age effect
       
-      gg_final <- ggplot() +
+      gg_final <- gg +
         geom_line(data = dat_age, mapping = aes(x = value, y = effect)) +
         ylab(y_lab) + xlab("Age") + theme + ggtitle("Marginal age effect")
       
     } else { # plots including the partial effects
       
       # age versus period
-      gg_AP <- ggplot() +
+      gg_AP <- gg +
         geom_line(data = dat_overallEffect,
                   mapping = aes(x = age, y = effect, group = period, col = period)) +
         scale_color_continuous(low = "grey90", high = "grey10", name = "Period") +
@@ -151,7 +165,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
         ylab(y_lab) + xlab("Age") + theme + ggtitle("Age effect by periods")
       
       # age versus cohort
-      gg_AC <- ggplot() +
+      gg_AC <- gg +
         geom_line(data    = dat_overallEffect,
                   mapping = aes(x = age, y = effect, group = cohort, col = cohort)) +
         scale_color_continuous(low = "grey90", high = "grey10", name = "Cohort") +
@@ -173,7 +187,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
     
     if (hide_partialEffects) { # plot with only the marginal age effect
       
-      gg_final <- ggplot() +
+      gg_final <- gg +
         geom_line(data = dat_period, mapping = aes(x = value, y = effect)) +
         scale_x_continuous(breaks = c(1970, 1980, 1990, 2000, 2010)) + 
         ylab(y_lab) + xlab("Period") + theme + ggtitle("Marginal period effect")
@@ -181,7 +195,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
     } else { # plots including the partial effects
       
       # period versus age
-      gg_PA <- ggplot() +
+      gg_PA <- gg +
         geom_line(data    = dat_overallEffect,
                   mapping = aes(x = period, y = effect, group = age, col = age)) +
         scale_color_continuous(low = "grey90", high = "grey10", name = "Age") +
@@ -192,7 +206,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
         ylab(y_lab) + xlab("Period") + theme + ggtitle("Period effect by age")
       
       # period versus cohort
-      gg_PC <- ggplot() +
+      gg_PC <- gg +
         geom_line(data    = dat_overallEffect,
                   mapping = aes(x = period, y = effect, group = cohort, col = cohort)) +
         scale_color_continuous(low = "grey90", high = "grey10", name = "Cohort") +
@@ -215,14 +229,14 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
     
     if (hide_partialEffects) { # plot with only the marginal age effect
       
-      gg_final <- ggplot() +
+      gg_final <- gg +
         geom_line(data = dat_cohort, mapping = aes(x = value, y = effect)) +
         ylab(y_lab) + xlab("Cohort") + theme + ggtitle("Marginal cohort effect")
       
     } else { # plots including the partial effects
       
       # cohort versus age
-      gg_CA <- ggplot() +
+      gg_CA <- gg +
         geom_line(data    = dat_overallEffect,
                   mapping = aes(x = cohort, y = effect, group = age, col = age)) +
         scale_color_continuous(low = "grey90", high = "grey10", name = "Age") +
@@ -231,7 +245,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
         ylab(y_lab) + xlab("Cohort") + theme + ggtitle("Cohort effect by age")
       
       # cohort versus period
-      gg_CP <- ggplot() +
+      gg_CP <- gg +
         geom_line(data    = dat_overallEffect,
                   mapping = aes(x = cohort, y = effect, group = period,
                                 col = period)) +

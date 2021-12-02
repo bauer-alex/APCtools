@@ -4,7 +4,13 @@
 \alias{plot_marginalAPCeffects}
 \title{Plot of marginal APC effects based on an estimated GAM model}
 \usage{
-plot_marginalAPCeffects(model, dat, variable = "age", return_plotData = FALSE)
+plot_marginalAPCeffects(
+  model,
+  dat,
+  variable = "age",
+  vlines_vec = NULL,
+  return_plotData = FALSE
+)
 }
 \arguments{
 \item{model}{Regression model estimated with \code{\link[mgcv]{gam}}.}
@@ -14,6 +20,10 @@ columns \code{period} and \code{age}.}
 
 \item{variable}{One of \code{c("age","period","cohort")}, specifying the
 temporal dimension for which the partial effect plots should be created.}
+
+\item{vlines_vec}{Optional numeric vector of values on the x-axis where
+vertical lines should be drawn. Can be used to highlight the borders of
+specific age groups, time intervals or cohorts.}
 
 \item{return_plotData}{If TRUE, a list of the datasets prepared for plotting
 is returned instead of the ggplot object. The list contains one dataset each

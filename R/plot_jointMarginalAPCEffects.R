@@ -11,15 +11,22 @@
 #' @inheritParams plot_APCheatmap
 #' @param model_list A list of regression models estimated with
 #' \code{\link[mgcv]{gam}}. If the list is named, the names are used as labels.
+#' @param vlines_list Optional list that can be used to highlight the borders of
+#' specific age groups, time intervals or cohorts. Each element must be a
+#' numeric vector of values on the x-axis where vertical lines should be drawn.
+#' The list can maximally have three elements and must have names out of
+#' \code{c("age","period","cohort"}.
 #' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
 #' @export
 #' 
-plot_jointMarginalAPCEffects <- function(model_list, dat) {
+plot_jointMarginalAPCEffects <- function(model_list, dat, vlines_list = NULL) {
   
   checkmate::assert_list(model_list, types = "gam")
   checkmate::assert_data_frame(dat)
+  checkmate::assert_list(vlines_list, min.len = 1, max.len = 3,
+                         types = "numeric", null.ok = TRUE)
   
   
   # retrieve model labels
@@ -39,13 +46,23 @@ plot_jointMarginalAPCEffects <- function(model_list, dat) {
   used_logLink <- model_list[[1]]$family[[2]] %in% c("log","logit")
   ylab <- ifelse(used_logLink, "Odds Ratio", "Effect")
   
+  # base plots
+  gg_age <- gg_period <- gg_cohort <- ggplot()
+  
   # marginal age effect
   dat_age <- lapply(1:length(datList_list), function(i) {
     datList_list[[i]]$dat_age %>% mutate(type = model_labels[i])
   }) %>% dplyr::bind_rows()
-  gg_age <- ggplot(dat_age, aes(x = value, y = effect, col = type)) +
+  
+  if ("age" %in% names(vlines_list)) {
+    gg_age <- gg_age + 
+      geom_vline(xintercept = vlines_list$age, col = gray(0.5), lty = 2)
+  }
+  
+  gg_age <- gg_age +
     geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
-    geom_line() + xlab("Age") +
+    geom_line(data = dat_age, aes(x = value, y = effect, col = type)) +
+    xlab("Age") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
                        name  = ylab, limits = ylim) +
     theme(legend.title = element_blank())
@@ -54,9 +71,16 @@ plot_jointMarginalAPCEffects <- function(model_list, dat) {
   dat_period <- lapply(1:length(datList_list), function(i) {
     datList_list[[i]]$dat_period %>% mutate(type = model_labels[i])
   }) %>% dplyr::bind_rows()
-  gg_period <- ggplot(dat_period, aes(x = value, y = effect, col = type)) +
+  
+  if ("period" %in% names(vlines_list)) {
+    gg_period <- gg_period + 
+      geom_vline(xintercept = vlines_list$period, col = gray(0.5), lty = 2)
+  }
+  
+  gg_period <- gg_period +
     geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
-    geom_line() + xlab("Period") +
+    geom_line(data = dat_period, aes(x = value, y = effect, col = type)) +
+    xlab("Period") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
                        name  = ylab, limits = ylim) +
     theme(legend.title = element_blank(),
@@ -68,9 +92,16 @@ plot_jointMarginalAPCEffects <- function(model_list, dat) {
   dat_cohort <- lapply(1:length(datList_list), function(i) {
     datList_list[[i]]$dat_cohort %>% mutate(type = model_labels[i])
   }) %>% dplyr::bind_rows()
-  gg_cohort <- ggplot(dat_cohort, aes(x = value, y = effect, col = type)) +
+  
+  if ("cohort" %in% names(vlines_list)) {
+    gg_cohort <- gg_cohort + 
+      geom_vline(xintercept = vlines_list$cohort, col = gray(0.5), lty = 2)
+  }
+  
+  gg_cohort <- gg_cohort +
     geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
-    geom_line() + xlab("Cohort") +
+    geom_line(data = dat_cohort, aes(x = value, y = effect, col = type)) +
+    xlab("Cohort") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
                        name  = ylab, limits = ylim) +
     theme(legend.title = element_blank(),

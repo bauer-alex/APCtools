@@ -4,7 +4,7 @@
 \alias{plot_jointMarginalAPCEffects}
 \title{Joint plot to compare the marginal APC effects of multiple models}
 \usage{
-plot_jointMarginalAPCEffects(model_list, dat)
+plot_jointMarginalAPCEffects(model_list, dat, vlines_list = NULL)
 }
 \arguments{
 \item{model_list}{A list of regression models estimated with
@@ -12,6 +12,12 @@ plot_jointMarginalAPCEffects(model_list, dat)
 
 \item{dat}{Dataset as passed to \code{gam} for model estimation, containing
 columns \code{period} and \code{age}.}
+
+\item{vlines_list}{Optional list that can be used to highlight the borders of
+specific age groups, time intervals or cohorts. Each element must be a
+numeric vector of values on the x-axis where vertical lines should be drawn.
+The list can maximally have three elements and must have names out of
+\code{c("age","period","cohort"}.}
 }
 \description{
 This function creates a joint plot of the marginal APC effects of multiple
