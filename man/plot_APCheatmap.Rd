@@ -4,7 +4,16 @@
 \alias{plot_APCheatmap}
 \title{Heatmap of the APC surface based on an estimated GAM model}
 \usage{
-plot_APCheatmap(model, dat, angle = 15, plot_CI = TRUE)
+plot_APCheatmap(
+  model,
+  dat,
+  dimensions = c("period", "age"),
+  bin_heatmap = TRUE,
+  bin_heatmapGrid_list = NULL,
+  markLines_list = NULL,
+  markLines_displayLabels = c("age", "period", "cohort"),
+  plot_CI = TRUE
+)
 }
 \arguments{
 \item{model}{Regression model estimated with \code{\link[mgcv]{gam}}.}
@@ -12,8 +21,30 @@ plot_APCheatmap(model, dat, angle = 15, plot_CI = TRUE)
 \item{dat}{Dataset as passed to \code{gam} for model estimation, containing
 columns \code{period} and \code{age}.}
 
-\item{angle}{Numeric angle of the text labels written on the diagonals that
-highlight individual cohorts. Defaults to 15.}
+\item{dimensions}{Character vector specifying the two APC dimensions that
+should be visualized along the x-axis and y-axis. Defaults to
+\code{c("period","age")}.}
+
+\item{bin_heatmap, bin_heatmapGrid_list}{\code{bin_heatmap} indicates if the
+heatmap surface should be binned. Defaults to TRUE. If TRUE, the binning
+grid borders are defined by \code{bin_heatmapGrid_list}. This is a list with
+each element a numeric vector and a name out of
+\code{c("age","period","cohort")}. Can maximally have three elements. Defaults
+to NULL, where the heatmap is binned in 5 year steps along the x-axis and the
+y-axis.}
+
+\item{markLines_list}{Optional list that can be used to highlight the borders
+of specific age groups, time intervals or cohorts. Each element must be a
+numeric vector of values where horizontal, vertical or diagonal lines should
+be drawn (depends on which APC dimension is displayed on which axis).
+The list can maximally have three elements and must have names out of
+\code{c("age","period","cohort")}.}
+
+\item{markLines_displayLabels}{Optional character vector defining for which
+dimensions the lines defined through \code{markLines_list} should be marked
+by a respective label. The vector should be a subset of
+\code{c("age","period","cohort")}, or NULL to suppress all labels.
+Defaults to \code{c("age","period","cohort")}.}
 
 \item{plot_CI}{Indicator if the confidence intervals should be plotted.
 Defaults to TRUE.}

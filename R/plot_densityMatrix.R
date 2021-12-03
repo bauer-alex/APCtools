@@ -82,8 +82,8 @@ plot_densityMatrix <- function(dat, y_var, dimensions = c("period","age"),
   # define axis labels and facets
   y_var_cap <- capitalize_firstLetter(y_var)
   main_lab  <- ifelse(!log_scale, y_var_cap, paste(y_var_cap, "on log10 scale"))
-  xlab      <- capitalize_firstLetter(dimensions[1])
-  ylab      <- capitalize_firstLetter(dimensions[2])
+  x_lab     <- capitalize_firstLetter(dimensions[1])
+  y_lab     <- capitalize_firstLetter(dimensions[2])
   facet_formula   <- as.formula(paste(paste0(dimensions[2],"_group"), "~",
                                       paste0(dimensions[1],"_group")))
   legend.position <- ifelse(is.numeric(dat[[y_var]]) & is.null(highlight_diagonals),
@@ -101,7 +101,7 @@ plot_densityMatrix <- function(dat, y_var, dimensions = c("period","age"),
                      legend_title        = legend_title,
                      ...) +
     facet_grid(facets = facet_formula, switch = "y") +
-    labs(subtitle = xlab, x = main_lab, y = ylab) +
+    labs(subtitle = x_lab, x = main_lab, y = y_lab) +
     theme(axis.text.y       = element_blank(),
           axis.ticks.y      = element_blank(),
           plot.subtitle     = element_text(hjust = 0.5),

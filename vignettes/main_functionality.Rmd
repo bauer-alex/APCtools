@@ -32,7 +32,9 @@ theme_set(theme_minimal())
 ```{r data preparation}
 data(data_RA)
 
-summary(data_RA)
+options(knitr.kable.NA = '')
+summary(data_RA) %>% 
+  knitr::kable()
 ```
 
 # Descriptive analyses
@@ -122,8 +124,6 @@ plot_densityMatrix(dat                 = data_RA,
 ### Wrapper function for the estimation of mgcv::gam
 
 ```{r}
-# TODO
-
 model_pure <- gam(mainTrip_distance ~ te(age, period), data = data_RA)
 model_cov  <- gam(mainTrip_distance ~ te(age, period) +
                     residence_region + household_size + s(household_income),
@@ -146,7 +146,31 @@ APCtools::plot_jointMarginalAPCEffects(model_list, dat = data_RA,
 ### Heatmaps
 
 ```{r}
+# estimated heatmap
+APCtools::plot_APCheatmap(model_pure, dat = data_RA, plot_CI = FALSE, bin_heatmap = FALSE)
+
+# binned heatmap
+APCtools::plot_APCheatmap(model_pure, dat = data_RA, plot_CI = FALSE)
+
+# including confidence intervals
 APCtools::plot_APCheatmap(model_pure, dat = data_RA)
+
+# flexibly choose which A, P, C dimension should be plotted on which axis
+APCtools::plot_APCheatmap(model_pure, dat = data_RA, dimensions = c("cohort","age"), plot_CI = FALSE)
+
+# add some reference lines
+APCtools::plot_APCheatmap(model_pure, dat = data_RA, plot_CI = FALSE, bin_heatmap = FALSE,
+                          markLines_list = list(cohort = c(1910,1939,1955,1980)))
+APCtools::plot_APCheatmap(model_pure, dat = data_RA, plot_CI = FALSE, bin_heatmap = FALSE,
+                          markLines_list = list(age = c(25,35,70)), dimensions = c("period","cohort"))
+APCtools::plot_APCheatmap(model_pure, dat = data_RA, plot_CI = T, bin_heatmap = FALSE,
+                          markLines_list = list(age = c(25,35,70)), dimensions = c("period","cohort"))
+
+# manual binning
+manual_binning <- list(period = seq(min(data_RA$period, na.rm = TRUE) - 1, max(data_RA$period, na.rm = TRUE), by = 5),
+                       cohort = seq(min(data_RA$period - data_RA$age, na.rm = TRUE) - 1, max(data_RA$period - data_RA$age, na.rm = TRUE), by = 10))
+APCtools::plot_APCheatmap(model_pure, dat = data_RA, plot_CI = FALSE,
+                          bin_heatmapGrid_list = manual_binning)
 ```
 
 ### Hexamaps
@@ -174,11 +198,4 @@ APCtools::plot_1Dsmooth(model_cov, select = 2)
 summary_list <- create_covariateSummary(model_list)
 summary_list[[1]]
 summary_list[[2]]
-```
-
-
-### Model evaluation
-
-```{r}
-# TODO
 ```
