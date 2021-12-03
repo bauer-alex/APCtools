@@ -67,7 +67,7 @@ plot_variable <- function(dat, variable, apc_dimension = "period",
   
   # final theme adjustments
   gg <- gg +
-    xlab(apc_dimension) +
+    xlab(capitalize_firstLetter(apc_dimension)) +
     scale_x_discrete(guide = guide_axis(check.overlap = TRUE))
   
   return(gg)
