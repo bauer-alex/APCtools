@@ -6,6 +6,13 @@
 \usage{
 create_covariateSummary(model_list, digits = 2, ...)
 }
+\arguments{
+\item{model_list}{list of APC models}
+
+\item{digits}{number of displayed digits}
+
+\item{...}{additional arguments to \code{\link[mgcv]{gam}}}
+}
 \description{
 Create publication-ready summary tables of all linear and nonlinear effects
 for models fitted with \code{\link[mgcv]{gam}}. The output format of the

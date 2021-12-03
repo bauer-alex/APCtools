@@ -9,7 +9,9 @@
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effects.
 #' 
-#' @inheritParams extract_summary_linearEffects
+#' @param model_list list of APC models
+#' @param digits number of displayed digits
+#' @param ... additional arguments to \code{\link[mgcv]{gam}}
 #' 
 #' @import checkmate dplyr
 #' @importFrom mgcv summary.gam

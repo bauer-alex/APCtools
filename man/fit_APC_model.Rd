@@ -11,7 +11,7 @@ fit_APC_model(APC_formula, data, ...)
 
 \item{data}{data}
 
-\item{...}{}
+\item{...}{additional arguments to \code{\link[mgcv]{gam}}}
 }
 \description{
 Fit APC model without bivariate tensorproduct spline

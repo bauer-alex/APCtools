@@ -2,15 +2,12 @@ Package: APCtools
 Title: Visualization functions for descriptive and model-based APC analyses
 Version: 0.1
 Authors@R: c(
-    person("Alexander", "Bauer", "alexander.bauer@stat.uni-muenchen.de", role=c("aut", "cre"), comment=c(ORCID = "0000-0003-3495-5131")),
-    person("Maximilian", "Weigert", "maximilian.weigert@stat.uni-muenchen.de", role=c("aut", "cre"), comment=c(ORCID = "0000-0003-4400-134X")),
-    person("Pauline", "Hohenemser", role="ctb"))
-Author: Alexander Bauer [aut, cre],
-    Maximilian Weigert [aut, cre],
-    Pauline Hohenemser [ctb]
+    person(given = "Alexander", family = "Bauer", email = "alexander.bauer@stat.uni-muenchen.de", role=c("aut", "cre"), comment=c(ORCID = "0000-0003-3495-5131")),
+    person(given = "Maximilian", family = "Weigert", email = "maximilian.weigert@stat.uni-muenchen.de", role="aut", comment=c(ORCID = "0000-0003-4400-134X")),
+    person(given = "Pauline", family = "Hohenemser", role="ctb"))
 Maintainer: Alexander Bauer <alexander.bauer@stat.uni-muenchen.de>
 Description: What the package does (one paragraph).
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -19,7 +16,11 @@ Imports:
     ggpubr,
     checkmate,
     knitr,
-    ggplot2
+    ggplot2,
+    colorspace,
+    dplyr,
+    mgcv,
+    scales
 Suggests: 
     testthat (>= 3.0.0),
     rmarkdown

@@ -3,7 +3,7 @@
 #' 
 #' @param APC_formula model formula
 #' @param data data
-#' @param ...
+#' @param ... additional arguments to \code{\link[mgcv]{gam}}
 #' 
 #' @import checkmate dplyr
 #' @importFrom mgcv summary.gam

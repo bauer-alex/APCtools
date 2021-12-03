@@ -57,8 +57,10 @@ plot_APChexamap(
 TEXT
 }
 \examples{
-# Hexamap for Overdose Deaths among White Men in the United States from 1999 through 2018
-data.df <- read.csv("overdose_deaths_white_men_1999_2018.csv") #data can be downloaded from CDC Wonder.
+# Hexamap for Overdose Deaths among White Men in the United States from 1999
+# through 2018
+data.df <- read.csv("overdose_deaths_white_men_1999_2018.csv")
+#data can be downloaded from CDC Wonder.
 data <- as.matrix(data.df) # convert to a matrix and exclude the row names
 create_hexamap(data = data,  #matrix: age as rows, period as columns
                first_age = 15,
