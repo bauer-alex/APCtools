@@ -130,6 +130,9 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
                                 weights_var = NULL, log_scale = FALSE, xlab = NULL,
                                 ylab = "Density", legend_title = NULL, ...) {
   
+  # delete potential NA's from y_var, since these mess with stats::density()
+  dat <- dat[!is.na(dat[[y_var]]),]
+  
   # log10 transform the main variable, and create a function to accordingly
   # adjust the labels on the x axis (the function is passed to scale_x_continuous())
   if (log_scale) {

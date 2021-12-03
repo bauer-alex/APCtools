@@ -62,8 +62,8 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   
   
   # create a dataset for predicting the values of the APC surface
-  grid_age    <- min(dat$age):max(dat$age)
-  grid_period <- min(dat$period):max(dat$period)
+  grid_age    <- min(dat$age, na.rm = TRUE):max(dat$age, na.rm = TRUE)
+  grid_period <- min(dat$period, na.rm = TRUE):max(dat$period, na.rm = TRUE)
   dat_predictionGrid <- expand.grid(age    = grid_age,
                                     period = grid_period) %>% 
     mutate(cohort = period - age)
