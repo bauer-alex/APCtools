@@ -1,6 +1,4 @@
 
-library(stringr)
-
 
 # load the data from the 'data-raw' folder --------------------------------
 data_RA <- readRDS("Reiseanalyse_sample.rds")

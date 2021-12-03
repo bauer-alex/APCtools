@@ -6,26 +6,27 @@
 \title{Data from the German Reiseanalyse survey}
 \format{
 A dataframe containing \describe{
-\item{travel_year}{Year in which the respondent traveled.}
-\item{S_Alter}{Age of the respondent.}
-\item{JS_HUR_Reisedistanz}{Distance (in km) between the center of the
-respondent's federal state and the center of the country of destination,
-for the \emph{HUR} trip (see the Details section for an explanation of
-\emph{HUR}).}
-\item{S_Einkommen_HH}{Joint income (in €) of the respondent's household.}
-\item{S_Haushaltsgroesse}{Categorized size of the respondent's household.}
-\item{JS_HUR_Reisedauer}{Categorized trip length of the respondent's
-\emph{HUR} trip (see the Details section for an explanation of \emph{HUR}).}
-\item{G_Gewichtung}{Individual weight of each respondent to account for
+\item{period}{Year in which the respondent traveled.}
+\item{age}{Age of the respondent.}
+\item{sampling_weight}{Individual weight of each respondent to account for
 a not perfectly representative sample and project the sample results to
 the population of German citizens (until 2009) or of German-speaking
 residents (starting 2010). Only available since 1974.}
-\item{S_Herkunft}{Indicator if the respondent's main residence is in a
-federal state in the former area of West Germany (\emph{West}) or in the
-former area of East Germany (\emph{Ost}).}
-\item{S_Staatsangehoerigkeit}{Indicator if the respondent is German citizen
-(\emph{Deutsch}) or not (\emph{Nicht deutsch}). Only available since 2010.
-Until 2009 all respondents were German citizens.}
+\item{german_citizenship}{Indicator if the respondent is German citizen or
+not. Only available since 2010. Until 2009, all respondents were German
+citizens.}
+\item{residence_region}{Indicator if the respondent's main residence is in a
+federal state in the former area of West Germany or in the former area of
+East Germany.}
+\item{household size}{Categorized size of the respondent's household.}
+\item{household_income}{Joint income (in €) of the respondent's household.}
+\item{mainTrip_duration}{Categorized trip length of the respondent's
+\emph{main trip}. The main trip is the trip which the respondent stated was
+his/her most important trip in the respective year.
+\item{mainTrip_distance}{Distance (in km) between the center of the
+respondent's federal state and the center of the country of destination,
+for the \emph{main trip}. The main trip is the trip which the respondent
+stated was his/her most important trip in the respective year.}
 }
 }
 \usage{
@@ -43,11 +44,7 @@ trips with at least five days of trip length. For details see
 \href{https://journals.sagepub.com/doi/10.1177/1354816620987198}{Weigert et al. (2021)}.
 }
 \details{
-The variables \code{JS_HUR_Reisedistanz} and \code{JS_HUR_Reisedauer} refer
-to the \emph{Haupturlaubsreise} (HUR), i.e. the trip which the respondent
-stated was his/her most important trip in the respective year.
-
-The data are a 20\% random sample of all respondents who undertook at least
+The data are a 10\% random sample of all respondents who undertook at least
 one trip in the respective year, between 1971 and 2018. We thank the
 \href{https://reiseanalyse.de/about-us/}{Forschungsgemeinschaft Urlaub und Reisen e.V.}
 for allowing us to publish this sample.
