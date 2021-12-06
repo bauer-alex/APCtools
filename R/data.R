@@ -20,7 +20,8 @@
 #' 
 #' @usage data(data_RA)
 #' 
-#' @format A dataframe containing \describe{
+#' @format A dataframe containing
+#' \describe{
 #'  \item{period}{Year in which the respondent traveled.}
 #'  \item{age}{Age of the respondent.}
 #'  \item{sampling_weight}{Individual weight of each respondent to account for
@@ -37,23 +38,24 @@
 #'  \item{household_income}{Joint income (in €) of the respondent's household.}
 #'  \item{mainTrip_duration}{Categorized trip length of the respondent's
 #'  \emph{main trip}. The main trip is the trip which the respondent stated was
-#'  his/her most important trip in the respective year.
+#'  his/her most important trip in the respective year.}
 #'  \item{mainTrip_distance}{Distance (in km) between the center of the
 #'  respondent's federal state and the center of the country of destination,
 #'  for the \emph{main trip}. The main trip is the trip which the respondent
 #'  stated was his/her most important trip in the respective year.}
 #' }
 #' 
-#' @references
-#' Weigert, M., Bauer, A., Gernert, J., Karl, M., Nalmpatian, A., Küchenhoff,
+#' @references Weigert, M., Bauer, A., Gernert, J., Karl, M., Nalmpatian, A., Küchenhoff,
 #' H., and Schmude, J. (2021). Semiparametric APC analysis of destination choice
 #' patterns: Using generalized additive models to quantify the impact of age,
 #' period, and cohort on travel distances. \emph{Tourism Economics}.
 #' \href{https://doi.org/10.1177/1354816620987198}{doi:10.1177/1354816620987198}.
 #' 
 #' Forschungsgemeinschaft Urlaub und Reisen e.V. (FUR) (2020b) \emph{Survey of
-#' tourist demand in Germany for holiday travel and short breaks. Available at:
+#' tourist demand in Germany for holiday travel and short breaks}. Available at:
 #' \href{https://reiseanalyse.de/wp-content/uploads/2019/08/RA2020_Infoflyer_EN.pdf}{https://reiseanalyse.de/wp-content/uploads/2019/08/RA2020_Infoflyer_EN.pdf}
 #' (accessed 22 November 2021).
+#' 
+#' @keywords datasets
 #' 
 "data_RA"
