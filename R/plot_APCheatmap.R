@@ -1,15 +1,22 @@
 
-#' Heatmap of the APC surface based on an estimated GAM model
+#' Heatmap of an APC surface
 #' 
-#' Plot the heatmap of the two-dimensional tensor product surface for the
-#' APC effect, based on a model estimated with \code{\link[mgcv]{gam}}.
+#' Plot the heatmap of an APC structure. The function can be used in two ways:
+#' Either to plot the observed mean structure of a metric variable, by
+#' specifying \code{dat} and the variable \code{y_var}, or by specifying
+#' \code{dat} and the \code{model} object, to plot some mean structure
+#' represented by an estimated two-dimensional tensor product surface. The model
+#' must be estimated with \code{\link[mgcv]{gam}}.
 #' 
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effect.
 #' 
-#' @param model Regression model estimated with \code{\link[mgcv]{gam}}.
 #' @param dat Dataset as passed to \code{gam} for model estimation, containing
 #' columns \code{period} and \code{age}.
+#' @param y_var Optional character name of a metric variable to be plotted.
+#' @param model Optional regression model estimated with \code{\link[mgcv]{gam}}
+#' to estimate a smoothed APC surface. Only used if \code{y_var} is not
+#' specified.
 #' @param dimensions Character vector specifying the two APC dimensions that
 #' should be visualized along the x-axis and y-axis. Defaults to
 #' \code{c("period","age")}.
@@ -31,8 +38,10 @@
 #' by a respective label. The vector should be a subset of
 #' \code{c("age","period","cohort")}, or NULL to suppress all labels.
 #' Defaults to \code{c("age","period","cohort")}.
+#' @param y_var_logScale Indicator if \code{y_var} should be log10 transformed.
+#' Only used if \code{y_var} is specified. Defaults to FALSE.
 #' @param plot_CI Indicator if the confidence intervals should be plotted.
-#' Defaults to TRUE.
+#' Only used if \code{y_var} is not specified. Defaults to TRUE.
 #' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
@@ -43,42 +52,57 @@
 #' library(mgcv)
 #' 
 #' data(travel)
+#' 
+#' # variant A: plot observed mean structures
+#' # observed heatmap
+#' plot_APCheatmap(dat = travel, y_var = "mainTrip_distance",
+#'                 bin_heatmap = FALSE, y_var_logScale = TRUE)
+#' 
+#' # with binning
+#' plot_APCheatmap(dat = travel, y_var = "mainTrip_distance",
+#'                 bin_heatmap = TRUE, y_var_logScale = TRUE)
+#' 
+#' # variant B: plot some smoothed, estimated mean structure
 #' model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
 #'              household_size + s(household_income), data = travel)
 #' 
 #' # plot the smooth tensor product surface
-#' plot_APCheatmap(model, dat = travel, bin_heatmap = FALSE, plot_CI = FALSE)
+#' plot_APCheatmap(dat = travel, model = model, bin_heatmap = FALSE, plot_CI = FALSE)
 #' 
 #' # ... same plot including the confidence intervals
-#' plot_APCheatmap(model, bin_heatmap = FALSE, dat = travel)
+#' plot_APCheatmap(dat = travel, model = model, bin_heatmap = FALSE)
 #' 
 #' # the APC dimensions can be flexibly assigned to the x-axis and y-axis
-#' plot_APCheatmap(model, dat = travel, dimensions = c("age","cohort"),
+#' plot_APCheatmap(dat = travel, model = model, dimensions = c("age","cohort"),
 #'                 bin_heatmap = FALSE, plot_CI = FALSE)
 #' 
 #' # add some reference lines
-#' plot_APCheatmap(model, dat = travel, bin_heatmap = FALSE, plot_CI = FALSE,
+#' plot_APCheatmap(dat = travel, model = model, bin_heatmap = FALSE, plot_CI = FALSE,
 #'                 markLines_list = list(cohort = c(1910,1939,1955,1980)))
 #' 
 #' # default binning of the tensor product surface in 5-year-blocks
-#' plot_APCheatmap(model, dat = travel, plot_CI = FALSE)
+#' plot_APCheatmap(dat = travel, model = model, plot_CI = FALSE)
 #' 
 #' # manual binning
 #' manual_binning <- list(period = seq(min(travel$period, na.rm = TRUE) - 1,
 #'                                     max(travel$period, na.rm = TRUE), by = 5),
 #'                        cohort = seq(min(travel$period - travel$age, na.rm = TRUE) - 1,
 #'                                     max(travel$period - travel$age, na.rm = TRUE), by = 10))
-#' plot_APCheatmap(model, dat = travel, plot_CI = FALSE,
+#' plot_APCheatmap(dat = travel, model = model, plot_CI = FALSE,
 #'                 bin_heatmapGrid_list = manual_binning)
 #' 
-plot_APCheatmap <- function(model, dat, dimensions = c("period","age"),
+plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
+                            dimensions = c("period","age"),
                             bin_heatmap = TRUE, bin_heatmapGrid_list = NULL,
                             markLines_list = NULL,
                             markLines_displayLabels = c("age","period","cohort"),
-                            plot_CI = TRUE) {
+                            y_var_logScale = FALSE, plot_CI = TRUE) {
   
-  checkmate::assert_class(model, classes = "gam")
   checkmate::assert_data_frame(dat)
+  checkmate::assert_true(!is.null(y_var) | !is.null(model))
+  checkmate::assert_character(y_var, len = 1, null.ok = TRUE)
+  checkmate::assert_choice(y_var, choices = colnames(dat), null.ok = TRUE)
+  checkmate::assert_class(model, classes = "gam", null.ok = TRUE)
   checkmate::assert_character(dimensions, len = 2)
   checkmate::assert_subset(dimensions, choices = c("age","period","cohort"))
   checkmate::assert_logical(bin_heatmap, len = 1)
@@ -90,55 +114,96 @@ plot_APCheatmap <- function(model, dat, dimensions = c("period","age"),
   checkmate::assert_subset(names(markLines_list), choices = c("age","period","cohort"))
   checkmate::assert_character(markLines_displayLabels, null.ok = TRUE)
   checkmate::assert_subset(markLines_displayLabels, choices = c("age","period","cohort"))
-  checkmate::assert_logical(plot_CI)
+  checkmate::assert_logical(y_var_logScale, len = 1)
+  checkmate::assert_logical(plot_CI, len = 1)
   
   
-  # create a dataset for predicting the values of the APC surface
-  grid_age    <- min(dat$age, na.rm = TRUE):max(dat$age, na.rm = TRUE)
-  grid_period <- min(dat$period, na.rm = TRUE):max(dat$period, na.rm = TRUE)
-  dat_predictionGrid <- expand.grid(age    = grid_age,
-                                    period = grid_period) %>% 
-    mutate(cohort = period - age)
-  # add random values for all further covariates in the model,
-  # necessary for calling mgcv:::predict.gam
-  covars <- attr(model$terms, "term.labels")
-  covars <- covars[!(covars %in% c("age","period","cohort"))]
-  if (length(covars) > 0) {
-    dat_predictionGrid[,covars] <- dat[1, covars]
-  }
+  if (is.null(model)) { # plot observed structures
+    
+    dat <- dat %>% 
+      mutate(cohort = period - age) %>% 
+      dplyr::rename(effect = y_var) %>% # rename 'y_var' for easier handling
+      filter(!is.na(effect))
+    
+    plot_dat <- dat
+    
+    # if 'y_var' is not binned, take the average of observations with the same
+    # age and period, to prevent overplotting
+    if (!bin_heatmap) {
+      plot_dat <- plot_dat %>% 
+        group_by(period, age) %>% 
+        summarize(effect = mean(effect)) %>% 
+        ungroup()
+    }
 
-  # create a dataset containing the estimated values of the APC surface
-  terms_model     <- sapply(model$smooth, function(x) { x$label })
-  terms_index_APC <- which(grepl("age", terms_model) | grepl("period", terms_model))
-  term_APCsurface <- terms_model[terms_index_APC]
-  
-  prediction <- dat_predictionGrid %>% 
-    predict(object  = model,
-            newdata = .,
-            type    = "terms",
-            terms   = term_APCsurface,
-            se.fit  = TRUE)
-  
-  plot_dat <- dat_predictionGrid %>%
-    mutate(effect = as.vector(prediction$fit),
-           se     = as.vector(prediction$se.fit)) %>% 
-    mutate(effect = effect - mean(effect)) %>% 
-    mutate(lower  = effect - qnorm(0.95) * se,
-           upper  = effect + qnorm(0.95) * se)
-  
-  used_logLink <- model$family[[2]] %in% c("log","logit")
-  legend_title <- ifelse(used_logLink, "Mean exp effect", "Mean effect")
-  y_trans      <- ifelse(used_logLink, "log", "identity")
-  if (used_logLink) {
+    # create some variables and objects, to re-use the model-based code
     plot_dat <- plot_dat %>% 
-      mutate(exp_effect = exp(effect),
-             exp_se     = sqrt((se^2) * (exp_effect^2))) %>% 
-      mutate(exp_lower  = exp_effect - qnorm(0.975) * exp_se,
-             exp_upper  = exp_effect + qnorm(0.975) * exp_se) %>% 
-      select(-effect, -se, -upper, -lower) %>% 
-      dplyr::rename(effect = exp_effect, se = exp_se,
-                    upper  = exp_upper, lower = exp_lower)
-  }  
+      mutate(upper = effect,
+             lower = effect)
+    dat_predictionGrid <- plot_dat
+    
+    if (y_var_logScale) {
+      plot_dat <- plot_dat %>% mutate(effect = log10(effect))
+    }
+    
+    plot_CI      <- FALSE
+    used_logLink <- FALSE
+    legend_title <- ifelse(!y_var_logScale, paste0("average ",y_var),
+                           paste0("average log10(",y_var,")"))
+    y_trans      <- "identity"
+    
+    
+  } else { # plot smoothed, model-based structures
+    
+    # create a dataset for predicting the values of the APC surface
+    grid_age    <- min(dat$age, na.rm = TRUE):max(dat$age, na.rm = TRUE)
+    grid_period <- min(dat$period, na.rm = TRUE):max(dat$period, na.rm = TRUE)
+    dat_predictionGrid <- expand.grid(age    = grid_age,
+                                      period = grid_period) %>% 
+      mutate(cohort = period - age)
+    # add random values for all further covariates in the model,
+    # necessary for calling mgcv:::predict.gam
+    covars <- attr(model$terms, "term.labels")
+    covars <- covars[!(covars %in% c("age","period","cohort"))]
+    if (length(covars) > 0) {
+      dat_predictionGrid[,covars] <- dat[1, covars]
+    }
+    
+    # create a dataset containing the estimated values of the APC surface
+    terms_model     <- sapply(model$smooth, function(x) { x$label })
+    terms_index_APC <- which(grepl("age", terms_model) | grepl("period", terms_model))
+    term_APCsurface <- terms_model[terms_index_APC]
+    
+    prediction <- dat_predictionGrid %>% 
+      predict(object  = model,
+              newdata = .,
+              type    = "terms",
+              terms   = term_APCsurface,
+              se.fit  = TRUE)
+    
+    plot_dat <- dat_predictionGrid %>%
+      mutate(effect = as.vector(prediction$fit),
+             se     = as.vector(prediction$se.fit)) %>% 
+      mutate(effect = effect - mean(effect)) %>% 
+      mutate(lower  = effect - qnorm(0.95) * se,
+             upper  = effect + qnorm(0.95) * se)
+    
+    used_logLink <- model$family[[2]] %in% c("log","logit")
+    legend_title <- ifelse(used_logLink, "Mean exp effect", "Mean effect")
+    y_trans      <- ifelse(used_logLink, "log", "identity")
+    
+    if (used_logLink) {
+      plot_dat <- plot_dat %>% 
+        mutate(exp_effect = exp(effect),
+               exp_se     = sqrt((se^2) * (exp_effect^2))) %>% 
+        mutate(exp_lower  = exp_effect - qnorm(0.975) * exp_se,
+               exp_upper  = exp_effect + qnorm(0.975) * exp_se) %>% 
+        select(-effect, -se, -upper, -lower) %>% 
+        dplyr::rename(effect = exp_effect, se = exp_se,
+                      upper  = exp_upper, lower = exp_lower)
+    }
+    
+  }
   
   
   # bin the heatmap surface, if necessary
@@ -193,7 +258,8 @@ plot_APCheatmap <- function(model, dat, dimensions = c("period","age"),
   # create the base heatmap plot
   gg_effect <- ggplot() +
     geom_tile(data = plot_dat, aes(x = x, y = y, fill = plot_effect)) +
-    ggtitle("Effect") + xlab(x_lab) + ylab(y_lab) + gg_theme
+    ggtitle(ifelse(!is.null(y_var), "", "Effect")) +
+    xlab(x_lab) + ylab(y_lab) + gg_theme
   
   if (!plot_CI) { # no confidence intervals to be plotted
     
@@ -217,9 +283,11 @@ plot_APCheatmap <- function(model, dat, dimensions = c("period","age"),
   
   
   # color scale
+  scale_midpoint <- ifelse(!is.null(model), 0, mean(plot_dat$plot_effect))
   gg_list <- lapply(gg_list, function(gg) {
     gg + scale_fill_gradient2(legend_title, trans = y_trans, low = "dodgerblue3",
-                              mid = "white", high = "firebrick3")
+                              mid = "white", high = "firebrick3",
+                              midpoint = scale_midpoint)
   })
   
   

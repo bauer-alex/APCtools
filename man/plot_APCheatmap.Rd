@@ -2,24 +2,30 @@
 % Please edit documentation in R/plot_APCheatmap.R
 \name{plot_APCheatmap}
 \alias{plot_APCheatmap}
-\title{Heatmap of the APC surface based on an estimated GAM model}
+\title{Heatmap of an APC surface}
 \usage{
 plot_APCheatmap(
-  model,
   dat,
+  y_var = NULL,
+  model = NULL,
   dimensions = c("period", "age"),
   bin_heatmap = TRUE,
   bin_heatmapGrid_list = NULL,
   markLines_list = NULL,
   markLines_displayLabels = c("age", "period", "cohort"),
+  y_var_logScale = FALSE,
   plot_CI = TRUE
 )
 }
 \arguments{
-\item{model}{Regression model estimated with \code{\link[mgcv]{gam}}.}
-
 \item{dat}{Dataset as passed to \code{gam} for model estimation, containing
 columns \code{period} and \code{age}.}
+
+\item{y_var}{Optional character name of a metric variable to be plotted.}
+
+\item{model}{Optional regression model estimated with \code{\link[mgcv]{gam}}
+to estimate a smoothed APC surface. Only used if \code{y_var} is not
+specified.}
 
 \item{dimensions}{Character vector specifying the two APC dimensions that
 should be visualized along the x-axis and y-axis. Defaults to
@@ -46,12 +52,19 @@ by a respective label. The vector should be a subset of
 \code{c("age","period","cohort")}, or NULL to suppress all labels.
 Defaults to \code{c("age","period","cohort")}.}
 
+\item{y_var_logScale}{Indicator if \code{y_var} should be log10 transformed.
+Only used if \code{y_var} is specified. Defaults to FALSE.}
+
 \item{plot_CI}{Indicator if the confidence intervals should be plotted.
-Defaults to TRUE.}
+Only used if \code{y_var} is not specified. Defaults to TRUE.}
 }
 \description{
-Plot the heatmap of the two-dimensional tensor product surface for the
-APC effect, based on a model estimated with \code{\link[mgcv]{gam}}.
+Plot the heatmap of an APC structure. The function can be used in two ways:
+Either to plot the observed mean structure of a metric variable, by
+specifying \code{dat} and the variable \code{y_var}, or by specifying
+\code{dat} and the \code{model} object, to plot some mean structure
+represented by an estimated two-dimensional tensor product surface. The model
+must be estimated with \code{\link[mgcv]{gam}}.
 }
 \details{
 If the model was estimated with a log or logit link, the function
@@ -62,32 +75,43 @@ library(APCtools)
 library(mgcv)
 
 data(travel)
+
+# variant A: plot observed mean structures
+# observed heatmap
+plot_APCheatmap(dat = travel, y_var = "mainTrip_distance",
+                bin_heatmap = FALSE, y_var_logScale = TRUE)
+
+# with binning
+plot_APCheatmap(dat = travel, y_var = "mainTrip_distance",
+                bin_heatmap = TRUE, y_var_logScale = TRUE)
+
+# variant B: plot some smoothed, estimated mean structure
 model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
              household_size + s(household_income), data = travel)
 
 # plot the smooth tensor product surface
-plot_APCheatmap(model, dat = travel, bin_heatmap = FALSE, plot_CI = FALSE)
+plot_APCheatmap(dat = travel, model = model, bin_heatmap = FALSE, plot_CI = FALSE)
 
 # ... same plot including the confidence intervals
-plot_APCheatmap(model, bin_heatmap = FALSE, dat = travel)
+plot_APCheatmap(dat = travel, model = model, bin_heatmap = FALSE)
 
 # the APC dimensions can be flexibly assigned to the x-axis and y-axis
-plot_APCheatmap(model, dat = travel, dimensions = c("age","cohort"),
+plot_APCheatmap(dat = travel, model = model, dimensions = c("age","cohort"),
                 bin_heatmap = FALSE, plot_CI = FALSE)
 
 # add some reference lines
-plot_APCheatmap(model, dat = travel, bin_heatmap = FALSE, plot_CI = FALSE,
+plot_APCheatmap(dat = travel, model = model, bin_heatmap = FALSE, plot_CI = FALSE,
                 markLines_list = list(cohort = c(1910,1939,1955,1980)))
 
 # default binning of the tensor product surface in 5-year-blocks
-plot_APCheatmap(model, dat = travel, plot_CI = FALSE)
+plot_APCheatmap(dat = travel, model = model, plot_CI = FALSE)
 
 # manual binning
 manual_binning <- list(period = seq(min(travel$period, na.rm = TRUE) - 1,
                                     max(travel$period, na.rm = TRUE), by = 5),
                        cohort = seq(min(travel$period - travel$age, na.rm = TRUE) - 1,
                                     max(travel$period - travel$age, na.rm = TRUE), by = 10))
-plot_APCheatmap(model, dat = travel, plot_CI = FALSE,
+plot_APCheatmap(dat = travel, model = model, plot_CI = FALSE,
                 bin_heatmapGrid_list = manual_binning)
 
 }
