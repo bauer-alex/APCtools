@@ -31,6 +31,8 @@ theme_set(theme_minimal())
 
 ```{r data preparation}
 data(travel)
+# alternative: drug deaths data
+data(drug_deaths)
 
 options(knitr.kable.NA = '')
 summary(travel) %>% 
