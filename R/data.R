@@ -64,7 +64,16 @@
 
 #' Drug deaths of white men in the United States
 #' 
-#' TODO detailed description, including how to retrieve the data from the online portal
+#' Dataset on the number of unintentional drug overdose deaths in the United
+#' States for each age group between 1999 and 2019, retrieved from the CDC
+#' WONDER Online Database. The data only cover white men.
+#' 
+#' The data were exported from the CDC WONDER Online Database (see link in
+#' references down below), based on the following settings:
+#' * Group by \emph{Year} and by \emph{Single-Year Ages}
+#' * Demographics: Gender \emph{Male}; Ethnicity \emph{White}
+#' * Cause of death: \emph{Drug / Alcohol Induced Causes}. Then select the more
+#' specific category \emph{Drug poisonings (overdose) Unintentional (X40-X44)}.
 #' 
 #' @docType data
 #' 
@@ -72,18 +81,29 @@
 #' 
 #' @format A dataframe containing
 #' \describe{
-#'   \item{period}{TODO.}
-#'   \item{age}{TODO.}
-#'   \item{deaths}{TODO.}
-#'   \item{population}{TODO.}
-#'   \item{death_rate}{TODO.}
+#'   \item{period}{Calendar year}
+#'   \item{age}{Age group.}
+#'   \item{deaths}{Number of observed unintentional drug overdose deaths in the
+#'   respective age group and calendar year.}
+#'   \item{population}{Number of white men in the respective age group and
+#'   calendar year in the U.S. population.}
+#'   \item{death_rate}{Crude death rate for the respective age group and
+#'   calendar year, reported as the number of deaths 100,000 population.}
 #' }
 #' 
 #' @references
-#' TODO format both references
-#' Jalal, H., & Burke, D. S. (2020). Hexamaps for Age-Period-Cohort Data Visualization and Implementation in R. Epidemiology (Cambridge, Mass.), 31(6), e47.
+#' Jalal, H., & Burke, D. S. (2020). Hexamaps for Age-Period-Cohort Data
+#' Visualization and Implementation in R. \emph{Epidemiology (Cambridge, Mass.)},
+#' 31(6), e47.
+#' \href{https://dx.doi.org/10.1097%2FEDE.0000000000001236}{doi:10.1097/EDE.0000000000001236}.
 #' 
-#' Centers for Disease Control and Prevention, National Center for Health Statistics. Underlying Cause of Death 1999-2019 on CDC WONDER Online Database, released in 2020. Data are from the Multiple Cause of Death Files, 1999-2019, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program. Accessed at http://wonder.cdc.gov/ucd-icd10.html on Dec 6, 2021 6:03:26 AM
+#' Centers for Disease Control and Prevention, National Center for Health
+#' Statistics. Underlying Cause of Death 1999-2019 on CDC WONDER Online Database,
+#' released in 2020. Data are from the Multiple Cause of Death Files, 1999-2019,
+#' as compiled from data provided by the 57 vital statistics jurisdictions
+#' through the Vital Statistics Cooperative Program. Accessed at
+#' \href{http://wonder.cdc.gov/ucd-icd10.html}{wonder.cdc.gov/ucd-icd10.html}
+#' on 6 December 2021.
 #' 
 #' @keywords datasets
 #' 
