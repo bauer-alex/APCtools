@@ -18,6 +18,16 @@
 #' @import checkmate dplyr ggplot2
 #' @export
 #' 
+#' @examples
+#' library(APCtools)
+#' library(mgcv)
+#' 
+#' data(travel)
+#' model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
+#'              household_size + s(household_income), data = travel)
+#' 
+#' plot_1Dsmooth(model, select = 2)
+#' 
 plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
                           ylim = NULL) {
   

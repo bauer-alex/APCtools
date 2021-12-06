@@ -56,3 +56,7 @@ plot_APChexamap(
 \description{
 TEXT
 }
+\examples{
+# TODO
+
+}

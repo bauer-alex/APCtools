@@ -19,6 +19,19 @@
 #' @import checkmate dplyr ggplot2
 #' @export
 #' 
+#' @examples
+#' library(APCtools)
+#' data(travel)
+#' 
+#' # plot a metric variable
+#' plot_variable(dat = travel, variable = "mainTrip_distance",
+#'               apc_dimension = "period", log_scale = TRUE)
+#' 
+#' # plot a categorical variable
+#' plot_variable(dat = travel, variable = "household_size", apc_dimension = "period")
+#' plot_variable(dat = travel, variable = "household_size", apc_dimension = "period",
+#'               geomBar_position = "stack")
+#' 
 plot_variable <- function(dat, variable, apc_dimension = "period",
                           log_scale = FALSE, geomBar_position = "fill") {
   

@@ -77,7 +77,7 @@
 #' 
 #' @docType data
 #' 
-#' @usage data(data_RA)
+#' @usage data(drug_deaths)
 #' 
 #' @format A dataframe containing
 #' \describe{

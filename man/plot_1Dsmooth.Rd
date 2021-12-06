@@ -25,3 +25,14 @@ Plots 1D smooth effects for a GAM model fitted with \code{\link[mgcv]{gam}}.
 If the model was estimated with a log or logit link, the function
 automatically performs an exponential transformation of the effect.
 }
+\examples{
+library(APCtools)
+library(mgcv)
+
+data(travel)
+model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
+             household_size + s(household_income), data = travel)
+
+plot_1Dsmooth(model, select = 2)
+
+}

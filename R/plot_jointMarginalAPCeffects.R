@@ -22,7 +22,25 @@
 #' @importFrom ggpubr ggarrange
 #' @export
 #' 
-plot_jointMarginalAPCEffects <- function(model_list, dat, vlines_list = NULL,
+#' @examples
+#' library(APCtools)
+#' library(mgcv)
+#' 
+#' data(travel)
+#' model_pure <- gam(mainTrip_distance ~ te(age, period), data = travel)
+#' model_cov  <- gam(mainTrip_distance ~ te(age, period) + s(household_income),
+#'                   data = travel)
+#' 
+#' model_list <- list("pure model"      = model_pure,
+#'                    "covariate model" = model_cov)
+#' 
+#' plot_jointMarginalAPCeffects(model_list, dat = travel)
+#' 
+#' # mark specific cohorts
+#' plot_jointMarginalAPCeffects(model_list, dat = travel,
+#'                              vlines_list = list("cohort" = c(1966.5,1982.5,1994.5)))
+#' 
+plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
                                          ylab = NULL) {
   
   checkmate::assert_list(model_list, types = "gam")

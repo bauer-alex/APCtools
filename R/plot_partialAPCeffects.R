@@ -10,6 +10,19 @@
 #' 
 #' @export
 #' 
+#' @examples
+#' library(APCtools)
+#' library(mgcv)
+#' 
+#' data(travel)
+#' model <- gam(mainTrip_distance ~ te(age, period), data = travel)
+#' 
+#' plot_marginalAPCeffects(model, dat = travel, variable = "age")
+#' 
+#' # mark specific cohorts
+#' plot_marginalAPCeffects(model, dat = travel, variable = "cohort",
+#'                         vlines_vec = c(1966.5,1982.5,1994.5))
+#' 
 plot_marginalAPCeffects <- function(model, dat, variable = "age",
                                     vlines_vec = NULL, return_plotData = FALSE) {
   
@@ -48,6 +61,19 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
 #' @export
+#' 
+#' @examples
+#' library(APCtools)
+#' library(mgcv)
+#' 
+#' data(travel)
+#' model <- gam(mainTrip_distance ~ te(age, period), data = travel)
+#' 
+#' plot_partialAPCeffects(model, dat = travel, variable = "age")
+#' 
+#' # mark specific cohorts
+#' plot_partialAPCeffects(model, dat = travel, variable = "cohort",
+#'                        vlines_vec = c(1966.5,1982.5,1994.5))
 #' 
 plot_partialAPCeffects <- function(model, dat, variable = "age",
                                    hide_partialEffects = FALSE,

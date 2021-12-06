@@ -18,7 +18,7 @@ calendar year, reported as the number of deaths 100,000 population.}
 }
 }
 \usage{
-data(data_RA)
+data(drug_deaths)
 }
 \description{
 Dataset on the number of unintentional drug overdose deaths in the United

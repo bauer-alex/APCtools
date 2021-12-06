@@ -22,6 +22,9 @@
 #' @import checkmate
 #' @export
 #' 
+#' @examples
+#' # TODO
+#' 
 plot_APChexamap  <- function (data,  #matrix: age as rows, period as columns
                               first_age,
                               first_period,

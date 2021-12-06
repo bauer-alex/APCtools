@@ -9,7 +9,7 @@
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effect.
 #' 
-#' @inheritParams plot_jointMarginalAPCEffects
+#' @inheritParams plot_jointMarginalAPCeffects
 #' @param digits Number of digits for numeric columns. Defaults to 2.
 #' @param apc_range Optional list with one or multiple elements with names
 #' \code{"age","period","cohort"} to filter the data. Each element should
@@ -20,6 +20,20 @@
 #' @import checkmate dplyr
 #' @importFrom knitr kable
 #' @export
+#' 
+#' @examples
+#' library(APCtools)
+#' library(mgcv)
+#' 
+#' data(travel)
+#' model_pure <- gam(mainTrip_distance ~ te(age, period), data = travel)
+#' model_cov  <- gam(mainTrip_distance ~ te(age, period) + s(household_income),
+#'                   data = travel)
+#' 
+#' model_list <- list("pure model"      = model_pure,
+#'                    "covariate model" = model_cov)
+#' 
+#' create_APCsummary(model_list, dat = travel)
 #' 
 create_APCsummary <- function(model_list, dat, digits = 2, apc_range = NULL,
                               ...) {

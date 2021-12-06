@@ -141,7 +141,7 @@ APCtools::plot_marginalAPCeffects(model_pure, dat = travel, variable = "cohort",
 
 model_list <- list("pure model"      = model_pure,
                    "covariate model" = model_cov)
-APCtools::plot_jointMarginalAPCEffects(model_list, dat = travel,
+APCtools::plot_jointMarginalAPCeffects(model_list, dat = travel,
                                        vlines_list = list("cohort" = c(1939,1955, 1980)))
 ```
 

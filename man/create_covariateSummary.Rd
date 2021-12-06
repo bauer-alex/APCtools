@@ -23,3 +23,14 @@ the \code{...} argument.
 If the model was estimated with a log or logit link, the function
 automatically performs an exponential transformation of the effects.
 }
+\examples{
+library(APCtools)
+library(mgcv)
+
+data(travel)
+model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
+             household_size + s(household_income), data = travel)
+
+create_APCsummary(list(model), dat = travel)
+
+}

@@ -68,3 +68,12 @@ If \code{plot_density} is called internally from within
 columns \code{c("age_group","period_group","cohort_group")}), this function
 will calculate the metric densities individually for these groups.
 }
+\examples{
+library(APCtools)
+data(travel)
+
+plot_density(dat = travel, y_var = "mainTrip_distance")
+
+plot_density(dat = travel, y_var = "mainTrip_distance")
+
+}

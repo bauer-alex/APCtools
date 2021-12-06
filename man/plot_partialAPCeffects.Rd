@@ -43,3 +43,17 @@ additive regression model with \code{\link[mgcv]{gam}}.
 If the model was estimated with a log or logit link, the function
 automatically performs an exponential transformation of the effect.
 }
+\examples{
+library(APCtools)
+library(mgcv)
+
+data(travel)
+model <- gam(mainTrip_distance ~ te(age, period), data = travel)
+
+plot_partialAPCeffects(model, dat = travel, variable = "age")
+
+# mark specific cohorts
+plot_partialAPCeffects(model, dat = travel, variable = "cohort",
+                       vlines_vec = c(1966.5,1982.5,1994.5))
+
+}

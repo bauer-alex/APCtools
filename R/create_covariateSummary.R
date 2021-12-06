@@ -17,6 +17,16 @@
 #' @importFrom mgcv summary.gam
 #' @export
 #' 
+#' @examples
+#' library(APCtools)
+#' library(mgcv)
+#' 
+#' data(travel)
+#' model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
+#'              household_size + s(household_income), data = travel)
+#' 
+#' create_APCsummary(list(model), dat = travel)
+#' 
 create_covariateSummary <- function(model_list, digits = 2, ...) {
   
   checkmate::assert_list(model_list, types = "gam")

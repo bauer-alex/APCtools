@@ -39,6 +39,14 @@
 #' @import checkmate dplyr
 #' @export
 #' 
+#' @examples
+#' library(APCtools)
+#' data(travel)
+#' 
+#' plot_density(dat = travel, y_var = "mainTrip_distance")
+#' 
+#' plot_density(dat = travel, y_var = "mainTrip_distance")
+#' 
 plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
                          highlight_diagonals = NULL,
                          y_var_cat_breaks = NULL, y_var_cat_labels = NULL,
@@ -268,7 +276,8 @@ plot_density_categorical <- function(dat, y_var, dat_highlightDiagonals = NULL,
                              weight = weight, fill = x)) +
     scale_fill_brewer(capitalize_firstLetter(y_var), palette = "Set2") +
     xlab(xlab) + ylab(ylab) +
-    theme(axis.text.x = element_blank())
+    theme(axis.text.x  = element_blank(),
+          axis.ticks.x = element_blank())
   
   return(gg)
 }

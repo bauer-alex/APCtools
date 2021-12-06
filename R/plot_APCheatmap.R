@@ -38,6 +38,39 @@
 #' @importFrom ggpubr ggarrange
 #' @export
 #' 
+#' @examples
+#' library(APCtools)
+#' library(mgcv)
+#' 
+#' data(travel)
+#' model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
+#'              household_size + s(household_income), data = travel)
+#' 
+#' # plot the smooth tensor product surface
+#' plot_APCheatmap(model, dat = travel, bin_heatmap = FALSE, plot_CI = FALSE)
+#' 
+#' # ... same plot including the confidence intervals
+#' plot_APCheatmap(model, bin_heatmap = FALSE, dat = travel)
+#' 
+#' # the APC dimensions can be flexibly assigned to the x-axis and y-axis
+#' plot_APCheatmap(model, dat = travel, dimensions = c("age","cohort"),
+#'                 bin_heatmap = FALSE, plot_CI = FALSE)
+#' 
+#' # add some reference lines
+#' plot_APCheatmap(model, dat = travel, bin_heatmap = FALSE, plot_CI = FALSE,
+#'                 markLines_list = list(cohort = c(1910,1939,1955,1980)))
+#' 
+#' # default binning of the tensor product surface in 5-year-blocks
+#' plot_APCheatmap(model, dat = travel, plot_CI = FALSE)
+#' 
+#' # manual binning
+#' manual_binning <- list(period = seq(min(travel$period, na.rm = TRUE) - 1,
+#'                                     max(travel$period, na.rm = TRUE), by = 5),
+#'                        cohort = seq(min(travel$period - travel$age, na.rm = TRUE) - 1,
+#'                                     max(travel$period - travel$age, na.rm = TRUE), by = 10))
+#' plot_APCheatmap(model, dat = travel, plot_CI = FALSE,
+#'                 bin_heatmapGrid_list = manual_binning)
+#' 
 plot_APCheatmap <- function(model, dat, dimensions = c("period","age"),
                             bin_heatmap = TRUE, bin_heatmapGrid_list = NULL,
                             markLines_list = NULL,

@@ -12,6 +12,16 @@
 #' @import checkmate colorspace dplyr
 #' @export
 #' 
+#' @examples
+#' library(APCtools)
+#' library(mgcv)
+#' 
+#' data(travel)
+#' model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
+#'              household_size + s(household_income), data = travel)
+#' 
+#' plot_linearEffects(model)
+#' 
 plot_linearEffects <- function(model) {
   
   checkmate::assert_class(model, classes = "gam")

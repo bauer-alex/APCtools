@@ -37,3 +37,17 @@ estimated as a semiparametric additive regression model with \code{\link[mgcv]{g
 This function is a simple wrapper to \code{\link{plot_partialAPCeffects}},
 called with argument \code{hide_partialEffects = TRUE}.
 }
+\examples{
+library(APCtools)
+library(mgcv)
+
+data(travel)
+model <- gam(mainTrip_distance ~ te(age, period), data = travel)
+
+plot_marginalAPCeffects(model, dat = travel, variable = "age")
+
+# mark specific cohorts
+plot_marginalAPCeffects(model, dat = travel, variable = "cohort",
+                        vlines_vec = c(1966.5,1982.5,1994.5))
+
+}
