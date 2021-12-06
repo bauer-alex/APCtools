@@ -126,8 +126,9 @@ plot_densityMatrix(dat                 = travel,
 ### Wrapper function for the estimation of mgcv::gam
 
 ```{r}
-model_pure <- gam(mainTrip_distance ~ te(age, period), data = travel)
-model_cov  <- gam(mainTrip_distance ~ te(age, period) +
+model_pure <- gam(mainTrip_distance ~ te(age, period, bs = "ps", k = c(8,8)),
+                  data = travel)
+model_cov  <- gam(mainTrip_distance ~ te(age, period, bs = "ps", k = c(8,8)) +
                     residence_region + household_size + s(household_income),
                   data = travel)
 ```
@@ -135,50 +136,91 @@ model_cov  <- gam(mainTrip_distance ~ te(age, period) +
 ### Partial effect plots
 
 ```{r}
-APCtools::plot_partialAPCeffects(model_pure, dat = travel, variable = "period")
-APCtools::plot_marginalAPCeffects(model_pure, dat = travel, variable = "cohort",
-                                  vlines_vec = c(1939,1955, 1980))
+plot_partialAPCeffects(model_pure, dat = travel, variable = "period")
+plot_marginalAPCeffects(model_pure, dat = travel, variable = "cohort",
+                        vlines_vec = c(1939,1955, 1980))
 
 model_list <- list("pure model"      = model_pure,
                    "covariate model" = model_cov)
-APCtools::plot_jointMarginalAPCeffects(model_list, dat = travel,
-                                       vlines_list = list("cohort" = c(1939,1955, 1980)))
+plot_jointMarginalAPCeffects(model_list, dat = travel,
+                             vlines_list = list("cohort" = c(1939,1955, 1980)))
 ```
 
-### Heatmaps
+### Non-smoothed heatmaps
+
+```{r}
+# observed heatmap
+plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", bin_heatmap = FALSE,
+                y_var_logScale = TRUE)
+
+# with binning
+plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", bin_heatmap = TRUE,
+                y_var_logScale = TRUE)
+
+# flexibly choose which A, P, C dimension should be plotted on which axis
+plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", dimensions = c("cohort","age"),
+                y_var_logScale = TRUE)
+
+# add some reference lines, with manual binning
+manual_binning <- list(period = seq(min(travel$period, na.rm = TRUE) - 1, max(travel$period, na.rm = TRUE), by = 5),
+                       age    = seq(min(travel$age, na.rm = TRUE) - 1, max(travel$age, na.rm = TRUE), by = 5),
+                       cohort = c(1875,1910,1939,1955,1980,2005))
+plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", y_var_logScale = TRUE,
+                bin_heatmapGrid_list = manual_binning,
+                markLines_list = list(cohort = c(1910,1939,1955,1980)))
+
+# cohort on the y-axis, without manual binning
+plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", y_var_logScale = TRUE,
+                dimensions = c("period","cohort"),
+                markLines_list = list(cohort = c(1910,1939,1955,1980)))
+```
+
+### Smoothed, model-based heatmaps
 
 ```{r}
 # estimated heatmap
-APCtools::plot_APCheatmap(model_pure, dat = travel, plot_CI = FALSE, bin_heatmap = FALSE)
+APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE,
+                          bin_heatmap = FALSE)
 
 # binned heatmap
-APCtools::plot_APCheatmap(model_pure, dat = travel, plot_CI = FALSE)
+APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE)
 
 # including confidence intervals
-APCtools::plot_APCheatmap(model_pure, dat = travel)
+APCtools::plot_APCheatmap(dat = travel, model = model_pure)
 
 # flexibly choose which A, P, C dimension should be plotted on which axis
-APCtools::plot_APCheatmap(model_pure, dat = travel, dimensions = c("cohort","age"), plot_CI = FALSE)
+APCtools::plot_APCheatmap(dat = travel, model = model_pure,
+                          dimensions = c("cohort","age"), plot_CI = FALSE)
 
 # add some reference lines
-APCtools::plot_APCheatmap(model_pure, dat = travel, plot_CI = FALSE, bin_heatmap = FALSE,
+APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE, bin_heatmap = FALSE,
                           markLines_list = list(cohort = c(1910,1939,1955,1980)))
-APCtools::plot_APCheatmap(model_pure, dat = travel, plot_CI = FALSE, bin_heatmap = FALSE,
+APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE, bin_heatmap = FALSE,
                           markLines_list = list(age = c(25,35,70)), dimensions = c("period","cohort"))
-APCtools::plot_APCheatmap(model_pure, dat = travel, plot_CI = T, bin_heatmap = FALSE,
+APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = T, bin_heatmap = FALSE,
                           markLines_list = list(age = c(25,35,70)), dimensions = c("period","cohort"))
 
 # manual binning
 manual_binning <- list(period = seq(min(travel$period, na.rm = TRUE) - 1, max(travel$period, na.rm = TRUE), by = 5),
                        cohort = seq(min(travel$period - travel$age, na.rm = TRUE) - 1, max(travel$period - travel$age, na.rm = TRUE), by = 10))
-APCtools::plot_APCheatmap(model_pure, dat = travel, plot_CI = FALSE,
+APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE,
                           bin_heatmapGrid_list = manual_binning)
 ```
 
 ### Hexamaps
 
 ```{r}
-# TODO
+data(drug_deaths)
+
+plot_APChexamap(data = drug_deaths,
+                first_age = 15,
+                first_period = 1999,
+                interval = 1, 
+                first_age_isoline = 20,
+                first_period_isoline = 2000,
+                isoline_interval = 5, 
+                color_scale = c(0,40), 
+                wrap_cohort_labels = T)
 ```
 
 ### Overview table

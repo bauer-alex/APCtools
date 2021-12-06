@@ -1,7 +1,9 @@
 
-#' Heatmap of the APC surface based on an estimated GAM model
+#' Hexamap of the APC surface based on an estimated GAM model
 #' 
-#' TEXT
+#' TODO in analogy to \code{\link{plot_APCheatmap}}, allow to plot an observed
+#' mean structure of a metric variable, or alternatively an estimated smoothed
+#' mean structure based on a GAM model.
 #' 
 #' @param data TODO
 #' @param first_age TODO
@@ -19,30 +21,41 @@
 #' @param scale_units TODO
 #' @param wrap_cohort_labels TODO
 #' 
-#' @import checkmate
+#' @import checkmate dplyr
+#' @importFrom tidyr pivot_wider
 #' @export
 #' 
 #' @examples
 #' # TODO
 #' 
-plot_APChexamap  <- function (data,  #matrix: age as rows, period as columns
-                              first_age,
-                              first_period,
-                              interval, 
-                              first_age_isoline = NULL,
-                              first_period_isoline = NULL,
-                              isoline_interval = NULL,
-                              color_scale = NULL, 
-                              color_map = NULL,
-                              line_width = .5,
-                              line_color = "grey",
-                              label_size = .5,
-                              label_color = "black",
-                              scale_units = "Rate", 
-                              wrap_cohort_labels = TRUE) {
+plot_APChexamap <- function (data,
+                             first_age,
+                             first_period,
+                             interval, 
+                             first_age_isoline = NULL,
+                             first_period_isoline = NULL,
+                             isoline_interval = NULL,
+                             color_scale = NULL, 
+                             color_map = NULL,
+                             line_width = .5,
+                             line_color = "grey",
+                             label_size = .5,
+                             label_color = "black",
+                             scale_units = "Rate", 
+                             wrap_cohort_labels = TRUE) {
   
-  # TODO revamp the code from here on (and probably base it on ggplot?)
+  # TODO revamp the code from here on
+  # Basing it on ggplot2 probably too complicated.
   
+  # data prep for the function to work
+  data <- data %>% mutate(age = as.numeric(age), 
+                          pop = as.numeric(population),
+                          mrate = 100000 * deaths / pop)
+  
+  data <- data %>% select(period, age, mrate) %>% 
+    filter(age >= 15 & age <= 70) %>% 
+    tidyr::pivot_wider(id_cols = age, names_from = period, values_from = mrate)
+  data <- as.matrix(data[,-1])
   
   # setting default values for missing parameters
   if(is.null(first_age_isoline)){
@@ -115,9 +128,9 @@ plot_APChexamap  <- function (data,  #matrix: age as rows, period as columns
   P0 <- matrix(periods, nrow = n_ages, ncol=n_periods, byrow = TRUE)
   A0 <- t(matrix(ages, nrow = n_periods, ncol = n_ages, byrow = TRUE))
   
-  # convert the grid to the X-Y coordinate
-  X <- compute_xcoordinate(P0)
-  Y <- compute_ycoordinate(P0, A0)
+  # convert the grid to the X-Y Coordinate
+  X <- compute_xCoordinate(P0)
+  Y <- compute_yCoordinate(P0, A0)
   
   # only keep those that have non-NA values
   X <- X[not_nan_data]
@@ -139,7 +152,7 @@ plot_APChexamap  <- function (data,  #matrix: age as rows, period as columns
   if (wrap_cohort_labels){
     minY <- min(Yhex) - interval
   } else {
-    minY <- compute_ycoordinate(p=first_period, a=first_age - (last_period-first_period)) - interval
+    minY <- compute_yCoordinate(p=first_period, a=first_age - (last_period-first_period)) - interval
   }
   maxY <- max(Yhex) + interval
   
@@ -160,10 +173,10 @@ plot_APChexamap  <- function (data,  #matrix: age as rows, period as columns
   }
   
   #age-isolines
-  y1 <- compute_ycoordinate(first_period,age_isolines)
-  y2 <- compute_ycoordinate(last_period+ interval,age_isolines)
-  x1 <- compute_xcoordinate(first_period)
-  x2 <- compute_xcoordinate(last_period + interval)
+  y1 <- compute_yCoordinate(first_period,age_isolines)
+  y2 <- compute_yCoordinate(last_period+ interval,age_isolines)
+  x1 <- compute_xCoordinate(first_period)
+  x2 <- compute_xCoordinate(last_period + interval)
   for (i in 1:n_age_isolines){ 
     lines(x=c(x1,x2), y=c(y1[i],y2[i]), col = line_color, lwd = line_width)
     text(x=x2, y=y2[i], labels = paste("A:",age_isolines[i]), 
@@ -172,9 +185,9 @@ plot_APChexamap  <- function (data,  #matrix: age as rows, period as columns
   }
   
   # period-isolines
-  x <- compute_xcoordinate(period_isolines)
-  y1 <- compute_ycoordinate(period_isolines, first_age)
-  y2 <- compute_ycoordinate(period_isolines, last_age+interval)
+  x <- compute_xCoordinate(period_isolines)
+  y1 <- compute_yCoordinate(period_isolines, first_age)
+  y2 <- compute_yCoordinate(period_isolines, last_age+interval)
   
   for (i in 1:n_period_isolines){ 
     lines(x=c(x[i], x[i]), y=c(y1[i],y2[i]), col = line_color, lwd = line_width)
@@ -203,7 +216,7 @@ plot_APChexamap  <- function (data,  #matrix: age as rows, period as columns
   a_right <- a_right[a_right <= last_age]
   n_right <- length(a_right)
   
-  # combine the periods and ages initial and final points on the a*p coordinates
+  # combine the periods and ages initial and final points on the a*p Coordinates
   # first the left-bottom edge
   if (wrap_cohort_labels){
     p1 <- c(rep(first_period, n_left), p_bottom)
@@ -216,11 +229,11 @@ plot_APChexamap  <- function (data,  #matrix: age as rows, period as columns
   p2 <- c(p_top, rep(last_period, n_right))
   a2 <- c(rep(last_age, n_top), a_right)
   
-  # convert the a*p coordinates to x-y coordinates
-  x1 <- compute_xcoordinate(p1-interval) #,a1-1)
-  x2 <- compute_xcoordinate(p2) #,a2)
-  y1 <- compute_ycoordinate(p1-interval, a1-interval)
-  y2 <- compute_ycoordinate(p2, a2)
+  # convert the a*p Coordinates to x-y Coordinates
+  x1 <- compute_xCoordinate(p1-interval) #,a1-1)
+  x2 <- compute_xCoordinate(p2) #,a2)
+  y1 <- compute_yCoordinate(p1-interval, a1-interval)
+  y2 <- compute_yCoordinate(p2, a2)
   # finally draw the lines.
   for (i in 1:n_cohort_isolines){ 
     lines(x=c(x1[i], x2[i]), y=c(y1[i],y2[i]), col = line_color, lwd = line_width)
@@ -234,15 +247,4 @@ plot_APChexamap  <- function (data,  #matrix: age as rows, period as columns
   cb_range <- seq(from = color_scale[1], to = color_scale[2], length.out = ncol)
   image(y=cb_range,z=t(cb_range), col=color_map, axes=FALSE, main=scale_units, cex.main=.8)
   axis(4,cex.axis=label_size,mgp=c(0,.5,0))
-}
-
-compute_xcoordinate <- function(p) {
-  x <- p * sqrt(3) / 2
-  return(x)
-}
-
-compute_ycoordinate <- function(p, a){
-  
-  y <- a - p / 2
-  return(y)
 }

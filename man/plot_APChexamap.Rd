@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_APChexamap.R
 \name{plot_APChexamap}
 \alias{plot_APChexamap}
-\title{Heatmap of the APC surface based on an estimated GAM model}
+\title{Hexamap of the APC surface based on an estimated GAM model}
 \usage{
 plot_APChexamap(
   data,
@@ -54,7 +54,9 @@ plot_APChexamap(
 \item{wrap_cohort_labels}{TODO}
 }
 \description{
-TEXT
+TODO in analogy to \code{\link{plot_APCheatmap}}, allow to plot an observed
+mean structure of a metric variable, or alternatively an estimated smoothed
+mean structure based on a GAM model.
 }
 \examples{
 # TODO

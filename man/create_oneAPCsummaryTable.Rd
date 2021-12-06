@@ -7,7 +7,9 @@
 create_oneAPCsummaryTable(model, dat, apc_range = NULL)
 }
 \arguments{
-\item{model}{Regression model estimated with \code{\link[mgcv]{gam}}.}
+\item{model}{Optional regression model estimated with \code{\link[mgcv]{gam}}
+to estimate a smoothed APC surface. Only used if \code{y_var} is not
+specified.}
 
 \item{dat}{Dataset as passed to \code{gam} for model estimation, containing
 columns \code{period} and \code{age}.}
