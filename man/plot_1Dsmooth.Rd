@@ -36,3 +36,6 @@ model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
 plot_1Dsmooth(model, select = 2)
 
 }
+\author{
+Alexander Bauer \email{alexander.bauer@stat.uni-muenchen.de}
+}

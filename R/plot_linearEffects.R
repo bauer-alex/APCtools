@@ -12,6 +12,8 @@
 #' @import checkmate colorspace dplyr
 #' @export
 #' 
+#' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de}
+#' 
 #' @examples
 #' library(APCtools)
 #' library(mgcv)

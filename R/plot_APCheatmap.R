@@ -47,6 +47,11 @@
 #' @importFrom ggpubr ggarrange
 #' @export
 #' 
+#' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de},
+#' Maximilian Weigert \email{maximilian.weigert@@stat.uni-muenchen.de}
+#' 
+#' @seealso plot_APChexamap
+#' 
 #' @examples
 #' library(APCtools)
 #' library(mgcv)

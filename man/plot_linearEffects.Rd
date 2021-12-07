@@ -28,3 +28,6 @@ model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
 plot_linearEffects(model)
 
 }
+\author{
+Alexander Bauer \email{alexander.bauer@stat.uni-muenchen.de}
+}

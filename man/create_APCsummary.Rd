@@ -47,3 +47,6 @@ model_list <- list("pure model"      = model_pure,
 create_APCsummary(model_list, dat = travel)
 
 }
+\author{
+Alexander Bauer \email{alexander.bauer@stat.uni-muenchen.de}
+}

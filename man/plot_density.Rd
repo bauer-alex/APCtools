@@ -77,3 +77,7 @@ plot_density(dat = travel, y_var = "mainTrip_distance")
 plot_density(dat = travel, y_var = "mainTrip_distance")
 
 }
+\author{
+Alexander Bauer \email{alexander.bauer@stat.uni-muenchen.de},
+Maximilian Weigert \email{maximilian.weigert@stat.uni-muenchen.de}
+}

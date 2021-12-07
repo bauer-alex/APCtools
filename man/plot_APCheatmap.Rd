@@ -115,3 +115,10 @@ plot_APCheatmap(dat = travel, model = model, plot_CI = FALSE,
                 bin_heatmapGrid_list = manual_binning)
 
 }
+\seealso{
+plot_APChexamap
+}
+\author{
+Alexander Bauer \email{alexander.bauer@stat.uni-muenchen.de},
+Maximilian Weigert \email{maximilian.weigert@stat.uni-muenchen.de}
+}

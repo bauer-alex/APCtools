@@ -47,3 +47,6 @@ plot_variable(dat = travel, variable = "household_size", apc_dimension = "period
               geomBar_position = "stack")
 
 }
+\author{
+Alexander Bauer \email{alexander.bauer@stat.uni-muenchen.de}
+}

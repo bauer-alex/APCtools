@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_APChexamap.R
 \name{plot_APChexamap}
 \alias{plot_APChexamap}
-\title{Hexamap of the APC surface based on an estimated GAM model}
+\title{Hexamap of an APC surface}
 \usage{
 plot_APChexamap(
   data,
@@ -61,4 +61,11 @@ mean structure based on a GAM model.
 \examples{
 # TODO
 
+}
+\seealso{
+\code{\link{plot_APCheatmap}}
+}
+\author{
+Hawre Jalal \email{hjalal@pitt.edu},
+Alexander Bauer \email{alexander.bauer@stat.uni-muenchen.de}
 }

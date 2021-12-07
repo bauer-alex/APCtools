@@ -19,6 +19,8 @@
 #' @import checkmate dplyr ggplot2
 #' @export
 #' 
+#' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de}
+#' 
 #' @examples
 #' library(APCtools)
 #' data(travel)

@@ -144,3 +144,7 @@ plot_densityMatrix(dat                 = travel,
                                               "born 1970 - 1979" = 10))
 
 }
+\author{
+Alexander Bauer \email{alexander.bauer@stat.uni-muenchen.de},
+Maximilian Weigert \email{maximilian.weigert@stat.uni-muenchen.de}
+}

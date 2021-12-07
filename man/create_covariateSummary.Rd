@@ -34,3 +34,6 @@ model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
 create_APCsummary(list(model), dat = travel)
 
 }
+\author{
+Alexander Bauer \email{alexander.bauer@stat.uni-muenchen.de}
+}

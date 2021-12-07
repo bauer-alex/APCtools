@@ -1,5 +1,5 @@
 
-#' Hexamap of the APC surface based on an estimated GAM model
+#' Hexamap of an APC surface
 #' 
 #' TODO in analogy to \code{\link{plot_APCheatmap}}, allow to plot an observed
 #' mean structure of a metric variable, or alternatively an estimated smoothed
@@ -24,6 +24,11 @@
 #' @import checkmate dplyr
 #' @importFrom tidyr pivot_wider
 #' @export
+#' 
+#' @author Hawre Jalal \email{hjalal@@pitt.edu},
+#' Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de}
+#' 
+#' @seealso \code{\link{plot_APCheatmap}}
 #' 
 #' @examples
 #' # TODO

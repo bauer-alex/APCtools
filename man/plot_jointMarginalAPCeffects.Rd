@@ -49,3 +49,7 @@ plot_jointMarginalAPCeffects(model_list, dat = travel,
                              vlines_list = list("cohort" = c(1966.5,1982.5,1994.5)))
 
 }
+\author{
+Alexander Bauer \email{alexander.bauer@stat.uni-muenchen.de},
+Maximilian Weigert \email{maximilian.weigert@stat.uni-muenchen.de}
+}

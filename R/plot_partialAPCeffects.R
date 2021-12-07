@@ -10,6 +10,9 @@
 #' 
 #' @export
 #' 
+#' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de},
+#' Maximilian Weigert \email{maximilian.weigert@@stat.uni-muenchen.de}
+#' 
 #' @examples
 #' library(APCtools)
 #' library(mgcv)
@@ -61,6 +64,9 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
 #' @export
+#' 
+#' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de},
+#' Maximilian Weigert \email{maximilian.weigert@@stat.uni-muenchen.de}
 #' 
 #' @examples
 #' library(APCtools)
