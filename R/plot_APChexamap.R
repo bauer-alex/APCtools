@@ -355,4 +355,6 @@ plot_APChexamap <- function (dat,
   image(y = cb_range, z = t(cb_range), col = color_vec, axes = FALSE,
         main = legend_title, cex.main = .8)
   axis(4, cex.axis = label_size, mgp = c(0,.5,0))
+  
+  invisible(NULL)
 }

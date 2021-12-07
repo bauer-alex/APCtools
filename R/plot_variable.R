@@ -5,8 +5,7 @@
 #' cohort. Creates a stacked bar plot for categorical variables and boxplots
 #' for metric variables.
 #' 
-#' @param dat Dataset containing columns \code{age}, \code{period} and
-#' \code{cohort}.
+#' @param dat Dataset containing columns \code{age} and \code{period}.
 #' @param variable Character name of the variable to plot.
 #' @param apc_dimension One of \code{c("age","period","cohort")}. Defaults to
 #' \code{"period"}.
@@ -38,11 +37,15 @@ plot_variable <- function(dat, variable, apc_dimension = "period",
                           log_scale = FALSE, geomBar_position = "fill") {
   
   checkmate::assert_data_frame(dat)
-  checkmate::assert_choice(variable, choices = names(dat))
+  checkmate::assert_choice("age", colnames(dat))
+  checkmate::assert_choice("period", colnames(dat))
+  checkmate::assert_choice(variable, choices = colnames(dat))
   checkmate::assert_choice(apc_dimension, choices = c("age","period","cohort"))
   checkmate::assert_logical(log_scale, len = 1)
   checkmate::assert_character(geomBar_position, len = 1)
   
+  
+  dat <- dat %>% mutate(cohort = period - age)
   
   var_class <- ifelse(class(dat[[variable]]) %in% c("character","factor"),
                       "categorical", "metric")

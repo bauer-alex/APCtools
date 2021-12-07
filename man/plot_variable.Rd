@@ -13,8 +13,7 @@ plot_variable(
 )
 }
 \arguments{
-\item{dat}{Dataset containing columns \code{age}, \code{period} and
-\code{cohort}.}
+\item{dat}{Dataset containing columns \code{age} and \code{period}.}
 
 \item{variable}{Character name of the variable to plot.}
 
