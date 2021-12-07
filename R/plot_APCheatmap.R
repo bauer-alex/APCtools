@@ -137,6 +137,12 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   checkmate::assert_logical(plot_CI, len = 1)
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  period <- age <- effect <- se <- exp_effect <- exp_se <- upper <- lower <-
+    exp_upper <- exp_lower <- cohort <- x <- y <- plot_effect <- plot_lower <-
+    plot_upper <- NULL
+  
+  
   if (!is.null(y_var)) { # plot observed structures
     
     dat <- dat %>% 
@@ -358,6 +364,10 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
 #' 
 gg_addReferenceLines <- function(gg_list, dimensions, plot_dat, markLines_list,
                                  markLines_displayLabels) {
+  
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  x <- y <- x_start <- x_end <- y_start <- y_end <- group <- NULL
+  
   
   dim_3 <- ifelse(!("age" %in% dimensions), "age",
                   ifelse(!("period" %in% dimensions), "period", "cohort"))

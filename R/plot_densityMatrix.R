@@ -131,6 +131,10 @@ plot_densityMatrix <- function(dat, y_var, dimensions = c("period","age"),
   checkmate::assert_character(legend_title, len = 1, null.ok = TRUE)
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  age_group <- period_group <- cohort_group <- NULL
+  
+  
   dat$cohort <- dat$period - dat$age
   
   
@@ -208,6 +212,10 @@ plot_densityMatrix <- function(dat, y_var, dimensions = c("period","age"),
 #' @import dplyr
 #' 
 create_groupVariable <- function(dat, APC_var, groups_list) {
+  
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  group_var <- NULL
+  
   
   # rename the 'APC_var' column, for easier handling
   dat <- dat %>% dplyr::rename(var = APC_var)

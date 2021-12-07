@@ -40,6 +40,11 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
   checkmate::assert_numeric(ylim, len = 2, null.ok = TRUE)
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  fit <- se <- fit_exp <- se_exp <- CI_lower <- CI_upper <- CI_lower_exp <-
+    CI_upper_exp <- x <- y <- NULL
+  
+  
   used_logLink <- model$family[[2]] %in% c("log","logit")
   ylab         <- ifelse(used_logLink, "Odds Ratio", "Effect")
   

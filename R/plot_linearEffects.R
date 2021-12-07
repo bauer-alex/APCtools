@@ -30,6 +30,11 @@ plot_linearEffects <- function(model) {
   checkmate::assert_class(model, classes = "gam")
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  coef <- CI_lower <- CI_upper <- coef_exp <- CI_lower_exp <- CI_upper_exp <-
+    param <- vargroup <- NULL
+  
+  
   used_logLink <- model$family[[2]] %in% c("log","logit")
   ylab         <- ifelse(used_logLink, "Odds Ratio", "Effect")
   

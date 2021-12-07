@@ -35,6 +35,10 @@ create_covariateSummary <- function(model_list, digits = 2, ...) {
   checkmate::assert_number(digits, lower = 0)
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  model <- param <- edf <- pvalue <- NULL
+  
+  
   # retrieve model labels
   if (!is.null(names(model_list))) {
     model_labels <- names(model_list)
@@ -95,6 +99,11 @@ create_covariateSummary <- function(model_list, digits = 2, ...) {
 extract_summary_linearEffects <- function(model) {
   
   checkmate::assert_class(model, classes = "gam")
+  
+  
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  param <- coef <- se <- coef_exp <- se_exp <- CI_lower <- CI_upper <-
+    CI_lower_exp <- CI_upper_exp <- pvalue <- NULL
   
   
   used_logLink <- model$family[[2]] %in% c("log","logit")

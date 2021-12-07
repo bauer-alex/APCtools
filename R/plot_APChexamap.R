@@ -100,6 +100,10 @@ plot_APChexamap <- function (dat,
   checkmate::assert_character(legend_title, len = 1, null.ok = TRUE)
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  period <- age <- effect <- cohort <- NULL
+  
+  
   if (!is.null(y_var)) { # plot observed structures
     
     plot_dat <- dat %>% 

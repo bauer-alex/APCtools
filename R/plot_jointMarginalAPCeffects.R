@@ -54,6 +54,10 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
   checkmate::assert_character(ylab, len = 1, null.ok = TRUE)
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  effect <- type <- value <- NULL
+  
+  
   # retrieve model labels
   if (!is.null(names(model_list))) {
     model_labels <- names(model_list)

@@ -15,6 +15,9 @@
 #' 
 calc_density <- function(dat, y_var, weights_var = NULL, ...) {
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  dim1 <- dim2 <- NULL
+  
   # remove potential NA values from 'y_var'
   dat <- dat[!is.na(dat[[y_var]]),]
   
@@ -105,6 +108,10 @@ calc_density <- function(dat, y_var, weights_var = NULL, ...) {
 #' 
 gg_highlightDiagonals <- function(gg, dat, dat_highlightDiagonals) {
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  col_group <- NULL
+  
+  
   diag_dimension <- ifelse(!("age_group" %in% names(dat)), "Age groups",
                            ifelse(!("period_group" %in% names(dat)), "Periods",
                                   "Cohorts"))
@@ -133,6 +140,10 @@ gg_highlightDiagonals <- function(gg, dat, dat_highlightDiagonals) {
 #' @import dplyr
 #' 
 create_highlightDiagonalData <- function(dat, highlight_diagonals) {
+  
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  dim1 <- dim2 <- col_group <- NULL
+  
   
   dimensions <- c()
   if ("age_group" %in% names(dat)) {    dimensions <- append(dimensions, "age_group") }

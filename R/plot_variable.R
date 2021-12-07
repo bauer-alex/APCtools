@@ -45,6 +45,10 @@ plot_variable <- function(dat, variable, apc_dimension = "period",
   checkmate::assert_character(geomBar_position, len = 1)
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  period <- age <- x <- y <- NULL
+  
+  
   dat <- dat %>% mutate(cohort = period - age)
   
   var_class <- ifelse(class(dat[[variable]]) %in% c("character","factor"),

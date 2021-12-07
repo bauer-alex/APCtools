@@ -13,6 +13,11 @@ fit_APC_model <- function(APC_formula, data, ...) {
   
   checkmate::assert_formula(APC_formula)
 
+  
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  gam <- NULL
+  
+  
   # Estimate model:
   model <- gam(formula = APC_formula, data = data, ...)
   

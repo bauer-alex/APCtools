@@ -73,6 +73,10 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
   checkmate::assert_character(legend_title, max.len = 1, null.ok = TRUE)
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  age <- period <- cohort <- NULL
+  
+  
   dat$cohort <- dat$period - dat$age
   
   # filter the dataset
@@ -140,6 +144,10 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
                                 y_var_cat_breaks = NULL, y_var_cat_labels = NULL,
                                 weights_var = NULL, log_scale = FALSE, xlab = NULL,
                                 ylab = "Density", legend_title = NULL, ...) {
+  
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  x <- y <- x_cat <- weight <- NULL
+  
   
   # delete potential NA's from y_var, since these mess with stats::density()
   dat <- dat[!is.na(dat[[y_var]]),]
@@ -249,6 +257,10 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
 plot_density_categorical <- function(dat, y_var, dat_highlightDiagonals = NULL,
                                      weights_var = NULL, xlab = NULL,
                                      ylab = "Density") {
+  
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  x <- weight <- NULL
+  
   
   # make sure the main variable is encoded as factor
   dat <- dat %>% dplyr::rename(x = y_var) %>% mutate(x = factor(x))

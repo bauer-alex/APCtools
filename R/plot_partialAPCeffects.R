@@ -94,6 +94,10 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   checkmate::assert_logical(return_plotData)
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  period <- age <- effect <- cohort <- exp_effect <- value <- NULL
+  
+  
   # create a dataset for predicting the values of the APC surface
   grid_age    <- min(dat$age, na.rm = TRUE):max(dat$age, na.rm = TRUE)
   grid_period <- min(dat$period, na.rm = TRUE):max(dat$period, na.rm = TRUE)

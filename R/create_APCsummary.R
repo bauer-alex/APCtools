@@ -48,6 +48,10 @@ create_APCsummary <- function(model_list, dat, digits = 2, apc_range = NULL,
   checkmate::assert_subset(names(apc_range), choices = c("age","period","cohort"))
   
   
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  model <- NULL
+  
+  
   # retrieve model labels
   if (!is.null(names(model_list))) {
     model_labels <- names(model_list)
@@ -89,6 +93,10 @@ create_oneAPCsummaryTable <- function(model, dat, apc_range = NULL) {
   checkmate::assert_list(apc_range, types = "numeric", max.len = 3,
                          null.ok = TRUE, any.missing = FALSE)
   checkmate::assert_subset(names(apc_range), choices = c("age","period","cohort"))
+  
+  
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  value <- max_effect <- min_effect <- NULL
   
   
   # retrieve datasets with the marginal effects
