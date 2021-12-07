@@ -15,6 +15,9 @@
 #' 
 calc_density <- function(dat, y_var, weights_var = NULL, ...) {
   
+  # remove potential NA values from 'y_var'
+  dat <- dat[!is.na(dat[[y_var]]),]
+  
   # retrieve the weights vector
   weights_vector <- NULL
   if (!is.null(weights_var)) {
@@ -159,7 +162,7 @@ create_highlightDiagonalData <- function(dat, highlight_diagonals) {
                                     dim2      = dim2_categories[i2],
                                     col_group = paste("other",diag_dimension))
       
-      col_group_row <- match(i1 + i2, diag_dat$diagonal)
+      col_group_row <- match(i1 + i2 - 1, diag_dat$diagonal)
       if (!is.na(col_group_row)) {
         dat_highlight12$col_group <- diag_dat$label[col_group_row]
       }
