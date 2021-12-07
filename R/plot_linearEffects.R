@@ -9,7 +9,8 @@
 #' 
 #' @inheritParams extract_summary_linearEffects
 
-#' @import checkmate colorspace dplyr
+#' @import checkmate dplyr
+#' @importFrom colorspace scale_colour_discrete_qualitative
 #' @export
 #' 
 #' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de}
