@@ -18,8 +18,10 @@ plot_partialAPCeffects(
 to estimate a smoothed APC surface. Only used if \code{y_var} is not
 specified.}
 
-\item{dat}{Dataset as passed to \code{gam} for model estimation, containing
-columns \code{period} and \code{age}.}
+\item{dat}{Dataset with columns \code{period} and \code{age}. If \code{y_var}
+is specified, the dataset must contain the respective column. If \code{model}
+is specified, the dataset must have been used for model estimation with
+\code{gam}.}
 
 \item{variable}{One of \code{c("age","period","cohort")}, specifying the
 temporal dimension for which the partial effect plots should be created.}

@@ -10,8 +10,10 @@ create_APCsummary(model_list, dat, digits = 2, apc_range = NULL, ...)
 \item{model_list}{A list of regression models estimated with
 \code{\link[mgcv]{gam}}. If the list is named, the names are used as labels.}
 
-\item{dat}{Dataset as passed to \code{gam} for model estimation, containing
-columns \code{period} and \code{age}.}
+\item{dat}{Dataset with columns \code{period} and \code{age}. If \code{y_var}
+is specified, the dataset must contain the respective column. If \code{model}
+is specified, the dataset must have been used for model estimation with
+\code{gam}.}
 
 \item{digits}{Number of digits for numeric columns. Defaults to 2.}
 

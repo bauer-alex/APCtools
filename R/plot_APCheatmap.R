@@ -8,11 +8,17 @@
 #' represented by an estimated two-dimensional tensor product surface. The model
 #' must be estimated with \code{\link[mgcv]{gam}}.
 #' 
-#' If the model was estimated with a log or logit link, the function
-#' automatically performs an exponential transformation of the effect.
+#' See also \code{\link{plot_APChexamap}} to plot a hexagonal heatmap with
+#' adapted axes.
 #' 
-#' @param dat Dataset as passed to \code{gam} for model estimation, containing
-#' columns \code{period} and \code{age}.
+#' If the plot is created based on the \code{model} object and the model was
+#' estimated with a log or logit link, the function automatically performs an
+#' exponential transformation of the effect.
+#' 
+#' @param dat Dataset with columns \code{period} and \code{age}. If \code{y_var}
+#' is specified, the dataset must contain the respective column. If \code{model}
+#' is specified, the dataset must have been used for model estimation with
+#' \code{gam}.
 #' @param y_var Optional character name of a metric variable to be plotted.
 #' @param model Optional regression model estimated with \code{\link[mgcv]{gam}}
 #' to estimate a smoothed APC surface. Only used if \code{y_var} is not
@@ -20,6 +26,10 @@
 #' @param dimensions Character vector specifying the two APC dimensions that
 #' should be visualized along the x-axis and y-axis. Defaults to
 #' \code{c("period","age")}.
+#' @param apc_range Optional list with one or multiple elements with names
+#' \code{"age","period","cohort"} to filter the data. Each element should
+#' contain a numeric vector of values for the respective variable that should
+#' be kept in the data. All other values are deleted.
 #' @param bin_heatmap,bin_heatmapGrid_list \code{bin_heatmap} indicates if the
 #' heatmap surface should be binned. Defaults to TRUE. If TRUE, the binning
 #' grid borders are defined by \code{bin_heatmapGrid_list}. This is a list with
@@ -97,7 +107,7 @@
 #'                 bin_heatmapGrid_list = manual_binning)
 #' 
 plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
-                            dimensions = c("period","age"),
+                            dimensions = c("period","age"), apc_range = NULL,
                             bin_heatmap = TRUE, bin_heatmapGrid_list = NULL,
                             markLines_list = NULL,
                             markLines_displayLabels = c("age","period","cohort"),
@@ -110,6 +120,9 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   checkmate::assert_class(model, classes = "gam", null.ok = TRUE)
   checkmate::assert_character(dimensions, len = 2)
   checkmate::assert_subset(dimensions, choices = c("age","period","cohort"))
+  checkmate::assert_list(apc_range, types = "numeric", max.len = 3,
+                         null.ok = TRUE, any.missing = FALSE)
+  checkmate::assert_subset(names(apc_range), choices = c("age","period","cohort"))
   checkmate::assert_logical(bin_heatmap, len = 1)
   checkmate::assert_list(bin_heatmapGrid_list, min.len = 1, max.len = 3,
                          types = "numeric", null.ok = TRUE)
@@ -123,7 +136,7 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   checkmate::assert_logical(plot_CI, len = 1)
   
   
-  if (is.null(model)) { # plot observed structures
+  if (!is.null(y_var)) { # plot observed structures
     
     dat <- dat %>% 
       mutate(cohort = period - age) %>% 
@@ -143,8 +156,9 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
 
     # create some variables and objects, to re-use the model-based code
     plot_dat <- plot_dat %>% 
-      mutate(upper = effect,
-             lower = effect)
+      mutate(cohort = period - age,
+             upper  = effect,
+             lower  = effect)
     dat_predictionGrid <- plot_dat
     
     if (y_var_logScale) {
@@ -210,6 +224,18 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
     
   }
   
+  # filter the data
+  if (!is.null(apc_range)) {
+    if (!is.null(apc_range$age)) {
+      plot_dat <- plot_dat %>% filter(age %in% apc_range$age)
+    }
+    if (!is.null(apc_range$period)) {
+      plot_dat <- plot_dat %>% filter(period %in% apc_range$period)
+    }
+    if (!is.null(apc_range$cohort)) {
+      plot_dat <- plot_dat %>% filter(cohort %in% apc_range$cohort)
+    }
+  }
   
   # bin the heatmap surface, if necessary
   if (!bin_heatmap) { # no binning
@@ -290,7 +316,7 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   # color scale
   scale_midpoint <- ifelse(!is.null(model), 0, mean(plot_dat$plot_effect))
   gg_list <- lapply(gg_list, function(gg) {
-    gg + scale_fill_gradient2(legend_title, trans = y_trans, low = "dodgerblue3",
+    gg + scale_fill_gradient2(legend_title, trans = y_trans, low = "dodgerblue4",
                               mid = "white", high = "firebrick3",
                               midpoint = scale_midpoint)
   })

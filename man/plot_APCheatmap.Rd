@@ -9,6 +9,7 @@ plot_APCheatmap(
   y_var = NULL,
   model = NULL,
   dimensions = c("period", "age"),
+  apc_range = NULL,
   bin_heatmap = TRUE,
   bin_heatmapGrid_list = NULL,
   markLines_list = NULL,
@@ -18,8 +19,10 @@ plot_APCheatmap(
 )
 }
 \arguments{
-\item{dat}{Dataset as passed to \code{gam} for model estimation, containing
-columns \code{period} and \code{age}.}
+\item{dat}{Dataset with columns \code{period} and \code{age}. If \code{y_var}
+is specified, the dataset must contain the respective column. If \code{model}
+is specified, the dataset must have been used for model estimation with
+\code{gam}.}
 
 \item{y_var}{Optional character name of a metric variable to be plotted.}
 
@@ -30,6 +33,11 @@ specified.}
 \item{dimensions}{Character vector specifying the two APC dimensions that
 should be visualized along the x-axis and y-axis. Defaults to
 \code{c("period","age")}.}
+
+\item{apc_range}{Optional list with one or multiple elements with names
+\code{"age","period","cohort"} to filter the data. Each element should
+contain a numeric vector of values for the respective variable that should
+be kept in the data. All other values are deleted.}
 
 \item{bin_heatmap, bin_heatmapGrid_list}{\code{bin_heatmap} indicates if the
 heatmap surface should be binned. Defaults to TRUE. If TRUE, the binning
@@ -67,8 +75,12 @@ represented by an estimated two-dimensional tensor product surface. The model
 must be estimated with \code{\link[mgcv]{gam}}.
 }
 \details{
-If the model was estimated with a log or logit link, the function
-automatically performs an exponential transformation of the effect.
+See also \code{\link{plot_APChexamap}} to plot a hexagonal heatmap with
+adapted axes.
+
+If the plot is created based on the \code{model} object and the model was
+estimated with a log or logit link, the function automatically performs an
+exponential transformation of the effect.
 }
 \examples{
 library(APCtools)

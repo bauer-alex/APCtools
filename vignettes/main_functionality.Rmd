@@ -31,7 +31,6 @@ theme_set(theme_minimal())
 
 ```{r data preparation}
 data(travel)
-# alternative: drug deaths data
 data(drug_deaths)
 
 options(knitr.kable.NA = '')
@@ -210,17 +209,19 @@ APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE,
 ### Hexamaps
 
 ```{r}
-data(drug_deaths)
+# restrict to data where the mortality rate is available
+drug_deaths <- drug_deaths %>% filter(!is.na(mortality_rate))
 
-plot_APChexamap(data = drug_deaths,
-                first_age = 15,
-                first_period = 1999,
-                interval = 1, 
-                first_age_isoline = 20,
-                first_period_isoline = 2000,
-                isoline_interval = 5, 
-                color_scale = c(0,40), 
-                wrap_cohort_labels = T)
+# hexamap of an observed structure
+plot_APChexamap(dat         = drug_deaths,
+                y_var       = "mortality_rate",
+                color_range = c(0,40))
+
+# hexamap of a smoothed structure
+model <- gam(mortality_rate ~ te(age, period, bs = "ps", k = c(8,8)),
+             data = drug_deaths)
+
+plot_APChexamap(dat = drug_deaths, model = model)
 ```
 
 ### Overview table

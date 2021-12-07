@@ -5,61 +5,103 @@
 \title{Hexamap of an APC surface}
 \usage{
 plot_APChexamap(
-  data,
-  first_age,
-  first_period,
-  interval,
-  first_age_isoline = NULL,
-  first_period_isoline = NULL,
-  isoline_interval = NULL,
-  color_scale = NULL,
-  color_map = NULL,
+  dat,
+  y_var = NULL,
+  model = NULL,
+  apc_range = NULL,
+  y_var_logScale = FALSE,
+  obs_interval = 1,
+  iso_interval = 5,
+  color_vec = NULL,
+  color_range = NULL,
   line_width = 0.5,
-  line_color = "grey",
+  line_color = gray(0.5),
   label_size = 0.5,
   label_color = "black",
-  scale_units = "Rate",
-  wrap_cohort_labels = TRUE
+  legend_title = NULL
 )
 }
 \arguments{
-\item{data}{TODO}
+\item{dat}{Dataset with columns \code{period} and \code{age}. If \code{y_var}
+is specified, the dataset must contain the respective column. If \code{model}
+is specified, the dataset must have been used for model estimation with
+\code{gam}.}
 
-\item{first_age}{TODO}
+\item{y_var}{Optional character name of a metric variable to be plotted.}
 
-\item{first_period}{TODO}
+\item{model}{Optional regression model estimated with \code{\link[mgcv]{gam}}
+to estimate a smoothed APC surface. Only used if \code{y_var} is not
+specified.}
 
-\item{interval}{TODO}
+\item{apc_range}{Optional list with one or multiple elements with names
+\code{"age","period","cohort"} to filter the data. Each element should
+contain a numeric vector of values for the respective variable that should
+be kept in the data. All other values are deleted.}
 
-\item{first_age_isoline}{TODO}
+\item{y_var_logScale}{Indicator if \code{y_var} should be log10 transformed.
+Only used if \code{y_var} is specified. Defaults to FALSE.}
 
-\item{first_period_isoline}{TODO}
+\item{obs_interval}{Numeric specifying the interval width based on which the
+data is spaced. Only used if \code{y_var} is specified. Defaults to 1, i.e.
+observations each year.}
 
-\item{isoline_interval}{TODO}
+\item{iso_interval}{Numeric specifying the interval width between the
+isolines along each axis. Defaults to 5.}
 
-\item{color_scale}{TODO}
+\item{color_vec}{Optional character vector of color names, specifying the
+color continuum.}
 
-\item{color_map}{TODO}
+\item{color_range}{Optional numeric vector with two elements, specifying the
+ends of the color scale in the legend.}
 
-\item{line_width}{TODO}
+\item{line_width}{Line width of the isolines. Defaults to 0.5.}
 
-\item{line_color}{TODO}
+\item{line_color}{Character color name for the isolines. Defaults to gray.}
 
-\item{label_size}{TODO}
+\item{label_size}{Size of the labels along the axes. Defaults to 0.5.}
 
-\item{label_color}{TODO}
+\item{label_color}{Character color name for the labels along the axes.}
 
-\item{scale_units}{TODO}
-
-\item{wrap_cohort_labels}{TODO}
+\item{legend_title}{Optional character title for the legend.}
 }
 \description{
-TODO in analogy to \code{\link{plot_APCheatmap}}, allow to plot an observed
-mean structure of a metric variable, or alternatively an estimated smoothed
-mean structure based on a GAM model.
+Plot the heatmap of an APC structure using a hexagon-based plot with adapted
+axes. In this way, the one temporal dimension that is represented by the
+diagonal structure is visually not underrepresented compared to the other two
+dimensions on the x-axis and y-axis. \cr
+The function can be used in two ways: Either to plot the observed mean
+structure of a metric variable, by specifying \code{dat} and the variable
+\code{y_var}, or by specifying \code{dat} and the \code{model} object, to
+plot some mean structure represented by an estimated two-dimensional tensor
+product surface. The model must be estimated with \code{\link[mgcv]{gam}}.
+}
+\details{
+See also \code{\link{plot_APCheatmap}} to plot a regular heatmap.
+
+If the plot is created based on the \code{model} object and the model was
+estimated with a log or logit link, the function automatically performs an
+exponential transformation of the effect.
 }
 \examples{
-# TODO
+library(APCtools)
+library(mgcv)
+library(dplyr)
+
+data(drug_deaths)
+
+# restrict to data where the mortality rate is available
+drug_deaths <- drug_deaths \%>\% filter(!is.na(mortality_rate))
+
+# hexamap of an observed structure
+plot_APChexamap(dat         = drug_deaths,
+                y_var       = "mortality_rate",
+                color_range = c(0,40))
+
+# hexamap of a smoothed structure
+model <- gam(mortality_rate ~ te(age, period, bs = "ps", k = c(8,8)),
+             data = drug_deaths)
+
+plot_APChexamap(dat = drug_deaths, model = model)
 
 }
 \seealso{
