@@ -105,7 +105,8 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   covars <- attr(model$terms, "term.labels")
   covars <- covars[!(covars %in% c("age","period","cohort"))]
   if (length(covars) > 0) {
-    row <- which(apply(dat[,covars], 1, function(x) { all(!is.na(x)) }))[1]
+    dat_cov <- dat[,covars, drop = FALSE]
+    row     <- which(apply(dat_cov, 1, function(x) { all(!is.na(x)) }))[1]
     dat_predictionGrid[,covars] <- dat[row, covars]
   }
   
