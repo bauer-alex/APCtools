@@ -15,16 +15,15 @@ drug_deaths <- read.table("usa_drugDeaths_1999_2019.txt", sep = "\t",
 
 # further data preparation ------------------------------------------------
 drug_deaths <- drug_deaths %>% 
-  select(Year, Single.Year.Ages.Code, Deaths, Population, Crude.Rate) %>% 
+  select(Year, Single.Year.Ages.Code, Deaths, Population) %>% 
   dplyr::rename(period     = Year,
                 age        = Single.Year.Ages.Code,
                 deaths     = Deaths,
-                population = Population,
-                death_rate = Crude.Rate) %>% 
+                population = Population) %>% 
   filter(!is.na(age)) %>% 
-  mutate(age        = as.integer(age),
-         population = as.integer(population),
-         death_rate = as.integer(death_rate))
+  mutate(age            = as.integer(age),
+         population     = as.integer(population),
+         mortality_rate = 100000 * deaths / population)
 
 
 

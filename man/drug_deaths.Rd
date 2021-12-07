@@ -13,8 +13,9 @@ A dataframe containing
 respective age group and calendar year.}
 \item{population}{Number of white men in the respective age group and
 calendar year in the U.S. population.}
-\item{death_rate}{Crude death rate for the respective age group and
-calendar year, reported as the number of deaths 100,000 population.}
+\item{mortality_rate}{Drug overdose mortality rate for the respective age
+group and calendar year, reported as the number of deaths per 100,000
+people. Calculated as \code{100000 * deaths / population}.}
 }
 }
 \usage{
