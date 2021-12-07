@@ -55,6 +55,7 @@
 #' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
+#' @importFrom mgcv predict.gam
 #' @export
 #' 
 #' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de},
@@ -194,11 +195,11 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
     term_APCsurface <- terms_model[terms_index_APC]
     
     prediction <- dat_predictionGrid %>% 
-      predict(object  = model,
-              newdata = .,
-              type    = "terms",
-              terms   = term_APCsurface,
-              se.fit  = TRUE)
+      mgcv::predict.gam(object  = model,
+                        newdata = .,
+                        type    = "terms",
+                        terms   = term_APCsurface,
+                        se.fit  = TRUE)
     
     plot_dat <- dat_predictionGrid %>%
       mutate(effect = as.vector(prediction$fit),

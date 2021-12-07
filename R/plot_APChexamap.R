@@ -33,7 +33,9 @@
 #' @param label_color Character color name for the labels along the axes.
 #' @param legend_title Optional character title for the legend.
 #' 
-#' @import checkmate dplyr
+#' @import checkmate dplyr graphics
+#' @importFrom grDevices colorRampPalette
+#' @importFrom mgcv predict.gam
 #' @importFrom tidyr pivot_wider
 #' @export
 #' 
@@ -141,11 +143,11 @@ plot_APChexamap <- function (dat,
     term_APCsurface <- terms_model[terms_index_APC]
     
     prediction <- dat_predictionGrid %>% 
-      predict(object  = model,
-              newdata = .,
-              type    = "terms",
-              terms   = term_APCsurface,
-              se.fit  = TRUE)
+      mgcv::predict.gam(object  = model,
+                        newdata = .,
+                        type    = "terms",
+                        terms   = term_APCsurface,
+                        se.fit  = TRUE)
     
     plot_dat <- dat_predictionGrid %>%
       mutate(effect = as.vector(prediction$fit)) %>% 
@@ -188,9 +190,8 @@ plot_APChexamap <- function (dat,
     color_range <- range(mat, na.rm = TRUE)
   }
   if (is.null(color_vec)) {
-    # define jet colormap
-    jet.colors <- colorRampPalette(c("dodgerblue4", "white", "firebrick3"))
-    color_vec  <- jet.colors(100)
+    color_palette <- grDevices::colorRampPalette(c("dodgerblue4", "white", "firebrick3"))
+    color_vec     <- color_palette(100)
   }
   # end of default values
   

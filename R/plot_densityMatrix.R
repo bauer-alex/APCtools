@@ -25,6 +25,7 @@
 #' @param ... Additional arguments passed to \code{\link{plot_density}}.
 #' 
 #' @import checkmate dplyr ggplot2
+#' @importFrom stats as.formula
 #' @export
 #' 
 #' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de},
@@ -156,8 +157,8 @@ plot_densityMatrix <- function(dat, y_var, dimensions = c("period","age"),
   main_lab  <- ifelse(!log_scale, y_var_cap, paste(y_var_cap, "on log10 scale"))
   x_lab     <- capitalize_firstLetter(dimensions[1])
   y_lab     <- capitalize_firstLetter(dimensions[2])
-  facet_formula   <- as.formula(paste(paste0(dimensions[2],"_group"), "~",
-                                      paste0(dimensions[1],"_group")))
+  facet_formula   <- stats::as.formula(paste(paste0(dimensions[2],"_group"), "~",
+                                             paste0(dimensions[1],"_group")))
   legend.position <- ifelse(is.numeric(dat[[y_var]]) & is.null(highlight_diagonals),
                             "none", "right")
   

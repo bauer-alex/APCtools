@@ -63,6 +63,7 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
+#' @importFrom mgcv predict.gam
 #' @export
 #' 
 #' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de},
@@ -114,10 +115,10 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   term_APCsurface <- terms_model[terms_index_APC]
   
   dat_overallEffect <- dat_predictionGrid %>%
-    mutate(effect = rowSums(predict(object  = model,
-                                    newdata = .,
-                                    type    = "terms",
-                                    terms   = term_APCsurface))) %>% 
+    mutate(effect = rowSums(mgcv::predict.gam(object  = model,
+                                              newdata = .,
+                                              type    = "terms",
+                                              terms   = term_APCsurface))) %>% 
     mutate(effect = effect - mean(effect))
   used_logLink <- model$family[[2]] %in% c("log","logit")
   if (used_logLink) {
