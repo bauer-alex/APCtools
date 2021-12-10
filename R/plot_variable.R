@@ -54,6 +54,12 @@ plot_variable <- function(dat, variable, apc_dimension = "period",
   var_class <- ifelse(class(dat[[variable]]) %in% c("character","factor"),
                       "categorical", "metric")
   
+  # remove NA measurements
+  if (any(is.na(dat[[variable]]))) {
+    message("Excluding ",sum(is.na(dat[[variable]])), " missing observations of ",variable,"...")
+    dat <- dat[!is.na(dat[[variable]]),]
+  }
+  
   # recode the APC variable to factor
   dat[,apc_dimension] <- factor(dat[[apc_dimension]])
   
