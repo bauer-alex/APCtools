@@ -35,7 +35,8 @@ Imports:
     tidyr
 Suggests: 
     testthat (>= 3.0.0),
-    rmarkdown
+    rmarkdown,
+    covr
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)

@@ -8,7 +8,7 @@ status](https://travis-ci.org/bauer-alex/APCtools.svg?branch=master)](https://tr
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/bauer-alex/APCtools?branch=master&svg=true)](https://ci.appveyor.com/project/bauer-alex/APCtools)
 [![Codecov test
-coverage](https://codecov.io/gh/bauer-alex/APCtools/branch/master/graph/badge.svg)](https://codecov.io/gh/bauer-alex/APCtools/coverage.svg?branch=master)
+coverage](https://codecov.io/gh/bauer-alex/APCtools/branch/master/graph/badge.svg)](https://codecov.io/gh/bauer-alex/APCtools?branch=master)
 [![GPL-3
 license](https://img.shields.io/badge/license-GPL--3.0-brightgreen.svg)](https://opensource.org/licenses/GPL-3.0)
 <!-- badges: end -->
