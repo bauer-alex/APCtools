@@ -2,8 +2,14 @@ language: r
 sudo: false
 cache: packages
 
+before_install:
+  - sudo apt-get -y install libharfbuzz-dev libfribidi-dev
+  
 r_packages:
-  - covr
+  - coalitions # for building pkgdown vignettes via travis
+  - pkgdown    # for building homepage
+  - covr       # for code coverage
 
 after_success:
   - Rscript -e 'covr::codecov(type="all", line_exclusions="R/zzz.R")'
+  - Rscript -e 'pkgdown::build_site()'
