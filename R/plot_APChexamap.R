@@ -33,6 +33,8 @@
 #' @param label_color Character color name for the labels along the axes.
 #' @param legend_title Optional character title for the legend.
 #' 
+#' @return Creates a plot with base R functions (not \code{ggplot2}).
+#' 
 #' @import checkmate dplyr graphics
 #' @importFrom grDevices colorRampPalette
 #' @importFrom mgcv predict.gam

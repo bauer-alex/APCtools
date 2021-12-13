@@ -61,6 +61,9 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' effects) and for each marginal APC effect (no matter the specified value of
 #' the argument \code{variable}). Defaults to FALSE.
 #' 
+#' @return ggplot object (if \code{hide_partialEffects} is TRUE) or a plot grid
+#' created with \code{\link[ggpubr]{ggarrange}} (if FALSE).
+#' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
 #' @importFrom mgcv predict.gam
@@ -218,7 +221,8 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
       }
       
       # combine both plots
-      gg_final <- ggarrange(plotlist = list(gg_AP, gg_AC), ncol = 2, legend = "bottom")
+      gg_final <- ggpubr::ggarrange(plotlist = list(gg_AP, gg_AC),
+                                    ncol = 2, legend = "bottom")
     }
     
   } else if (variable == "period") {
@@ -260,7 +264,8 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
       }
       
       # combine both plots
-      gg_final <- ggarrange(plotlist = list(gg_PA, gg_PC), ncol = 2, legend = "bottom")
+      gg_final <- ggpubr::ggarrange(plotlist = list(gg_PA, gg_PC),
+                                    ncol = 2, legend = "bottom")
     }
     
   } else if (variable == "cohort") {
@@ -299,7 +304,8 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
       }
       
       # combine both plots
-      gg_final <- ggarrange(plotlist = list(gg_CA, gg_CP), ncol = 2, legend = "bottom")
+      gg_final <- ggpubr::ggarrange(plotlist = list(gg_CA, gg_CP),
+                                    ncol = 2, legend = "bottom")
     }
   }
   

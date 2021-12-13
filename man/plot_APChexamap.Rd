@@ -64,6 +64,9 @@ ends of the color scale in the legend.}
 
 \item{legend_title}{Optional character title for the legend.}
 }
+\value{
+Creates a plot with base R functions (not \code{ggplot2}).
+}
 \description{
 Plot the heatmap of an APC structure using a hexagon-based plot with adapted
 axes. In this way, the one temporal dimension that is represented by the

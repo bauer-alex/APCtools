@@ -17,6 +17,8 @@
 #' be kept in the data. All other values are deleted before producing the table.
 #' @param ... Optional additional arguments passed to \code{\link[knitr]{kable}}.
 #' 
+#' @return Table created with \code{\link[knitr]{kable}}.
+#' 
 #' @import checkmate dplyr
 #' @importFrom knitr kable
 #' @export

@@ -23,6 +23,9 @@ The list can maximally have three elements and must have names out of
 
 \item{ylab}{Optional title for the y-axis.}
 }
+\value{
+Plot grid created with \code{\link[ggpubr]{ggarrange}}.
+}
 \description{
 This function creates a joint plot of the marginal APC effects of multiple
 estimated models. It creates a plot with one pane per age, period and

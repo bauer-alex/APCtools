@@ -9,6 +9,9 @@ plot_linearEffects(model)
 \arguments{
 \item{model}{Model fitted with \code{\link[mgcv]{gam}}.}
 }
+\value{
+ggplot object
+}
 \description{
 Create an effect plot of linear effects of a model fitted with
 \code{\link[mgcv]{gam}}.

@@ -36,6 +36,8 @@
 #' @param xlab,ylab,legend_title Optional plot annotations.
 #' @param ... Additional arguments passed to \code{\link[stats]{density}}.
 #' 
+#' @return ggplot object
+#' 
 #' @import checkmate dplyr
 #' @export
 #' 

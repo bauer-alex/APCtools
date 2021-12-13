@@ -24,6 +24,8 @@
 #' names are used as legend labels.
 #' @param ... Additional arguments passed to \code{\link{plot_density}}.
 #' 
+#' @return ggplot object
+#' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom stats as.formula
 #' @export

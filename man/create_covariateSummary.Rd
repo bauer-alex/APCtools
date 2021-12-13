@@ -13,6 +13,9 @@ create_covariateSummary(model_list, digits = 2, ...)
 
 \item{...}{additional arguments to \code{\link[mgcv]{gam}}}
 }
+\value{
+List of tables created with \code{\link[knitr]{kable}}.
+}
 \description{
 Create publication-ready summary tables of all linear and nonlinear effects
 for models fitted with \code{\link[mgcv]{gam}}. The output format of the

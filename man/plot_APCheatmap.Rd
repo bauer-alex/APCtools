@@ -66,6 +66,9 @@ Only used if \code{y_var} is specified. Defaults to FALSE.}
 \item{plot_CI}{Indicator if the confidence intervals should be plotted.
 Only used if \code{y_var} is not specified. Defaults to TRUE.}
 }
+\value{
+Plot grid created with \code{\link[ggpubr]{ggarrange}}.
+}
 \description{
 Plot the heatmap of an APC structure. The function can be used in two ways:
 Either to plot the observed mean structure of a metric variable, by

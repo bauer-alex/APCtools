@@ -39,6 +39,10 @@ for the overall effect (= evaluations of the APC surface to plot the partial
 effects) and for each marginal APC effect (no matter the specified value of
 the argument \code{variable}). Defaults to FALSE.}
 }
+\value{
+ggplot object (if \code{hide_partialEffects} is TRUE) or a plot grid
+created with \code{\link[ggpubr]{ggarrange}} (if FALSE).
+}
 \description{
 Create the partial APC plots based on an APC model estimated as a semiparametric
 additive regression model with \code{\link[mgcv]{gam}}.

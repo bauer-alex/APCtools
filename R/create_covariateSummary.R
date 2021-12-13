@@ -13,6 +13,8 @@
 #' @param digits number of displayed digits
 #' @param ... additional arguments to \code{\link[mgcv]{gam}}
 #' 
+#' @return List of tables created with \code{\link[knitr]{kable}}.
+#' 
 #' @import checkmate dplyr
 #' @importFrom mgcv summary.gam
 #' @export

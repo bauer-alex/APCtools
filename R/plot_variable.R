@@ -15,6 +15,8 @@
 #' \code{position} argument. Only used if the visualized variable is categorical.
 #' Defaults to \code{"fill"}.
 #' 
+#' @return ggplot object
+#' 
 #' @import checkmate dplyr ggplot2
 #' @export
 #' 

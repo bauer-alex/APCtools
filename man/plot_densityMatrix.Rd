@@ -68,6 +68,9 @@ Only used if the \code{y_var} column is numeric. Defaults to FALSE.}
 
 \item{...}{Additional arguments passed to \code{\link{plot_density}}.}
 }
+\value{
+ggplot object
+}
 \description{
 This function creates a matrix of individual density plots or boxplots (for
 metric variables) or of individual barplots (for categorical variables).

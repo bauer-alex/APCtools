@@ -27,6 +27,9 @@ transformed. Only used if the variable is numeric. Defaults to FALSE.}
 \code{position} argument. Only used if the visualized variable is categorical.
 Defaults to \code{"fill"}.}
 }
+\value{
+ggplot object
+}
 \description{
 Plot the distribution of one variable in the data against age, period or
 cohort. Creates a stacked bar plot for categorical variables and boxplots

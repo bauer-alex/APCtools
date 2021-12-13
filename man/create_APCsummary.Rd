@@ -24,6 +24,9 @@ be kept in the data. All other values are deleted before producing the table.}
 
 \item{...}{Optional additional arguments passed to \code{\link[knitr]{kable}}.}
 }
+\value{
+Table created with \code{\link[knitr]{kable}}.
+}
 \description{
 Create a table to summarize the overall effect strengths of the age, period
 and cohort effects for models fitted with \code{\link[mgcv]{gam}}. The output

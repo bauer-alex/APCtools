@@ -8,7 +8,9 @@
 #' automatically performs an exponential transformation of the effect.
 #' 
 #' @inheritParams extract_summary_linearEffects
-
+#' 
+#' @return ggplot object
+#' 
 #' @import checkmate dplyr
 #' @importFrom colorspace scale_colour_discrete_qualitative
 #' @export

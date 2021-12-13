@@ -13,6 +13,8 @@
 #' 95% CIs.
 #' @param ylim Optional limits of the y-axis.
 #' 
+#' @return ggplot object
+#' 
 #' @importFrom grDevices gray
 #' @importFrom stats qnorm
 #' @import checkmate dplyr ggplot2

@@ -58,6 +58,9 @@ Only used if the \code{y_var} column is numeric. Defaults to FALSE.}
 
 \item{...}{Additional arguments passed to \code{\link[stats]{density}}.}
 }
+\value{
+ggplot object
+}
 \description{
 Create a density plot or a boxplot of one metric variable or a barplot
 of one categorical variable, based on a specific subset of the data.

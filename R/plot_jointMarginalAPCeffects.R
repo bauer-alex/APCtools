@@ -18,6 +18,8 @@
 #' \code{c("age","period","cohort"}.
 #' @param ylab Optional title for the y-axis.
 #' 
+#' @return Plot grid created with \code{\link[ggpubr]{ggarrange}}.
+#' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
 #' @export

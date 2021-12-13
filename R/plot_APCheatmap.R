@@ -53,6 +53,8 @@
 #' @param plot_CI Indicator if the confidence intervals should be plotted.
 #' Only used if \code{y_var} is not specified. Defaults to TRUE.
 #' 
+#' @return Plot grid created with \code{\link[ggpubr]{ggarrange}}.
+#' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
 #' @importFrom mgcv predict.gam
@@ -339,8 +341,8 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   }
   
   # join the three plots
-  plots <- ggarrange(plotlist = gg_list, legend = "bottom", common.legend = TRUE,
-                     ncol = ifelse(plot_CI, 3, 1))
+  plots <- ggpubr::ggarrange(plotlist = gg_list, legend = "bottom",
+                             common.legend = TRUE, ncol = ifelse(plot_CI, 3, 1))
   
   return(plots)
 }

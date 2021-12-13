@@ -18,6 +18,9 @@ plot_1Dsmooth(model, plot_ci = TRUE, select, alpha = 0.05, ylim = NULL)
 
 \item{ylim}{Optional limits of the y-axis.}
 }
+\value{
+ggplot object
+}
 \description{
 Plots 1D smooth effects for a GAM model fitted with \code{\link[mgcv]{gam}}.
 }
