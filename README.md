@@ -44,12 +44,7 @@ further covariates in the regression model.
 Useful materials:
 
 -   To get an overview of the functionalities of the package, check out
-    the package vignette by running
-
-``` r
-devtools::install_github("bauer-alex/APCtools", build_vignettes = TRUE)
-vignette("main_functionality", package = "APCtools")
-```
+    the [package vignette](https://bauer-alex.github.io/APCtools/).
 
 -   See [Weigert et
     al. (2021)](https://doi.org/10.1177/1354816620987198) or our
