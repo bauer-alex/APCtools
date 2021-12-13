@@ -10,6 +10,12 @@
 #' 
 #' @export
 #' 
+#' @references Weigert, M., Bauer, A., Gernert, J., Karl, M., Nalmpatian, A.,
+#' Küchenhoff, H., and Schmude, J. (2021). Semiparametric APC analysis of
+#' destination choice patterns: Using generalized additive models to quantify
+#' the impact of age, period, and cohort on travel distances.
+#' \emph{Tourism Economics}. doi:10.1177/1354816620987198.
+#' 
 #' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de},
 #' Maximilian Weigert \email{maximilian.weigert@@stat.uni-muenchen.de}
 #' 
@@ -68,6 +74,12 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' @importFrom ggpubr ggarrange
 #' @importFrom mgcv predict.gam
 #' @export
+#' 
+#' @references Weigert, M., Bauer, A., Gernert, J., Karl, M., Nalmpatian, A.,
+#' Küchenhoff, H., and Schmude, J. (2021). Semiparametric APC analysis of
+#' destination choice patterns: Using generalized additive models to quantify
+#' the impact of age, period, and cohort on travel distances.
+#' \emph{Tourism Economics}. doi:10.1177/1354816620987198.
 #' 
 #' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de},
 #' Maximilian Weigert \email{maximilian.weigert@@stat.uni-muenchen.de}

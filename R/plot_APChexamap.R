@@ -41,6 +41,10 @@
 #' @importFrom tidyr pivot_wider
 #' @export
 #' 
+#' @references Jalal, H., Burke, D. (2020). Hexamaps for Age–Period–Cohort
+#' Data Visualization and Implementation in R.
+#' \emph{Epidemiology}, 31 (6), e47-e49. doi: 10.1097/EDE.0000000000001236.
+#' 
 #' @author Hawre Jalal \email{hjalal@@pitt.edu},
 #' Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de}
 #' 

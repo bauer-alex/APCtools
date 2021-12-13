@@ -1,7 +1,8 @@
 
 #' Create a matrix of density plots
 #' 
-#' This function creates a matrix of individual density plots or boxplots (for
+#' This function creates a matrix of individual density plots
+#' (i.e., a \emph{ridgeline matrix}) or boxplots (for
 #' metric variables) or of individual barplots (for categorical variables).
 #' The age, period or cohort information can each either be plotted on the
 #' x-axis or the y-axis.
@@ -29,6 +30,12 @@
 #' @import checkmate dplyr ggplot2
 #' @importFrom stats as.formula
 #' @export
+#' 
+#' @references Weigert, M., Bauer, A., Gernert, J., Karl, M., Nalmpatian, A.,
+#' Küchenhoff, H., and Schmude, J. (2021). Semiparametric APC analysis of
+#' destination choice patterns: Using generalized additive models to quantify
+#' the impact of age, period, and cohort on travel distances.
+#' \emph{Tourism Economics}. doi:10.1177/1354816620987198.
 #' 
 #' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de},
 #' Maximilian Weigert \email{maximilian.weigert@@stat.uni-muenchen.de}

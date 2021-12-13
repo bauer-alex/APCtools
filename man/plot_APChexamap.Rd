@@ -107,6 +107,11 @@ model <- gam(mortality_rate ~ te(age, period, bs = "ps", k = c(8,8)),
 plot_APChexamap(dat = drug_deaths, model = model)
 
 }
+\references{
+Jalal, H., Burke, D. (2020). Hexamaps for Age–Period–Cohort
+Data Visualization and Implementation in R.
+\emph{Epidemiology}, 31 (6), e47-e49. doi: 10.1097/EDE.0000000000001236.
+}
 \seealso{
 \code{\link{plot_APCheatmap}}
 }

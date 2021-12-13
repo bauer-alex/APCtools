@@ -8,14 +8,14 @@ Authors@R: c(
     person(given = "Pauline",    family = "Hohenemser", role = "ctb"))
 Maintainer: Alexander Bauer <alexander.bauer@stat.uni-muenchen.de>
 Description: Age-Period-Cohort (APC) analyses are used to differentiate relevant drivers for long-term developments.
-The APCtools package offers visualization techniques and general routines to simplify the workflow of an APC analysis.
-Sophisticated functions are available both for descriptive and regression model-based analyses.
-For the former, we use density (or ridgeline) matrices and (hexagonally binned) heatmaps as innovative visualization
-techniques building on the concept of Lexis diagrams.
-Model-based analyses build on the separation of the temporal dimensions based on generalized additive models,
-where a tensor product interaction surface (usually between age and period) is utilized
-to represent the third dimension (usually cohort) on its diagonal.
-See Weigert et al. (2021) <doi:10.1177/1354816620987198> for methodological details.
+    The APCtools package offers visualization techniques and general routines to simplify the workflow of an APC analysis.
+    Sophisticated functions are available both for descriptive and regression model-based analyses.
+    For the former, we use density (or ridgeline) matrices and (hexagonally binned) heatmaps as innovative visualization
+    techniques building on the concept of Lexis diagrams.
+    Model-based analyses build on the separation of the temporal dimensions based on generalized additive models,
+    where a tensor product interaction surface (usually between age and period) is utilized
+    to represent the third dimension (usually cohort) on its diagonal.
+    See Weigert et al. (2021) <doi:10.1177/1354816620987198> for methodological details.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
