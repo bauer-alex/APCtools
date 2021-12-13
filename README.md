@@ -1,5 +1,5 @@
 
-# APCtools <img src="hex-sticker/hex-sticker.svg" align="right" width="200"/>
+# APCtools <img src="man/figures/hex-sticker/hex-sticker.svg" align="right" width="200"/>
 
 <!-- badges: start -->
 

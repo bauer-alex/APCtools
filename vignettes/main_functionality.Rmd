@@ -1,5 +1,5 @@
 ---
-title: "Functionality of APCtools package"
+title: "APCtools - Main Functionality"
 author: "Alexander Bauer, Maximilian Weigert, Pauline Hohenemser"
 date: "`r format(Sys.time(), '%d.%B %Y')`"
 output:
@@ -38,15 +38,9 @@ theme_set(theme_minimal())
 ### Data overview
 APC analyses require long-term panel or repeated cross-sectional data (Yang and Land, 2013). In this example, we investigates how age, period, and birth cohorts are related to altering travel distances in Germany between 1971 and 2018. 
 
-This table gives you an brief overview of the data, you are able to see the Min/Max, 1st and 3rd quantile and median/mean for each 
-variable or a count of each category if its a categorial variable, including NA`s.
 ```{r data preparation}
 data(travel)
 data(drug_deaths)
-
-options(knitr.kable.NA = '')
-summary(travel) %>% 
-  knitr::kable()
 ```
 
 # Descriptive analyses
@@ -58,7 +52,7 @@ give you the mean travel distance, 25th/75th percentile and the lowest/highest d
 If your variable is categorical, bar charts are used to represent counts of the values. By default, the function will show 
 you each category as a percentage  of the whole data in each year, to see the magnitude of each category over the periods. If you add "stack" the data will be shown in absolute numbers for each year and category to get a sense of the quantity of the data points over the years.
 
-```{r}
+```{r, warning = FALSE}
 # plot a metric variable
 plot_variable(dat = travel, variable = "mainTrip_distance", apc_dimension = "period", log_scale = TRUE)
 
@@ -82,6 +76,9 @@ To further illustrate the plot it is possible to visualize your "breaking points
 different categories.
 
 You can also change the depiction if you change your temporal dimension from "age" to "cohort" or the other way round, to get a different view on your data. 
+
+#### Metric variables
+
 ```{r density matrix}
 dist_cat_breaks <- c(1,500,1000,2000,6000,100000)
 dist_cat_labels <- c("< 500 km","500 - 1,000 km", "1,000 - 2,000 km", "2,000 - 6,000 km", "> 6,000 km")
@@ -114,16 +111,6 @@ plot_densityMatrix(dat              = travel,
                    highlight_diagonals = list("born 1950 - 1959" = 8,
                                               "born 1970 - 1979" = 10),
                    legend_title     = "Distance category")
-
-plot_densityMatrix(dat              = travel,
-                   y_var            = "mainTrip_distance",
-                   dimensions       = c("period","cohort"),
-                   period_groups    = period_groups,
-                   cohort_groups    = cohort_groups,
-                   log_scale        = TRUE,
-                   y_var_cat_breaks = dist_cat_breaks,
-                   y_var_cat_labels = dist_cat_labels,
-                   legend_title     = "Distance category")
 ```
 
 If you change the plot type to "boxplot" you will get boxplots instead of densities.
@@ -137,6 +124,9 @@ plot_densityMatrix(dat           = travel,
                    highlight_diagonals = list("born 1950 - 1959" = 8,
                                               "born 1970 - 1979" = 10))
 ```
+
+
+#### Categorical variables
 
 It is also possible to have a categorical variable as your y variable. Instead of densities, the absolute values of the
 categories will be shown.
@@ -170,42 +160,31 @@ The dashed vertical lines in the cohort plot mark the boundaries between the gen
 ```{r}
 plot_partialAPCeffects(model_pure, dat = travel, variable = "period")
 plot_marginalAPCeffects(model_pure, dat = travel, variable = "cohort",
-                        vlines_vec = c(1939,1955, 1980))
+                        vlines_vec = c(1939,1946,1966,1982,1994))
 
 model_list <- list("pure model"      = model_pure,
                    "covariate model" = model_cov)
 plot_jointMarginalAPCeffects(model_list, dat = travel,
-                             vlines_list = list("cohort" = c(1939,1955, 1980)))
+                             vlines_list = list("cohort" = c(1939,1946,1966,1982,1994)))
 ```
 
 ### Non-smoothed heatmaps
 Heatmaps show relationships between variables which are plotted on both axes. The make it easy to look for patterns in the cells by noticing the color change. The results are visualized by the estimated tensor product surface allowing the comparison of areas with a higher chance in the examined category and areas with a respective lower chance.
 The Image starts with the observed heatmap, with binning the picture gets more distinct. After that, you choose which A, P, C dimension should be plotted on which axis and if reference lines should be included.
+
+TODO binning is automatically performed, but can be turned off with the `bin_heatmap` argument.
+When binning is used, the underlying grid used for binning can be set with the argument
+`bin_heatmapGrid_list`.
+
 ```{r}
-# observed heatmap
-plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", bin_heatmap = FALSE,
-                y_var_logScale = TRUE)
+plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", y_var_logScale = TRUE)
+```
 
-# with binning
-plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", bin_heatmap = TRUE,
-                y_var_logScale = TRUE)
+TODO APC axes can be set flexibly with the `dimensions` argument.
 
-# flexibly choose which A, P, C dimension should be plotted on which axis
+```{r}
 plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", dimensions = c("cohort","age"),
                 y_var_logScale = TRUE)
-
-# add some reference lines, with manual binning
-manual_binning <- list(period = seq(min(travel$period, na.rm = TRUE) - 1, max(travel$period, na.rm = TRUE), by = 5),
-                       age    = seq(min(travel$age, na.rm = TRUE) - 1, max(travel$age, na.rm = TRUE), by = 5),
-                       cohort = c(1875,1910,1939,1955,1980,2005))
-plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", y_var_logScale = TRUE,
-                bin_heatmapGrid_list = manual_binning,
-                markLines_list = list(cohort = c(1910,1939,1955,1980)))
-
-# cohort on the y-axis, without manual binning
-plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", y_var_logScale = TRUE,
-                dimensions = c("period","cohort"),
-                markLines_list = list(cohort = c(1910,1939,1955,1980)))
 ```
 
 ### Smoothed, model-based heatmaps
@@ -213,30 +192,14 @@ This approach is used to get a heatmap of the model which was estimated prior. T
 ```{r}
 # estimated heatmap
 APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE,
-                          bin_heatmap = FALSE)
+                          bin_heatmap = FALSE,
+                          markLines_list = list(cohort = c(1939,1946,1966,1982,1994)))
+
 # binned heatmap
 APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE)
 
 # including confidence intervals
 APCtools::plot_APCheatmap(dat = travel, model = model_pure)
-
-# flexibly choose which A, P, C dimension should be plotted on which axis
-APCtools::plot_APCheatmap(dat = travel, model = model_pure,
-                          dimensions = c("cohort","age"), plot_CI = FALSE)
-
-# add some reference lines
-APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE, bin_heatmap = FALSE,
-                          markLines_list = list(cohort = c(1910,1939,1955,1980)))
-APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE, bin_heatmap = FALSE,
-                          markLines_list = list(age = c(25,35,70)), dimensions = c("period","cohort"))
-APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = T, bin_heatmap = FALSE,
-                          markLines_list = list(age = c(25,35,70)), dimensions = c("period","cohort"))
-
-# manual binning
-manual_binning <- list(period = seq(min(travel$period, na.rm = TRUE) - 1, max(travel$period, na.rm = TRUE), by = 5),
-                       cohort = seq(min(travel$period - travel$age, na.rm = TRUE) - 1, max(travel$period - travel$age, na.rm = TRUE), by = 10))
-APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE,
-                          bin_heatmapGrid_list = manual_binning)
 ```
 
 ### Hexamaps

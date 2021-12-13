@@ -1,0 +1,51 @@
+template:
+  bootstrap: 5
+
+navbar:
+  right:
+   - icon: fa-github
+     href: https://github.com/bauer-alex/APCtools
+
+reference:
+  - title: "Visualizing observed structures"
+    desc: "Functions to visualize structures observed in the data."
+    contents:
+      - plot_variable
+      - plot_density
+      - plot_densityMatrix
+      - plot_APCheatmap
+      - plot_APChexamap
+  - title: "Visualizing and summarizing model-based results"
+    desc: "Functions to visualize and summarize estimation results based on
+    generalized additive regression models (GAMs), where the APC effects were
+    estimated with a tensor product surface."
+    contents:
+      - plot_partialAPCeffects
+      - plot_marginalAPCeffects
+      - plot_jointMarginalAPCeffects
+      - create_APCsummary
+      - plot_linearEffects
+      - plot_1Dsmooth
+      - create_covariateSummary
+  - title: "Datasets"
+    desc: "Internal datasets to showcase the package functionalities."
+    contents:
+      - travel
+      - drug_deaths
+  - title: "Internal functions"
+    desc: "Further internal functions that are not specifically meant for general use."
+    contents:
+      - calc_density
+      - capitalize_firstLetter
+      - compute_xCoordinate
+      - compute_yCoordinate
+      - create_groupVariable
+      - create_highlightDiagonalData
+      - create_oneAPCsummaryTable
+      - ensure_segmentsInPlotRange
+      - extract_summary_linearEffects
+      - get_plotGAMobject
+      - gg_addReferenceLines
+      - gg_highlightDiagonals
+      - plot_density_categorical
+      - plot_density_metric

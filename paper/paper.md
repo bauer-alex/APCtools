@@ -16,8 +16,6 @@ authors:
   - name: Hawre Jalal
     orcid: 0000-0002-8224-6834 
     affiliation: 2
-  - name: Pauline Hohenemser
-    affiliation: 1
 affiliations:
  - name: Statistical Consulting Unit StaBLab, Department of Statistics, LMU Munich, Germany
    index: 1
@@ -26,6 +24,8 @@ affiliations:
 date: 03 December 2021
 bibliography: paper.bib
 ---
+
+Age-Period-Cohort (APC) analysis ...
 
 Aufbau:
 1. Kurze Einleitung in APC-Analyse, inklusive der Problematik der APC-Trennung

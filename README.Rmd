@@ -7,7 +7,7 @@ library(knitr)
 opts_chunk$set(warning=FALSE)
 ```
 
-# APCtools <img src="hex-sticker/hex-sticker.svg" align="right" width="200"/>
+# APCtools <img src="man/figures/hex-sticker/hex-sticker.svg" align="right" width="200"/>
 
 <!-- badges: start -->
 [![Travis CI build status](https://travis-ci.org/bauer-alex/APCtools.svg?branch=master)](https://travis-ci.org/bauer-alex/APCtools)
