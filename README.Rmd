@@ -18,7 +18,8 @@ opts_chunk$set(warning=FALSE)
 
 Routines and visualization techniques for descriptive and model-based APC analyses.
 
-* Authors: [Alexander Bauer](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/bauer1/index.html), [Maximilian Weigert](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/weigert/index.html), [Hawre Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal), Pauline Hohenemser
+* Authors: [Alexander Bauer](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/bauer1/index.html), [Maximilian Weigert](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/weigert/index.html), [Hawre Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal)
+* Contributors: Pauline Hohenemser
 * Version: 1.0
 
 

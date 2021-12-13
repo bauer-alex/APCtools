@@ -21,8 +21,8 @@ APC analyses.
     [Maximilian
     Weigert](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/weigert/index.html),
     [Hawre
-    Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal),
-    Pauline Hohenemser
+    Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal)
+-   Contributors: Pauline Hohenemser
 -   Version: 1.0
 
 ## Overview
