@@ -1,5 +1,5 @@
 Package: APCtools
-Title: Visualization functions for descriptive and model-based APC analyses
+Title: Routines and visualization techniques for descriptive and model-based APC analyses
 Version: 1.0
 Authors@R: c(
     person(given = "Alexander",  family = "Bauer",   email = "alexander.bauer@stat.uni-muenchen.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3495-5131")),
