@@ -33,7 +33,7 @@ visualization techniques and general routines to simplify the workflow
 of an APC analysis. Sophisticated functions are available both for
 descriptive and regression model-based analyses. For the former, we use
 density (or ridgeline) matrices, classical heatmaps and *hexamaps*
-(hexagonally binned heatmaps as innovative visualization techniques
+(hexagonally binned heatmaps) as innovative visualization techniques
 building on the concept of Lexis diagrams. Model-based analyses build on
 the separation of the temporal dimensions based on generalized additive
 models, where a tensor product interaction surface (usually between age
