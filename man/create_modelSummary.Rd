@@ -11,7 +11,7 @@ create_modelSummary(model_list, digits = 2, ...)
 
 \item{digits}{number of displayed digits}
 
-\item{...}{additional arguments to \code{\link[mgcv]{gam}}}
+\item{...}{additional arguments to \code{\link[knitr]{kable}}}
 }
 \value{
 List of tables created with \code{\link[knitr]{kable}}.
@@ -25,6 +25,14 @@ the \code{...} argument.
 \details{
 If the model was estimated with a log or logit link, the function
 automatically performs an exponential transformation of the effects.
+
+The table for linear coefficients includes the estimated coefficient
+(\code{coef}), the corresponding standard error (\code{se}), lower and upper
+limits of 95\% confidence intervals (\code{CI_lower}, \code{CI_upper}) and
+the p-values for all coefficients apart from the intercept.
+
+The table for nonlinear coefficients include the estimated degrees of freedom
+(\code{edf}) and the p-value for each estimate.
 }
 \examples{
 library(APCtools)

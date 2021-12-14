@@ -9,9 +9,17 @@
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effects.
 #' 
+#' The table for linear coefficients includes the estimated coefficient
+#' (\code{coef}), the corresponding standard error (\code{se}), lower and upper
+#' limits of 95% confidence intervals (\code{CI_lower}, \code{CI_upper}) and
+#' the p-values for all coefficients apart from the intercept.
+#' 
+#' The table for nonlinear coefficients include the estimated degrees of freedom
+#' (\code{edf}) and the p-value for each estimate.
+#' 
 #' @param model_list list of APC models
 #' @param digits number of displayed digits
-#' @param ... additional arguments to \code{\link[mgcv]{gam}}
+#' @param ... additional arguments to \code{\link[knitr]{kable}}
 #' 
 #' @return List of tables created with \code{\link[knitr]{kable}}.
 #' 
