@@ -6,7 +6,7 @@
 \usage{
 plot_variable(
   dat,
-  variable,
+  y_var,
   apc_dimension = "period",
   log_scale = FALSE,
   geomBar_position = "fill"
@@ -15,7 +15,7 @@ plot_variable(
 \arguments{
 \item{dat}{Dataset containing columns \code{age} and \code{period}.}
 
-\item{variable}{Character name of the variable to plot.}
+\item{y_var}{Character name of the variable to plot.}
 
 \item{apc_dimension}{One of \code{c("age","period","cohort")}. Defaults to
 \code{"period"}.}
@@ -40,12 +40,12 @@ library(APCtools)
 data(travel)
 
 # plot a metric variable
-plot_variable(dat = travel, variable = "mainTrip_distance",
+plot_variable(dat = travel, y_var = "mainTrip_distance",
               apc_dimension = "period", log_scale = TRUE)
 
 # plot a categorical variable
-plot_variable(dat = travel, variable = "household_size", apc_dimension = "period")
-plot_variable(dat = travel, variable = "household_size", apc_dimension = "period",
+plot_variable(dat = travel, y_var = "household_size", apc_dimension = "period")
+plot_variable(dat = travel, y_var = "household_size", apc_dimension = "period",
               geomBar_position = "stack")
 
 }

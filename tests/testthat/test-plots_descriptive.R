@@ -4,8 +4,8 @@ test_that("plot_variable", {
   data(travel)
   
   # metric variable
-  gg1 <- plot_variable(dat = travel, variable = "mainTrip_distance")
-  gg2 <- plot_variable(dat = travel, variable = "mainTrip_distance",
+  gg1 <- plot_variable(dat = travel, y_var = "mainTrip_distance")
+  gg2 <- plot_variable(dat = travel, y_var = "mainTrip_distance",
                        apc_dimension = "cohort", log_scale = TRUE)
   
   expect_s3_class(gg1, class = c("gg","ggplot"))
@@ -13,8 +13,8 @@ test_that("plot_variable", {
 
     
   # categorical variable
-  gg3 <- plot_variable(dat = travel, variable = "household_size")
-  gg4 <- plot_variable(dat = travel, variable = "household_size",
+  gg3 <- plot_variable(dat = travel, y_var = "household_size")
+  gg4 <- plot_variable(dat = travel, y_var = "household_size",
                        geomBar_position = "stack")
   
   expect_s3_class(gg3, class = c("gg","ggplot"))
@@ -23,8 +23,8 @@ test_that("plot_variable", {
   
   # produce some error messages
   expect_error(plot_variable())
-  expect_error(plot_variable(dat = travel, variable = "nonexistent_variable"))
-  expect_error(plot_variable(dat = travel, variable = "household_size",
+  expect_error(plot_variable(dat = travel, y_var = "nonexistent_variable"))
+  expect_error(plot_variable(dat = travel, y_var = "household_size",
                              apc_dimension = "stuff"))
 })
 
