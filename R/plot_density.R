@@ -81,6 +81,12 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
   
   dat$cohort <- dat$period - dat$age
   
+  # remove NA measurements
+  if (any(is.na(dat[[y_var]]))) {
+    message("Excluding ",sum(is.na(dat[[y_var]])), " missing observations of ",y_var,"...")
+    dat <- dat[!is.na(dat[[y_var]]),]
+  }
+  
   # filter the dataset
   if (!is.null(apc_range)) {
     if (!is.null(apc_range$age)) {
