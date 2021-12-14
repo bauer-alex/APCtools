@@ -32,14 +32,15 @@ drivers for long-term developments. The `APCtools` package offers
 visualization techniques and general routines to simplify the workflow
 of an APC analysis. Sophisticated functions are available both for
 descriptive and regression model-based analyses. For the former, we use
-density (or ridgeline) matrices and (hexagonally binned) heatmaps as
-innovative visualization techniques building on the concept of Lexis
-diagrams. Model-based analyses build on the separation of the temporal
-dimensions based on generalized additive models, where a tensor product
-interaction surface (usually between age and period) is utilized to
-represent the third dimension (usually cohort) on its diagonal. Such
-tensor product surfaces can also be estimated while accounting for
-further covariates in the regression model.
+density (or ridgeline) matrices, classical heatmaps and *hexamaps*
+(hexagonally binned heatmaps as innovative visualization techniques
+building on the concept of Lexis diagrams. Model-based analyses build on
+the separation of the temporal dimensions based on generalized additive
+models, where a tensor product interaction surface (usually between age
+and period) is utilized to represent the third dimension (usually
+cohort) on its diagonal. Such tensor product surfaces can also be
+estimated while accounting for further covariates in the regression
+model.
 
 Useful materials:
 
