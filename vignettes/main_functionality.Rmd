@@ -1,5 +1,5 @@
 ---
-title: "APCtools - Main Functionality"
+title: "Main Functionality"
 author: "Alexander Bauer, Maximilian Weigert, Pauline Hohenemser"
 date: "`r format(Sys.time(), '%d.%B %Y')`"
 output:
@@ -14,16 +14,41 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r, echo=FALSE}
+# global settings
+knitr::opts_chunk$set(fig.width = 10)
+```
+
 This document gives an overview of the functionality provided by the R package
 `APCtools`.
 
-An Age-Period-Cohort analysis is used to disentangle trends of social/health behvaiors into three components:
-Age effect (life cycle) – This represents the effect associated with chronological age.
-Period effect (macro-level developments) – This represents the effect associated with time period that affects all age groups at the same time.
-Cohort effect (generational membership) – Epidemiologists and social scientists are often interested in birth cohort, who experienced the same historical and social events at the same age. Cohort effect thus is often used to refered to the variation due to these unique experiences.
-These three are linked through the identity age + cohort = period.
+Age-Period-Cohort (APC) analysis is used to disentangle observed trends (e.g. of social, economical, medical or epidemiological data) to enable conclusions about the developments over three temporal dimensions:
 
-The package includes functions for descriptive plots, innovative visualization techniques for APC models like ridgeline matrix for metric and categorical variables, estimation of Partial effect plots.Furthermore smoothed and non-smoothed model based heatmaps, effect plots of linear and nonlinear effects, and Hexamaps for a better APC analysis. 
+* Age, representing the developments associated with chronological age over someones life cycle.
+* Period, representing the developments over calendar time which affect all age groups simultaneously.
+* Cohort, representing the developments observed over different birth cohorts and generations.
+
+The critical challenge in APC analysis is that these main components are linearly dependent:
+$$
+cohort = period - age
+$$
+
+Accordingly, flexible methods and visualization techniques are needed to properly
+disentagle observed temporal association structures.
+The `APCtools` package comprises different methods that tackle this problem and
+aims to cover all steps of an APC analysis.
+This includes state-of-the-art descriptive visualizations as well as visualization
+and summary functions based on the estimation of a generalized additive model (GAM).
+The main functionalities of the package are highlighted in the following.
+
+For details on the statistical methodology see
+[Weigert et al. (2021)](https://doi.org/10.1177/1354816620987198) or
+our corresponding [research poster](https://www.researchgate.net/publication/353852226_Visualization_techniques_for_semiparametric_APC_analysis_Using_Generalized_Additive_Models_to_examine_touristic_travel_distances).
+The *hexamaps* (hexagonally binned heatmaps) are outlined in
+[Jalal & Burke (2020)](https://doi.org/10.1097/EDE.0000000000001236).
+
+
+## Load relevant packages
 
 ```{r packages, message = FALSE}
 library(APCtools)
@@ -35,64 +60,96 @@ library(ggplot2)
 theme_set(theme_minimal())
 ```
 
-### Data overview
-APC analyses require long-term panel or repeated cross-sectional data (Yang and Land, 2013). In this example, we investigates how age, period, and birth cohorts are related to altering travel distances in Germany between 1971 and 2018. 
+## Example data
+
+APC analyses require long-term panel or repeated cross-sectional data.
+The package includes two exemplary datasets on the travel behavior of German
+tourists (dataset `travel`) and the number of unintentional drug overdose deaths
+in the United States (`drug_deaths`). See the respective help pages `?travel`
+and `?drug_deaths` for details.
+
+In the following, we will use the `travel` dataset to investigate if travel
+distances of the main trip of German travelers over the last decades mainly
+changed over the life cycle of a person (age effect), macro-level developments
+like decreasing air travel prices (period effect) or the generational membership
+of a person, which is shaped by similar socialization and historical experiences
+(cohort effect).
 
 ```{r data preparation}
 data(travel)
-data(drug_deaths)
 ```
 
-# Descriptive analyses
+## Descriptive visualizations
 
-### 1D visualization function for metric and categorical variables
-Plot_variable will show you the distribution of your data.In the case of a metric variable, the function will 
-give you the mean travel distance, 25th/75th percentile and the lowest/highest data point (excluding any outliers) for each year, to help illustrate the magnitude of the difference as well as the uncertainty over the years. Outliers are also visible as dots outside of the boxplot. If the difference in your values are big, it is possible to use a log2-scale to get a useful visualization. 
+Different functions are available for descriptively visualizing observed structures.
+This includes plots for the marginal distribution of some variable of interest,
+1D plots for the development of some variable over age, period or cohort,
+as well as density matrices that visualize the development over all temporal
+dimensions.
 
-If your variable is categorical, bar charts are used to represent counts of the values. By default, the function will show 
-you each category as a percentage  of the whole data in each year, to see the magnitude of each category over the periods. If you add "stack" the data will be shown in absolute numbers for each year and category to get a sense of the quantity of the data points over the years.
 
-```{r, warning = FALSE}
-# plot a metric variable
-plot_variable(dat = travel, variable = "mainTrip_distance", apc_dimension = "period", log_scale = TRUE)
+### Marginal distribution of one variable
 
-# plot a categorical variable
-plot_variable(dat = travel, variable = "household_size", apc_dimension = "period")
-plot_variable(dat = travel, variable = "household_size", apc_dimension = "period", geomBar_position = "stack")
+The marginal distribution of a variable can be visualized using `plot_density`.
+Metric variables can be plotted using a density plot or a boxplot, while
+categorical variables can be plotted using a bar chart.
+
+```{r, message=FALSE, warning=FALSE, fig.height=2.2}
+gg1 <- plot_density(dat = travel, y_var = "mainTrip_distance", log_scale = TRUE)
+gg2 <- plot_density(dat = travel, y_var = "mainTrip_distance", log_scale = TRUE,
+                    plot_type = "boxplot")
+gg3 <- plot_density(dat = travel, y_var = "household_size")
+
+ggpubr::ggarrange(gg1, gg2, gg3, nrow = 1)
 ```
 
-### Density matrix for metric and categorical variables
+### 1D: One variable against age, period or cohort
 
-You are able to define the "breaking points" in your data as you need them, as well as adding a label to each level. 
-In this step, you should also define the age-, period-, and cohort-groups.
+Plotting the distribution of a variable against age, period or cohorts
+is possible with function `plot_variable`.
+The distribution of metric and categorical variables is visualized using boxplots
+and bar charts, respectively. The latter by default show relative frequencies,
+but can be changed to show absolute numbers by specifying argument
+`geomBar_position = "stack"`.
 
-These ridgeline plots shows the density of your data on a log scale in a matrix structure, split up in the age/period 
-groups you defined prior.
+```{r, message = FALSE, fig.height=4}
+plot_variable(dat = travel, y_var = "mainTrip_distance",
+              apc_dimension = "period", log_scale = TRUE)
 
-If you want to highlight your cohort-groups you can show them if you add "highlight_diagonals" and select the ones you 
-want to be marked.
+plot_variable(dat = travel, y_var = "household_size", apc_dimension = "period")
+```
 
-To further illustrate the plot it is possible to visualize your "breaking points" with different colours for the 
-different categories.
+### 2D: Density matrices
 
-You can also change the depiction if you change your temporal dimension from "age" to "cohort" or the other way round, to get a different view on your data. 
+To include all temporal dimensions in one plot, `APCtools` contains function
+`plot_densityMatrix`. In Weigert et al. (2019), this plot type was referred to
+as *ridgeline matrix* when plotting multiple density plots for a metric variable.
+The basic principle of a density matrix is to (i) visualize two of the temporal
+dimensions on the x- and y-axis (specified using the argument `dimensions`), s.t.
+the third temporal dimension is represented on the diagonals of the matrix, and
+(ii) to categorize the respective variables on the x- and y-axis in meaningful
+groups. The function then creates a grid, where each cell contains the distribution
+of the selected `y_var` variable in the respective category.
 
-#### Metric variables
+By default, age and period are depicted on the x- and y-axis, respectively,
+and cohort on the diagonal. The categorization is defined by specifying two of
+the arguments `age_groups`, `period_groups` and `cohort_groups`.
 
-```{r density matrix}
-dist_cat_breaks <- c(1,500,1000,2000,6000,100000)
-dist_cat_labels <- c("< 500 km","500 - 1,000 km", "1,000 - 2,000 km", "2,000 - 6,000 km", "> 6,000 km")
-
+```{r, fig.width=8, message=FALSE}
 age_groups    <- list(c(80,89),c(70,79),c(60,69),c(50,59),c(40,49),c(30,39),c(20,29))
 period_groups <- list(c(1971,1979),c(1980,1989),c(1990,1999),c(2000,2009),c(2010,2018))
-cohort_groups <- list(c(1980,1989),c(1970,1979),c(1960,1969),c(1950,1959),c(1940,1949),c(1930,1939),c(1920,1929))
 
 plot_densityMatrix(dat              = travel,
                    y_var            = "mainTrip_distance",
                    age_groups       = age_groups,
                    period_groups    = period_groups,
                    log_scale        = TRUE)
+```
 
+To highlight the effect of the variable depicted on the diagonal (here: cohort),
+different diagonals can be highlighted using argument `highlight_diagonals`.
+
+```{r, fig.height=6.5, message=FALSE}
 plot_densityMatrix(dat                 = travel,
                    y_var               = "mainTrip_distance",
                    age_groups          = age_groups,
@@ -100,6 +157,15 @@ plot_densityMatrix(dat                 = travel,
                    highlight_diagonals = list("born 1950 - 1959" = 8,
                                               "born 1970 - 1979" = 10),
                    log_scale           = TRUE)
+```
+
+For metric variables it is further possible to use a color scale for
+the density function (arguments `y_var_cat_breaks` and `y_var_cat_labels`)
+to highlight local developments over the APC dimensions.
+
+```{r, fig.height=6.5, message=FALSE}
+dist_cat_breaks <- c(1,500,1000,2000,6000,100000)
+dist_cat_labels <- c("< 500 km","500 - 1,000 km", "1,000 - 2,000 km", "2,000 - 6,000 km", "> 6,000 km")
 
 plot_densityMatrix(dat              = travel,
                    y_var            = "mainTrip_distance",
@@ -113,24 +179,11 @@ plot_densityMatrix(dat              = travel,
                    legend_title     = "Distance category")
 ```
 
-If you change the plot type to "boxplot" you will get boxplots instead of densities.
-```{r density matrix boxplot, warning = FALSE}
-plot_densityMatrix(dat           = travel,
-                   y_var         = "mainTrip_distance",
-                   plot_type     = "boxplot",
-                   age_groups    = age_groups,
-                   period_groups = period_groups,
-                   log_scale     = TRUE,
-                   highlight_diagonals = list("born 1950 - 1959" = 8,
-                                              "born 1970 - 1979" = 10))
-```
+Alternatively to plotting a conditional density in each matrix cell, metric
+variables can also be visualized using boxplots by specifying `plot_type = "boxplot"`.
+Categorical variables are automatically plotted using conditional bar plots.
 
-
-#### Categorical variables
-
-It is also possible to have a categorical variable as your y variable. Instead of densities, the absolute values of the
-categories will be shown.
-```{r density matrix categorical}
+```{r, fig.height=6.5, message=FALSE}
 plot_densityMatrix(dat                 = travel,
                    y_var               = "household_size",
                    age_groups          = age_groups,
@@ -140,109 +193,201 @@ plot_densityMatrix(dat                 = travel,
 ```
 
 
-# Model-based analyses
+### 2D: Heatmaps
 
-### Wrapper function for the estimation of mgcv::gam
-To get an estimation for a further analysis, a wrapper function (just a function which wraps another function, in this case it sets the previous defined values for the age/period/cohort) is used to fit a generalized additive model (GAM). 
-```{r}
-model_pure <- gam(mainTrip_distance ~ te(age, period, bs = "ps", k = c(8,8)),
-                  data = travel)
-model_cov  <- gam(mainTrip_distance ~ te(age, period, bs = "ps", k = c(8,8)) +
-                    residence_region + household_size + s(household_income),
-                  data = travel)
+Similar to densitry matrices, heatmaps simultaneously visualize all three APC
+dimensions. Instead of the whole distribution in specific categories, however,
+a color scale is used to depict the mean value in a specific region.
+When setting `bin_heatmap = FALSE`, the function `plot_APCheatmap` simply shows
+the average observed values of a metric variable for each observed combination
+of observed age and period values (if `dimensions = c("period","age")`).
+Groups along the diagonal can be marked using argument `markLines_list`.
+
+```{r, fig.height=6.5, fig.width=8}
+plot_APCheatmap(dat            = travel,
+                y_var          = "mainTrip_distance",
+                y_var_logScale = TRUE,
+                bin_heatmap    = FALSE,
+                markLines_list = list(cohort = c(1900,1920,1939,1946,
+                                                 1966,1982,1994)))
 ```
 
-### Partial effect plots
-A partial APC plot highlights the interrelations between the temporal dimensions. These plots show the estimated odds ratios for the cohort effect dependent on age group and period. The mean marginal effect is marked as bold blue line. In addition to the marginal cohort effect, it includes one line for each partial cohort effect, that is, for the estimated differences between cohorts when just focusing on a specific age (left panel) or a specific period (right panel).
+By default, however, the heatmap is binned in five year blocks along the
+x- and y-axis to focus on larger-scale developments. Note that the grid used
+for binning can flexibly be defined with the argument `bin_heatmapGrid_list`.
 
-These plots show the estimated marginal odds ratios of age, period, and cohort for each distance category on a log2 scale. 
-The dashed vertical lines in the cohort plot mark the boundaries between the generations defined in “Database” section.
-```{r}
-plot_partialAPCeffects(model_pure, dat = travel, variable = "period")
-plot_marginalAPCeffects(model_pure, dat = travel, variable = "cohort",
-                        vlines_vec = c(1939,1946,1966,1982,1994))
-
-model_list <- list("pure model"      = model_pure,
-                   "covariate model" = model_cov)
-plot_jointMarginalAPCeffects(model_list, dat = travel,
-                             vlines_list = list("cohort" = c(1939,1946,1966,1982,1994)))
+```{r, fig.height=6.5, fig.width=8}
+plot_APCheatmap(dat            = travel,
+                y_var          = "mainTrip_distance",
+                y_var_logScale = TRUE,
+                markLines_list = list(cohort = c(1900,1920,1939,1946,
+                                                 1966,1982,1994)))
 ```
 
-### Non-smoothed heatmaps
-Heatmaps show relationships between variables which are plotted on both axes. The make it easy to look for patterns in the cells by noticing the color change. The results are visualized by the estimated tensor product surface allowing the comparison of areas with a higher chance in the examined category and areas with a respective lower chance.
-The Image starts with the observed heatmap, with binning the picture gets more distinct. After that, you choose which A, P, C dimension should be plotted on which axis and if reference lines should be included.
 
-TODO binning is automatically performed, but can be turned off with the `bin_heatmap` argument.
-When binning is used, the underlying grid used for binning can be set with the argument
-`bin_heatmapGrid_list`.
+### 2D: Hexamaps
 
-```{r}
-plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", y_var_logScale = TRUE)
-```
+As an alternative to classical heatmaps observed developments can also be
+visualized using *hexamaps*, i.e. hexagonally binned heatmaps with rotated axes
+to give all three APC dimensions similar visual weight. This resolves the
+central problem of classical heatmaps that developments along the diagonal
+dimension are visually much harder to grasp than developments along the x- or
+y-axis. Function `plot_APChexamap` can be called similarly to `plot_APCheatmap`,
+note however that hexamaps are currently implemented in base R and not based on
+`ggplot2`.
 
-TODO APC axes can be set flexibly with the `dimensions` argument.
-
-```{r}
-plot_APCheatmap(dat = travel, y_var = "mainTrip_distance", dimensions = c("cohort","age"),
+```{r, fig.height=6.5}
+plot_APChexamap(dat            = travel,
+                y_var          = "mainTrip_distance",
                 y_var_logScale = TRUE)
 ```
 
-### Smoothed, model-based heatmaps
-This approach is used to get a heatmap of the model which was estimated prior. The tool will give you a smoothed heatmap with the possibility to and the lower/upper 95% CI boundary for the considered category.
+
+## Model-based analyses
+
+After getting a descriptive overview of the data with the functions outlined
+above, an established approach to analyze APC structures in more detail is to
+use the semiparametric approach offered by generalized additive regression
+models (GAMs). This regression-based approach offers several benefits:
+
+* Compared to alternative regression-based APC approaches it circumvents the
+issue of linear dependency of the APC dimensions by estimating a flexible
+two-dimensional tensor product surface.
+* The model separates the underlying smooth effects of age, period and cohort
+from random variation in the data and allows for the subsequent visualization of
+marginal age, period and cohort effects.
+* While the heatmaps and hexamaps can only be used to visualize the distribution
+of *metric* variables, the regression-based approach also allows for estimating
+and plotting the mean structure in settings with a categorical response variable,
+for example by estimating a logistic regression model.
+* The regression-based approach allows for accounting for further control
+variables in the model. E.g., when analyzing how travel distances developed over
+the last decades, the persons income can be included as a covariate in the model
+estimation to account for income differences over the years.
+
+For estimating a regression model we utilize the function `gam` implemented in
+package `mgcv`. For further methodological details see Weigert et al. (2019).
+
+Let's fit two GAM models, one with and one without further control variables.
+See `?travel` for an explanation of the used control variables.
+The tensor product surface is estimated with marginal P-spline bases with
+eight basis functions.
+
 ```{r}
-# estimated heatmap
-APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE,
-                          bin_heatmap = FALSE,
-                          markLines_list = list(cohort = c(1939,1946,1966,1982,1994)))
+# GAM without covariates
+model_pure <- gam(mainTrip_distance ~ te(age, period, bs = "ps", k = c(8,8)),
+                  data = travel)
 
-# binned heatmap
-APCtools::plot_APCheatmap(dat = travel, model = model_pure, plot_CI = FALSE)
+# GAM including covariates
+model_cov  <- gam(mainTrip_distance ~ te(age, period, bs = "ps", k = c(8,8)) +
+                    residence_region + household_size + s(household_income),
+                  data = travel)
 
-# including confidence intervals
-APCtools::plot_APCheatmap(dat = travel, model = model_pure)
+# create a named list of the two models, useful for some functions
+model_list <- list("pure model"      = model_pure,
+                   "covariate model" = model_cov)
+```
+
+
+### 2D: Heatmaps
+
+Similary to the descriptive visualization outlined above, the tensor product
+surface estimated with the regression model can be created with
+`plot_APCheatmap`, by passing the model object as argument `model` to the
+function.
+
+```{r, fig.height=3.5, fig.width=8}
+plot_APCheatmap(dat   = travel,
+                model = model_pure)
 ```
 
 ### Hexamaps
-A commonly used display of APC data is the traditional Lexis diagram, which consists of a simple two-dimensional heatmap with a field of colored square tiles representing a quantity of interest. While it is informative, the main issue with a Lexis diagram is that the researcher has to make a choice to represent only two of the three dimensions (often age and period) on the XY axes, leaving cohorts to be represented on the diagonal. This setup introduces substantial visual distortion in how cohort patterns are presented relative to age and period.
-In addition to these distortions, tracing cohort patterns is further complicated because adjacent square pixels along any cohort 
-isoline only share a single corner. Together, these distortions can substantially impede cohort pattern recognition in Lexis diagrams.
 
-A hexagonal grid is especially powerful for visualizing APC data because it places all three APC axes at equal 60° angles. Because of 
-this placement, a hexamap overcomes all the visual distortions in a traditional Lexis diagram. So this tool helps to overcome many of the challenges of the existing APC data visualization tools.
-```{r}
-# restrict to data where the mortality rate is available
-drug_deaths <- drug_deaths %>% filter(!is.na(mortality_rate))
+The same applies to the hexamaps. By calling `plot_APChexamap` and specifying
+the `model` argument, a hexamap of the estimated mean structure is created.
 
-# hexamap of an observed structure
-plot_APChexamap(dat         = drug_deaths,
-                y_var       = "mortality_rate",
-                color_range = c(0,40))
-
-# hexamap of a smoothed structure
-model <- gam(mortality_rate ~ te(age, period, bs = "ps", k = c(8,8)),
-             data = drug_deaths)
-
-plot_APChexamap(dat = drug_deaths, model = model)
+```{r, fig.height=6.5}
+plot_APChexamap(dat   = travel,
+                model = model_pure)
 ```
 
-### Overview table
+### Marginal APC effects
+
+Based on the mean tensor product surface estimated by the regression model
+marginal effects can be extracted by taking the average of all values of the
+surface along one dimension. Marginal effects can be visualized using
+`plot_marginalAPCeffects`.
 
 ```{r}
-create_APCsummary(model_list, dat = travel)
+plot_marginalAPCeffects(model    = model_pure,
+                        dat      = travel,
+                        variable = "age")
 ```
 
-### Effect plots of linear and nonlinear effects
-To show the effect of a single variable, this package offers effect plots of linear and nonlinear effects by using the estimated odds 
-ratios of the variable in the model (for a specific category category) and presents the results on a log2 scale.Uncertainty is displayed by 95% confidence intervals. 
+The marginal effects of all models can also be jointly visualized in one plot
+using `plot_jointMarginalAPCeffects`.
+
+```{r}
+plot_jointMarginalAPCeffects(model_list  = model_list,
+                             dat         = travel,
+                             vlines_list = list("cohort" = c(1900,1920,1939,
+                                                             1946,1966,1982,
+                                                             1994)))
+```
+
+### Partial effect plots
+
+Partial effect plots can be used to get deeper insights into a specific
+temporal effect and the interrelations between the temporal dimensions.
+These plots show the estimated effects for one temporal dimension dependent on the other two
+dimensions. In the plot, the mean marginal effect is marked as bold blue line,
+and one grayscale line is drawn for each partial effect,
+that is, for the estimated differences when just focusing on a specific age, period or cohort group.
+
+In the following example, the period effect is visualized, dependent on different
+age groups and cohorts.
+
+```{r}
+plot_partialAPCeffects(model    = model_pure,
+                       dat      = travel,
+                       variable = "period")
+```
+
+
+### APC summary table
+
+The function `create_APCsummary` can be used to get a compact overview of the
+magnitude of the different APC effects. It is based on the marginal APC effects,
+extracts their minimum and maximum values and computes the overall size of each
+effect.
+
+```{r}
+create_APCsummary(model_list = model_list,
+                  dat        = travel)
+```
+
+### Covariate effect plots
+
+Control variables in the regression models can be visualized using the functions
+`plot_linearEffects` and `plot_1Dsmooth` which create an effect plot of all
+linear effects in a model and a line plot of a one-dimensional smooth effect,
+respectively.
+
 ```{r}
 APCtools::plot_linearEffects(model_cov)
 APCtools::plot_1Dsmooth(model_cov, select = 2)
 ```
 
-### Overview tables of linear and nonlinear effects
+### Model summary tables
+
+The function `create_modelSummary` can be used to create publication-ready
+tables of the full model results. It can either be applied to a list of multiple
+models or a list of a single model, and returns a list with both a table for
+all linear coefficients and all nonlinear estimates.
 
 ```{r}
-summary_list <- create_covariateSummary(model_list)
+summary_list <- create_modelSummary(model_list)
 summary_list[[1]]
 summary_list[[2]]
 ```
+
