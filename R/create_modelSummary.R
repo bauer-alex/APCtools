@@ -1,5 +1,5 @@
 
-#' Create covariate summary tables for multiple estimated GAM models
+#' Create model summary tables for multiple estimated GAM models
 #' 
 #' Create publication-ready summary tables of all linear and nonlinear effects
 #' for models fitted with \code{\link[mgcv]{gam}}. The output format of the
@@ -29,9 +29,9 @@
 #' model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
 #'              household_size + s(household_income), data = travel)
 #' 
-#' create_APCsummary(list(model), dat = travel)
+#' create_modelsummary(list(model), dat = travel)
 #' 
-create_covariateSummary <- function(model_list, digits = 2, ...) {
+create_modelSummary <- function(model_list, digits = 2, ...) {
   
   checkmate::assert_list(model_list, types = "gam")
   checkmate::assert_number(digits, lower = 0)

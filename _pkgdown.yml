@@ -26,7 +26,7 @@ reference:
       - create_APCsummary
       - plot_linearEffects
       - plot_1Dsmooth
-      - create_covariateSummary
+      - create_modelSummary
   - title: "Datasets"
     desc: "Internal datasets to showcase the package functionalities."
     contents:

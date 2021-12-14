@@ -36,7 +36,7 @@ test_that("create_APCsummary", {
 
 
 
-test_that("create_covariateSummary", {
+test_that("create_modelSummary", {
   
   testthat::skip_if_not_installed("mgcv")
   library(mgcv)
@@ -50,8 +50,8 @@ test_that("create_covariateSummary", {
   model_list <- list("Model A" = model,
                      "Model B" = model)
   
-  # create_covariateSummary
-  res <- create_covariateSummary(model_list, digits = 4)
+  # create_modelSummary
+  res <- create_modelSummary(model_list, digits = 4)
   
   expect_length(res, 2)
   expect_s3_class(res[[1]], "knitr_kable")
