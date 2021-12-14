@@ -117,6 +117,14 @@ plot_APChexamap <- function (dat,
       dplyr::rename(effect = y_var) %>% # rename 'y_var' for easier handling
       filter(!is.na(effect))
     
+    # if a period-age combination is appearing multiple times, take the average
+    if (max(table(paste(plot_dat$period, plot_dat$age))) > 1) {
+      plot_dat <- plot_dat %>% 
+        group_by(period, age) %>% 
+        summarize(effect = mean(effect)) %>% 
+        ungroup()
+    }
+    
     if (y_var_logScale) {
       plot_dat <- plot_dat %>% mutate(effect = log10(effect))
       if (!is.null(color_range)) {
@@ -192,26 +200,28 @@ plot_APChexamap <- function (dat,
   # reformat the data to wide format
   mat <- plot_dat %>% select(period, age, effect) %>% 
     tidyr::pivot_wider(id_cols = age, names_from = period, values_from = effect) %>% 
+    arrange(age) %>% 
     select(-1) %>% 
     as.matrix()
+  row.names(mat) <- sort(unique(plot_dat$age))
   
   # setting default values for missing parameters
   if (is.null(color_range)) {
     color_range <- range(mat, na.rm = TRUE)
   }
   if (is.null(color_vec)) {
-    color_palette <- grDevices::colorRampPalette(c("dodgerblue4", "white", "firebrick3"))
+    color_palette <- grDevices::colorRampPalette(c("dodgerblue4", gray(0.95), "firebrick3"))
     color_vec     <- color_palette(100)
   }
   # end of default values
   
-  m <- dim(mat)[1]
-  n <- dim(mat)[2]
+  nA <- 1 + diff(range(as.numeric(row.names(mat))))
+  nP <- 1 + diff(range(as.numeric(colnames(mat))))
   
   first_age    <- min(plot_dat$age)
-  last_age     <- first_age + (m - 1) * obs_interval
+  last_age     <- first_age + (nA - 1) * obs_interval
   first_period <- min(plot_dat$period)
-  last_period  <- first_period + (n - 1) * obs_interval
+  last_period  <- first_period + (nP - 1) * obs_interval
   first_cohort <- first_period - last_age
   last_cohort  <- last_period - first_age
   
@@ -222,6 +232,8 @@ plot_APChexamap <- function (dat,
   ages      <- seq(from = first_age,    to = last_age,    by = obs_interval)
   periods   <- seq(from = first_period, to = last_period, by = obs_interval)
   cohorts   <- seq(from = first_cohort, to = last_cohort, by = obs_interval)
+  ages      <- ages[ages %in% row.names(mat)]
+  periods   <- periods[periods %in% colnames(mat)]
   n_ages    <- length(ages)
   n_periods <- length(periods)
   n_cohorts <- length(cohorts)
@@ -237,13 +249,14 @@ plot_APChexamap <- function (dat,
   
   ### plotting
   ncol        <- length(color_vec)
-  not_nan_mat <- !is.nan(mat)
+  not_nan_mat <- !is.na(mat) & !is.nan(mat)
   
   v_mat <- as.vector(mat[not_nan_mat])
   matc  <- cut(mat[not_nan_mat], # discretize the data 
-               seq(from = color_range[1], to = color_range[2], length.out = ncol), 
-               include.lowest = T, 
-               labels = F)
+               breaks         = seq(from = color_range[1], to = color_range[2],
+                                    length.out = ncol), 
+               include.lowest = TRUE,
+               labels         = FALSE)
   
   a  <- obs_interval / sqrt(3) # radius of the hexagon (distance from center to a vertex).
   b  <- sqrt(3)/2 * a # half height of the hexagon (distance from the center perpendicular to the middle of the top edge)
@@ -251,8 +264,8 @@ plot_APChexamap <- function (dat,
   xv <- c(-a, -a/2, a/2, a, a/2, -a/2, -a)
   
   # compute the center of each hexagon by creating an a*p grid for each age-period combination
-  P0 <- matrix(periods, nrow = n_ages, ncol=n_periods, byrow = TRUE)
-  A0 <- t(matrix(ages, nrow = n_periods, ncol = n_ages, byrow = TRUE))
+  P0 <- matrix(periods, nrow = n_ages,    ncol = n_periods, byrow = TRUE)
+  A0 <- t(matrix(ages,  nrow = n_periods, ncol = n_ages,    byrow = TRUE))
   
   # convert the grid to the X-Y Coordinate
   X <- compute_xCoordinate(P0)
@@ -269,7 +282,8 @@ plot_APChexamap <- function (dat,
   Yvec <- as.vector(Y)
   n_hexagons <- length(Xvec)
   
-  # compute the X and Y cooridinate for each hexagon - each hexagon is a row and each point is a column
+  # compute the X and Y cooridinate for each hexagon - each hexagon is a row and
+  # each polygon point is a column
   Xhex <- outer(Xvec, xv, '+') 
   Yhex <- outer(Yvec, yv, '+')
   
@@ -278,23 +292,25 @@ plot_APChexamap <- function (dat,
   minY <- min(Yhex) - obs_interval
   maxY <- max(Yhex) + obs_interval
   
-  layout(t(1:2), widths=c(4,1)) # two columns - one for the plot, the other for the colorbar
+  # plot layout with two columns - for the plot and the colorbar
+  layout(t(1:2), widths = c(4,1))
   
-  par(mar=c(.5,.5,.5,.5))
+  par(mar = c(.5,.5,.5,.5))
   
   plot(x = NULL, y = NULL,
        xlim = c(minX,maxX), ylim = c(minY,maxY),
-       axes=FALSE, frame.plot=FALSE,
+       axes = FALSE, frame.plot = FALSE,
        xaxt = 'n', yaxt = 'n', type = 'n', asp = 1)
   
   for (i in 1:n_hexagons) {
-    polygon(x = Xhex[i,],   # X-Coordinates of polygon
-            y = Yhex[i,],   # Y-Coordinates of polygon
-            col = color_vec2[i],  # Color of polygon
+    polygon(x      = Xhex[i,],   # X-Coordinates of polygon
+            y      = Yhex[i,],   # Y-Coordinates of polygon
+            col    = color_vec2[i],  # Color of polygon
             border = NA, # Color of polygon border
-            lwd = 1)                                            
+            lwd    = 1)                                            
   }
   
+    
   # age-isolines
   y1 <- compute_yCoordinate(first_period, age_isolines)
   y2 <- compute_yCoordinate(last_period + obs_interval, age_isolines)
@@ -351,7 +367,7 @@ plot_APChexamap <- function (dat,
   x2 <- compute_xCoordinate(p2)
   y1 <- compute_yCoordinate(p1 - obs_interval, a1 - obs_interval)
   y2 <- compute_yCoordinate(p2, a2)
-  # finally draw the lines.
+  # finally draw the lines
   for (i in 1:n_cohort_isolines) { 
     lines(x = c(x1[i], x2[i]), y = c(y1[i],y2[i]), col = line_color, lwd = line_width)
     text(x = x1[i], y = y1[i], labels = paste("C:",cohort_isolines[i]), 
