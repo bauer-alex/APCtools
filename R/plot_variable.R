@@ -72,9 +72,12 @@ plot_variable <- function(dat, variable, apc_dimension = "period",
   # create plot
   if (var_class == "categorical") {
     
+    y_lab <- ifelse(geomBar_position == "fill", "Rel. frequency", "Frequency")
+    
     gg <- ggplot(dat, aes(x = x, fill = y)) + 
       geom_bar(position = geomBar_position) +
-      scale_fill_brewer(variable, palette = "Set2")
+      scale_fill_brewer(variable, palette = "Set2") +
+      ylab(y_lab)
     
   } else { # var_class == "metric"
     

@@ -10,7 +10,7 @@ plot_density_categorical(
   dat_highlightDiagonals = NULL,
   weights_var = NULL,
   xlab = NULL,
-  ylab = "Density"
+  ylab = NULL
 )
 }
 \arguments{

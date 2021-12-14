@@ -14,7 +14,7 @@ plot_density_metric(
   weights_var = NULL,
   log_scale = FALSE,
   xlab = NULL,
-  ylab = "Density",
+  ylab = NULL,
   legend_title = NULL,
   ...
 )

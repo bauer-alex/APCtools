@@ -56,7 +56,7 @@ plot_density <- function(dat, y_var, plot_type = "density", apc_range = NULL,
                          highlight_diagonals = NULL,
                          y_var_cat_breaks = NULL, y_var_cat_labels = NULL,
                          weights_var = NULL, log_scale = FALSE, xlab = NULL,
-                         ylab = "Density", legend_title = NULL, ...) {
+                         ylab = NULL, legend_title = NULL, ...) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_character(y_var, len = 1)
@@ -151,7 +151,7 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
                                 dat_highlightDiagonals = NULL,
                                 y_var_cat_breaks = NULL, y_var_cat_labels = NULL,
                                 weights_var = NULL, log_scale = FALSE, xlab = NULL,
-                                ylab = "Density", legend_title = NULL, ...) {
+                                ylab = NULL, legend_title = NULL, ...) {
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
   x <- y <- x_cat <- weight <- NULL
@@ -176,9 +176,10 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
   
   # general plot preparations
   if (is.null(xlab)) {
-    # axis label, with capitalized first letter
-    y_var_cap <- capitalize_firstLetter(y_var)
-    xlab      <- ifelse(!log_scale, y_var_cap, paste(y_var_cap, "on log10 scale"))
+    xlab <- ifelse(!log_scale, y_var, paste(y_var, "on log10 scale"))
+  }
+  if (is.null(ylab)) {
+    ylab <- "Density"
   }
   
   # base plot
@@ -264,7 +265,7 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
 #' 
 plot_density_categorical <- function(dat, y_var, dat_highlightDiagonals = NULL,
                                      weights_var = NULL, xlab = NULL,
-                                     ylab = "Density") {
+                                     ylab = NULL) {
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
   x <- weight <- NULL
@@ -282,9 +283,12 @@ plot_density_categorical <- function(dat, y_var, dat_highlightDiagonals = NULL,
   
   # final plot preparations
   if (is.null(xlab)) {
-    # axis label, with capitalized first letter
-    xlab <- capitalize_firstLetter(y_var)
+    xlab <- y_var
   }
+  if (is.null(ylab)) {
+    ylab <- "Rel. frequency"
+  }
+  
   
   # base plot
   gg <- ggplot()
@@ -297,7 +301,7 @@ plot_density_categorical <- function(dat, y_var, dat_highlightDiagonals = NULL,
   gg <- gg +
     geom_bar(data = dat, aes(x = x, y = ..count../sum(..count..),
                              weight = weight, fill = x)) +
-    scale_fill_brewer(capitalize_firstLetter(y_var), palette = "Set2") +
+    scale_fill_brewer(y_var, palette = "Set2") +
     xlab(xlab) + ylab(ylab) +
     theme(axis.text.x  = element_blank(),
           axis.ticks.x = element_blank())
