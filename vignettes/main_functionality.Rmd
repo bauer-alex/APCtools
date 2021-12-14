@@ -289,7 +289,7 @@ model_list <- list("pure model"      = model_pure,
 ```
 
 
-### 2D: Heatmaps
+### Heatmaps
 
 Similary to the descriptive visualization outlined above, the tensor product
 surface estimated with the regression model can be created with
