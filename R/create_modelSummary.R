@@ -37,7 +37,7 @@
 #' model <- gam(mainTrip_distance ~ te(age, period) + residence_region +
 #'              household_size + s(household_income), data = travel)
 #' 
-#' create_modelsummary(list(model), dat = travel)
+#' create_modelSummary(list(model), dat = travel)
 #' 
 create_modelSummary <- function(model_list, digits = 2, ...) {
   
