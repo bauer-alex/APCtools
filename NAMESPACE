@@ -2,7 +2,6 @@
 
 export(create_APCsummary)
 export(create_modelSummary)
-export(fit_APC_model)
 export(plot_1Dsmooth)
 export(plot_APCheatmap)
 export(plot_APChexamap)
