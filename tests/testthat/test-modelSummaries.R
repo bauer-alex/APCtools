@@ -43,12 +43,15 @@ test_that("create_modelSummary", {
   
   data(travel)
   
-  model <- gam(mainTrip_distance ~ te(period, age) +
-                 household_size + residence_region,
-               data = travel)
+  model <- gam(mainTrip_distance ~ te(period, age) + household_size +
+                 residence_region, data = travel)
+  model_logLink <- gam(mainTrip_distance ~ te(period, age) +
+                         s(household_income) + household_size +
+                         residence_region,
+                       family = Gamma(link = "log"), data = travel)
   
   model_list <- list("Model A" = model,
-                     "Model B" = model)
+                     "Model B" = model_logLink)
   
   # create_modelSummary
   res <- create_modelSummary(model_list, digits = 4)
@@ -59,8 +62,11 @@ test_that("create_modelSummary", {
   
   
   # extract_summary_linearEffects
-  tab <- APCtools:::extract_summary_linearEffects(model)
+  tab1 <- APCtools:::extract_summary_linearEffects(model)
+  tab2 <- APCtools:::extract_summary_linearEffects(model_logLink)
   
-  expect_s3_class(tab, "data.frame")
-  expect_identical(colnames(tab)[1:3], c("param","coef","se"))
+  expect_s3_class(tab1, "data.frame")
+  expect_s3_class(tab2, "data.frame")
+  expect_identical(colnames(tab1)[1:3], c("param","coef","se"))
+  expect_identical(colnames(tab2)[1:3], c("param","coef","se"))
 })

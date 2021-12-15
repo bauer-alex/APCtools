@@ -139,6 +139,7 @@ test_that("plot_densityMatrix", {
   data(travel)
   
   age_groups    <- list(c(20,29),c(30,39),c(40,49))
+  period_groups <- list(c(1980,1989),c(1990,1999),c(2000,2009))
   cohort_groups <- list(c(1940,1949),c(1950,1959),c(1960,1969))
   
   gg1 <- plot_densityMatrix(dat = travel, y_var = "mainTrip_distance",
@@ -156,7 +157,16 @@ test_that("plot_densityMatrix", {
                             age_groups = age_groups, cohort_groups = cohort_groups,
                             highlight_diagonals = list("A" = 1, "B" = 3))
   
+  gg4 <- plot_densityMatrix(dat = travel, y_var = "mainTrip_distance",
+                            dimensions = c("age","period"),
+                            age_groups = age_groups, period_groups = period_groups)
+  gg5 <- plot_densityMatrix(dat = travel, y_var = "mainTrip_distance",
+                            dimensions = c("period","cohort"),
+                            period_groups = period_groups, cohort_groups = cohort_groups)
+  
   expect_s3_class(gg1, class = c("gg","ggplot"))
   expect_s3_class(gg2, class = c("gg","ggplot"))
   expect_s3_class(gg3, class = c("gg","ggplot"))
+  expect_s3_class(gg4, class = c("gg","ggplot"))
+  expect_s3_class(gg5, class = c("gg","ggplot"))
 })

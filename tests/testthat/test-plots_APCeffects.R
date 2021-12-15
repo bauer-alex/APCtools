@@ -7,12 +7,27 @@ test_that("plot_partialAPCeffects and plot_marginalAPCeffects", {
   data(drug_deaths)
   
   model <- gam(mortality_rate ~ te(period, age), data = drug_deaths)
+  drug_deaths$mortality_rate <- drug_deaths$mortality_rate + 1
+  model_logLink <- gam(mortality_rate ~ te(period, age),
+                       family = Gamma(link = "log"), data = drug_deaths)
   
   # plot_partialAPCeffects
-  gg1 <- plot_partialAPCeffects(model, dat = drug_deaths, variable = "cohort",
+  gg1 <- plot_partialAPCeffects(model, dat = drug_deaths, variable = "age",
+                                vlines_vec = c(20,70))
+  gg2 <- plot_partialAPCeffects(model, dat = drug_deaths, variable = "period",
+                                vlines_vec = c(1990,2010))
+  gg3 <- plot_partialAPCeffects(model, dat = drug_deaths, variable = "cohort",
                                 vlines_vec = c(1950,1970))
+  gg4 <- plot_partialAPCeffects(model_logLink, dat = drug_deaths, variable = "age")
+  gg5 <- plot_partialAPCeffects(model_logLink, dat = drug_deaths, variable = "period")
+  gg6 <- plot_partialAPCeffects(model_logLink, dat = drug_deaths, variable = "cohort")
   
   expect_s3_class(gg1, class = c("gg","ggplot"))
+  expect_s3_class(gg2, class = c("gg","ggplot"))
+  expect_s3_class(gg3, class = c("gg","ggplot"))
+  expect_s3_class(gg4, class = c("gg","ggplot"))
+  expect_s3_class(gg5, class = c("gg","ggplot"))
+  expect_s3_class(gg6, class = c("gg","ggplot"))
   
   # return the dataset
   dat_list <- plot_partialAPCeffects(model, dat = drug_deaths, variable = "cohort",
@@ -25,10 +40,13 @@ test_that("plot_partialAPCeffects and plot_marginalAPCeffects", {
   
   
   # plot_marginalAPCeffects
-  gg2 <- plot_marginalAPCeffects(model, dat = drug_deaths, variable = "period",
-                                 vlines_vec = c(2000,2007))
+  gg7 <- plot_marginalAPCeffects(model, dat = drug_deaths, variable = "age")
+  gg8 <- plot_marginalAPCeffects(model, dat = drug_deaths, variable = "period")
+  gg9 <- plot_marginalAPCeffects(model, dat = drug_deaths, variable = "cohort")
   
-  expect_s3_class(gg2, class = c("gg","ggplot"))
+  expect_s3_class(gg7, class = c("gg","ggplot"))
+  expect_s3_class(gg8, class = c("gg","ggplot"))
+  expect_s3_class(gg9, class = c("gg","ggplot"))
   
   # return the dataset
   dat_list2 <- plot_marginalAPCeffects(model, dat = drug_deaths, variable = "period",
