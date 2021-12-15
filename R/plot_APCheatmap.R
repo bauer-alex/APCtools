@@ -319,10 +319,12 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
     
     gg_lower <- ggplot() +
       geom_tile(data = plot_dat, aes(x = x, y = y, fill = plot_lower)) +
-      ggtitle("Lower 95% CI boundary") + xlab(x_lab) + gg_theme
+      ggtitle("Lower 95% CI boundary") + xlab(x_lab) + gg_theme +
+      theme(axis.title.y = element_blank())
     gg_upper <- ggplot() +
       geom_tile(data = plot_dat, aes(x = x, y = y, fill = plot_upper)) +
-      ggtitle("Upper 95% CI boundary") + xlab(x_lab) + gg_theme
+      ggtitle("Upper 95% CI boundary") + xlab(x_lab) + gg_theme +
+      theme(axis.title.y = element_blank())
     
     gg_list <- list(gg_effect, gg_lower, gg_upper)
   }
@@ -348,7 +350,8 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   
   # join the three plots
   plots <- ggpubr::ggarrange(plotlist = gg_list, legend = "bottom",
-                             common.legend = TRUE, ncol = ifelse(plot_CI, 3, 1))
+                             common.legend = TRUE, ncol = ifelse(plot_CI, 3, 1),
+                             widths = c(.34,.32,.32))
   
   return(plots)
 }
