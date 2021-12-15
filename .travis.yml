@@ -1,4 +1,36 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
+language: r
+sudo: false
 cache: packages
+
+before_install:
+  - sudo apt-get -y install libharfbuzz-dev libfribidi-dev
+
+r:
+  - devel
+  - release
+
+r_packages:
+  - APCtools # for building pkgdown vignettes via travis
+  - covr     # for codecov test coverage
+  - pkgdown  # for building homepage
+
+# whitelist
+branches:
+  only:
+    - master
+
+after_success:
+  - Rscript -e 'covr::codecov()'
+  - Rscript -e 'pkgdown::build_site()'
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_PAT
+  keep-history: false
+  local-dir: docs
+  on:
+    branch: master
+
