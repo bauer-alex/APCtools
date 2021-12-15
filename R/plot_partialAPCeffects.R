@@ -162,14 +162,16 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   }
   
   # define the theme
-  theme <- theme(text = element_text(size = 16), axis.title = element_text(size = 16),
-                 axis.text = element_text(size = 16),
-                 legend.text = element_text(size = 12),
-                 plot.title = element_text(hjust = 0.5, size = 18, face = "bold"),
-                 strip.text.y = element_text(size = 16), 
-                 strip.placement = "outside", strip.background = element_blank(),
-                 axis.title.y = element_text(margin = margin(0, 10, 0, 0)),
-                 axis.title.x = element_text(margin = margin(10, 0, 0, 0))) 
+  theme <- theme(text             = element_text(size = 16),
+                 axis.title       = element_text(size = 16),
+                 axis.text        = element_text(size = 16),
+                 legend.text      = element_text(size = 12),
+                 plot.title       = element_text(hjust = 0.5, size = 18, face = "bold"),
+                 strip.text.y     = element_text(size = 16), 
+                 strip.placement  = "outside",
+                 strip.background = element_blank(),
+                 axis.title.y     = element_text(margin = margin(0, 10, 0, 0)),
+                 axis.title.x     = element_text(margin = margin(10, 0, 0, 0))) 
   
   # final preparations
   if (used_logLink) {
@@ -204,6 +206,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
       
       gg_final <- gg +
         geom_line(data = dat_age, mapping = aes(x = value, y = effect)) +
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
         ylab(y_lab) + xlab("Age") + theme + ggtitle("Marginal age effect")
       
     } else { # plots including the partial effects
@@ -212,6 +215,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
       gg_AP <- gg +
         geom_line(data = dat_overallEffect,
                   mapping = aes(x = age, y = effect, group = period, col = period)) +
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
         scale_color_continuous(low = "grey90", high = "grey10", name = "Period") +
         geom_line(data = dat_age, mapping = aes(x = value, y = effect),
                   size = 1.5, col = "RoyalBlue3") +
@@ -221,6 +225,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
       gg_AC <- gg +
         geom_line(data    = dat_overallEffect,
                   mapping = aes(x = age, y = effect, group = cohort, col = cohort)) +
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
         scale_color_continuous(low = "grey90", high = "grey10", name = "Cohort") +
         geom_line(data = dat_age, mapping = aes(x = value, y = effect),
                   size = 1.5, col = "RoyalBlue3") +
@@ -243,7 +248,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
       
       gg_final <- gg +
         geom_line(data = dat_period, mapping = aes(x = value, y = effect)) +
-        scale_x_continuous(breaks = c(1970, 1980, 1990, 2000, 2010)) + 
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) + 
         ylab(y_lab) + xlab("Period") + theme + ggtitle("Marginal period effect")
       
     } else { # plots including the partial effects
@@ -252,21 +257,21 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
       gg_PA <- gg +
         geom_line(data    = dat_overallEffect,
                   mapping = aes(x = period, y = effect, group = age, col = age)) +
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) + 
         scale_color_continuous(low = "grey90", high = "grey10", name = "Age") +
         geom_line(data = dat_period,
                   mapping = aes(x = value, y = effect),
                   size = 1.5, col = "RoyalBlue3") +
-        scale_x_continuous(breaks = c(1970, 1980, 1990, 2000, 2010)) + 
         ylab(y_lab) + xlab("Period") + theme + ggtitle("Period effect by age")
       
       # period versus cohort
       gg_PC <- gg +
         geom_line(data    = dat_overallEffect,
                   mapping = aes(x = period, y = effect, group = cohort, col = cohort)) +
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
         scale_color_continuous(low = "grey90", high = "grey10", name = "Cohort") +
         geom_line(data = dat_period, mapping = aes(x = value, y = effect),
                   size = 1.5, col = "RoyalBlue3") +
-        scale_x_continuous(breaks = c(1970, 1980, 1990, 2000, 2010)) +
         theme + theme(axis.text.y = element_blank()) + ylab(" ") + xlab("Period") +
         ggtitle("Period effect by cohorts")
       
@@ -286,6 +291,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
       
       gg_final <- gg +
         geom_line(data = dat_cohort, mapping = aes(x = value, y = effect)) +
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
         ylab(y_lab) + xlab("Cohort") + theme + ggtitle("Marginal cohort effect")
       
     } else { # plots including the partial effects
@@ -294,6 +300,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
       gg_CA <- gg +
         geom_line(data    = dat_overallEffect,
                   mapping = aes(x = cohort, y = effect, group = age, col = age)) +
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
         scale_color_continuous(low = "grey90", high = "grey10", name = "Age") +
         geom_line(data = dat_cohort, mapping = aes(x = value, y = effect),
                   size = 1.5, col = "RoyalBlue3") +
@@ -305,6 +312,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
                   mapping = aes(x = cohort, y = effect, group = period,
                                 col = period)) +
         scale_color_continuous(low = "grey90", high = "grey10", name = "Period") +
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
         geom_line(data = dat_cohort, mapping = aes(x = value, y = effect),
                   size = 1.5, col = "RoyalBlue3") +
         theme + theme(axis.text.y = element_blank()) + ylab(" ") + xlab("Cohort") +
