@@ -4,7 +4,7 @@
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.com/bauer-alex/APCtools.svg?branch=master)](https://travis-ci.com/bauer-alex/APCtools)
+status](https://app.travis-ci.com/bauer-alex/APCtools.svg?branch=main)](https://app.travis-ci.com/github/bauer-alex/APCtools)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/hjda0i3a0j2vc4r8/branch/main?svg=true)](https://ci.appveyor.com/project/bauer-alex/APCtools)
 [![Codecov test
