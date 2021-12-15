@@ -166,8 +166,7 @@ plot_densityMatrix <- function(dat, y_var, dimensions = c("period","age"),
   
   
   # define axis labels and facets
-  y_var_cap <- capitalize_firstLetter(y_var)
-  main_lab  <- ifelse(!log_scale, y_var_cap, paste(y_var_cap, "on log10 scale"))
+  main_lab  <- ifelse(!log_scale, y_var, paste(y_var, "on log10 scale"))
   x_lab     <- capitalize_firstLetter(dimensions[1])
   y_lab     <- capitalize_firstLetter(dimensions[2])
   facet_formula   <- stats::as.formula(paste(paste0(dimensions[2],"_group"), "~",
