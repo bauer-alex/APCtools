@@ -296,7 +296,7 @@ surface estimated with the regression model can be created with
 `plot_APCheatmap`, by passing the model object as argument `model` to the
 function.
 
-```{r, fig.height=3.5, fig.width=8}
+```{r, fig.height=3, fig.width=8}
 plot_APCheatmap(dat   = travel,
                 model = model_pure)
 ```
