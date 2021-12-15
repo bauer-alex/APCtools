@@ -5,10 +5,8 @@
 
 [![R build
 status](https://github.com/bauer-alex/APCtools/workflows/R-CMD-check/badge.svg)](https://github.com/bauer-alex/APCtools/actions)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/hjda0i3a0j2vc4r8/branch/main?svg=true)](https://ci.appveyor.com/project/bauer-alex/APCtools)
 [![Codecov test
-coverage](https://codecov.io/gh/bauer-alex/APCtools/branch/master/graph/badge.svg)](https://codecov.io/gh/bauer-alex/APCtools?branch=master)
+coverage](https://codecov.io/gh/bauer-alex/APCtools/branch/main/graph/badge.svg?token=KrjDYWRi2W)](https://codecov.io/gh/bauer-alex/APCtools)
 [![GPL-3
 license](https://img.shields.io/badge/license-GPL--3.0-brightgreen.svg)](https://opensource.org/licenses/GPL-3.0)
 <!-- badges: end -->
@@ -45,7 +43,8 @@ model.
 Useful materials:
 
 -   To get an overview of the functionalities of the package, check out
-    the [package vignette](https://bauer-alex.github.io/APCtools/).
+    the [package
+    vignette](https://bauer-alex.github.io/APCtools/articles/main_functionality.html).
 
 -   See [Weigert et
     al. (2021)](https://doi.org/10.1177/1354816620987198) or our
