@@ -53,7 +53,8 @@ Useful materials:
     poster](https://www.researchgate.net/publication/353852226_Visualization_techniques_for_semiparametric_APC_analysis_Using_Generalized_Additive_Models_to_examine_touristic_travel_distances)
     for methodological details.
 
--   The *hexamaps* are outlined in [Jalal &
+-   Hexamaps as a concept for the visualization of APC structures are
+    outlined in [Jalal &
     Burke (2020)](https://doi.org/10.1097/EDE.0000000000001236).
 
 ## Installation
@@ -69,8 +70,7 @@ devtools::install_github("bauer-alex/APCtools")
 Please open a [GitHub
 issue](https://github.com/bauer-alex/APCtools/issues) if you encounter a
 bug or have suggestions for additional functionalities of the package.
-Alternatively, feel free to contact us directly via email (see author
-list above).
+Alternatively, feel free to contact us directly via email.
 
 ## References
 
