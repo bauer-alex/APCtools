@@ -3,8 +3,8 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://app.travis-ci.com/bauer-alex/APCtools.svg?branch=main)](https://app.travis-ci.com/github/bauer-alex/APCtools)
+[![R build
+status](https://github.com/bauer-alex/APCtools/workflows/R-CMD-check/badge.svg)](https://github.com/bauer-alex/APCtools/actions)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/hjda0i3a0j2vc4r8/branch/main?svg=true)](https://ci.appveyor.com/project/bauer-alex/APCtools)
 [![Codecov test
