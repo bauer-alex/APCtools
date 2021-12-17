@@ -143,9 +143,18 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
           axis.text.y  = element_blank(),
           axis.ticks.y = element_blank())
   
+  # no color coding when only one model is plotted
+  if (length(model_list) == 1) {
+    gg_age    <- gg_age    + scale_color_manual(values = gray(0.2))
+    gg_period <- gg_period + scale_color_manual(values = gray(0.2))
+    gg_cohort <- gg_cohort + scale_color_manual(values = gray(0.2))
+  }
+  
   # joint plot
-  ggpubr::ggarrange(plotlist = list(gg_age, gg_period, gg_cohort),
-                    legend = "bottom", common.legend = TRUE,
-                    ncol = 3, widths = c(0.36, 0.32, 0.32))
+  ggpubr::ggarrange(plotlist      = list(gg_age, gg_period, gg_cohort),
+                    legend        = ifelse(length(model_list) == 1, "none", "bottom"),
+                    common.legend = TRUE,
+                    ncol          = 3,
+                    widths        = c(0.36, 0.32, 0.32))
   
 }
