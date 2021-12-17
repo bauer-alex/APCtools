@@ -341,9 +341,9 @@ plot_jointMarginalAPCeffects(model_list  = model_list,
                                                              1994)))
 ```
 
-### Partial effect plots
+### Partial APC plots
 
-Partial effect plots can be used to get deeper insights into a specific
+partial APC plots can be used to get deeper insights into a specific
 temporal effect and the interrelations between the temporal dimensions.
 These plots show the estimated effect for one temporal dimension dependent on the remaining two
 dimensions. The mean marginal effect is marked as a bold blue line,
@@ -352,6 +352,8 @@ that is, for the estimated differences when just focusing on a specific age, per
 
 In the following example, the period effect is visualized, dependent on different
 age groups and cohorts.
+See [Weigert et al. (2021)](https://doi.org/10.1177/1354816620987198) for details
+on the interpretation of partial APC plots.
 
 ```{r}
 plot_partialAPCeffects(model    = model_pure,
