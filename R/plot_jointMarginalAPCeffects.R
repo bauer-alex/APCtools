@@ -10,7 +10,8 @@
 #' 
 #' @inheritParams plot_APCheatmap
 #' @param model_list A list of regression models estimated with
-#' \code{\link[mgcv]{gam}}. If the list is named, the names are used as labels.
+#' \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}. If the list is named, the
+#' names are used as labels.
 #' @param vlines_list Optional list that can be used to highlight the borders of
 #' specific age groups, time intervals or cohorts. Each element must be a
 #' numeric vector of values on the x-axis where vertical lines should be drawn.

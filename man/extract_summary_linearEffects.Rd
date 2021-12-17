@@ -7,11 +7,12 @@
 extract_summary_linearEffects(model)
 }
 \arguments{
-\item{model}{Model fitted with \code{\link[mgcv]{gam}}.}
+\item{model}{Model fitted with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.}
 }
 \description{
 Internal helper function to create a \code{data.frame} containing the linear
-effects summary of a model fitted with \code{\link[mgcv]{gam}}.
+effects summary of a model fitted with \code{\link[mgcv]{gam}} or
+\code{\link[mgcv]{bam}}.
 }
 \details{
 If the model was estimated with a log or logit link, the function

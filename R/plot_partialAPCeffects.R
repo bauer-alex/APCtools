@@ -2,7 +2,8 @@
 #' Plot of marginal APC effects based on an estimated GAM model
 #' 
 #' Plot the marginal effect of age, period or cohort, based on an APC model
-#' estimated as a semiparametric additive regression model with \code{\link[mgcv]{gam}}.
+#' estimated as a semiparametric additive regression model with \code{\link[mgcv]{gam}}
+#' or \code{\link[mgcv]{bam}}.
 #' This function is a simple wrapper to \code{\link{plot_partialAPCeffects}},
 #' called with argument \code{hide_partialEffects = TRUE}.
 #' 
@@ -48,7 +49,7 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' Partial APC plots based on an estimated GAM model
 #' 
 #' Create the partial APC plots based on an APC model estimated as a semiparametric
-#' additive regression model with \code{\link[mgcv]{gam}}.
+#' additive regression model with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
 #' 
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effect.

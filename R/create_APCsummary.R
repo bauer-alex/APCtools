@@ -2,9 +2,9 @@
 #' Create a summary table for multiple estimated GAM models
 #' 
 #' Create a table to summarize the overall effect strengths of the age, period
-#' and cohort effects for models fitted with \code{\link[mgcv]{gam}}. The output
-#' format can be adjusted by passing arguments to \code{\link[knitr]{kable}} via
-#' the \code{...} argument.
+#' and cohort effects for models fitted with \code{\link[mgcv]{gam}} or
+#' \code{\link[mgcv]{bam}}. The output format can be adjusted by passing
+#' arguments to \code{\link[knitr]{kable}} via the \code{...} argument.
 #' 
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effect.
@@ -79,7 +79,7 @@ create_APCsummary <- function(model_list, dat, digits = 2, apc_range = NULL,
 #' 
 #' Internal helper function to be called in \code{\link{create_APCsummary}}.
 #' This function creates the summary table for one model estimated with
-#' \code{\link[mgcv]{gam}}.
+#' \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
 #' 
 #' @inheritParams plot_APCheatmap
 #' @inheritParams create_APCsummary

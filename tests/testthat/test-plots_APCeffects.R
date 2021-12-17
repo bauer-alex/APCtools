@@ -8,7 +8,7 @@ test_that("plot_partialAPCeffects and plot_marginalAPCeffects", {
   
   model <- gam(mortality_rate ~ te(period, age), data = drug_deaths)
   drug_deaths$mortality_rate <- drug_deaths$mortality_rate + 1
-  model_logLink <- gam(mortality_rate ~ te(period, age),
+  model_logLink <- bam(mortality_rate ~ te(period, age),
                        family = Gamma(link = "log"), data = drug_deaths)
   
   # plot_partialAPCeffects

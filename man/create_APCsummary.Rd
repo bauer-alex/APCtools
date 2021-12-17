@@ -8,12 +8,13 @@ create_APCsummary(model_list, dat, digits = 2, apc_range = NULL, ...)
 }
 \arguments{
 \item{model_list}{A list of regression models estimated with
-\code{\link[mgcv]{gam}}. If the list is named, the names are used as labels.}
+\code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}. If the list is named, the
+names are used as labels.}
 
 \item{dat}{Dataset with columns \code{period} and \code{age}. If \code{y_var}
 is specified, the dataset must contain the respective column. If \code{model}
 is specified, the dataset must have been used for model estimation with
-\code{gam}.}
+\code{gam} or \code{bam}.}
 
 \item{digits}{Number of digits for numeric columns. Defaults to 2.}
 
@@ -29,9 +30,9 @@ Table created with \code{\link[knitr]{kable}}.
 }
 \description{
 Create a table to summarize the overall effect strengths of the age, period
-and cohort effects for models fitted with \code{\link[mgcv]{gam}}. The output
-format can be adjusted by passing arguments to \code{\link[knitr]{kable}} via
-the \code{...} argument.
+and cohort effects for models fitted with \code{\link[mgcv]{gam}} or
+\code{\link[mgcv]{bam}}. The output format can be adjusted by passing
+arguments to \code{\link[knitr]{kable}} via the \code{...} argument.
 }
 \details{
 If the model was estimated with a log or logit link, the function

@@ -7,7 +7,8 @@
 get_plotGAMobject(model)
 }
 \arguments{
-\item{model}{GAM model fitted with \code{\link[mgcv]{gam}}.}
+\item{model}{GAM model fitted with \code{\link[mgcv]{gam}} or
+\code{\link[mgcv]{bam}}.}
 }
 \description{
 Internal helper function to extract the values returned of

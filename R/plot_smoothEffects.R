@@ -1,12 +1,14 @@
 
 #' Plot 1D smooth effects for \code{\link[mgcv]{gam}} models
 #'
-#' Plots 1D smooth effects for a GAM model fitted with \code{\link[mgcv]{gam}}.
+#' Plots 1D smooth effects for a GAM model fitted with \code{\link[mgcv]{gam}}
+#' or \code{\link[mgcv]{bam}}.
 #'
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effect.
 #' 
-#' @param model GAM model fitted with \code{\link[mgcv]{gam}}.
+#' @param model GAM model fitted with \code{\link[mgcv]{gam}} or
+#' \code{\link[mgcv]{bam}}.
 #' @param plot_ci If \code{TRUE} CIs are plotted. Only used if \code{plot_type = 1}.
 #' @param select Index of smooth term to be plotted.
 #' @param alpha \code{(1-alpha)} CIs are calculated. The default 0.05 leads to

@@ -8,7 +8,7 @@ test_that("plot_linearEffects", {
   
   model <- gam(mainTrip_distance ~ te(period, age) + household_size +
                  residence_region, data = travel)
-  model_logLink <- gam(mainTrip_distance ~ te(period, age) +
+  model_logLink <- bam(mainTrip_distance ~ te(period, age) +
                          s(household_income) + household_size +
                          residence_region,
                        family = Gamma(link = "log"), data = travel)
@@ -28,7 +28,7 @@ test_that("plot_1Dsmooth", {
   
   data(travel)
   
-  model <- gam(mainTrip_distance ~ te(period, age) + s(household_income) +
+  model <- bam(mainTrip_distance ~ te(period, age) + s(household_income) +
                  household_size + residence_region, data = travel)
   model_logLink <- gam(mainTrip_distance ~ te(period, age) +
                          s(household_income) + household_size +

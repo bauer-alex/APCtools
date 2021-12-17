@@ -9,7 +9,8 @@
 #' structure of a metric variable, by specifying \code{dat} and the variable
 #' \code{y_var}, or by specifying \code{dat} and the \code{model} object, to
 #' plot some mean structure represented by an estimated two-dimensional tensor
-#' product surface. The model must be estimated with \code{\link[mgcv]{gam}}.
+#' product surface. The model must be estimated with \code{\link[mgcv]{gam}} or
+#' \code{\link[mgcv]{bam}}.
 #' 
 #' See also \code{\link{plot_APCheatmap}} to plot a regular heatmap.
 #' 

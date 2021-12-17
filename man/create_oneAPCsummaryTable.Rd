@@ -8,13 +8,14 @@ create_oneAPCsummaryTable(model, dat, apc_range = NULL)
 }
 \arguments{
 \item{model}{Optional regression model estimated with \code{\link[mgcv]{gam}}
-to estimate a smoothed APC surface. Only used if \code{y_var} is not
+or \code{\link[mgcv]{bam}} to estimate a smoothed APC surface. Only used if
+\code{y_var} is not
 specified.}
 
 \item{dat}{Dataset with columns \code{period} and \code{age}. If \code{y_var}
 is specified, the dataset must contain the respective column. If \code{model}
 is specified, the dataset must have been used for model estimation with
-\code{gam}.}
+\code{gam} or \code{bam}.}
 
 \item{apc_range}{Optional list with one or multiple elements with names
 \code{"age","period","cohort"} to filter the data. Each element should
@@ -28,5 +29,5 @@ individual effects.
 \description{
 Internal helper function to be called in \code{\link{create_APCsummary}}.
 This function creates the summary table for one model estimated with
-\code{\link[mgcv]{gam}}.
+\code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
 }

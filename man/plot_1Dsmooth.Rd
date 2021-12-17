@@ -7,7 +7,8 @@
 plot_1Dsmooth(model, plot_ci = TRUE, select, alpha = 0.05, ylim = NULL)
 }
 \arguments{
-\item{model}{GAM model fitted with \code{\link[mgcv]{gam}}.}
+\item{model}{GAM model fitted with \code{\link[mgcv]{gam}} or
+\code{\link[mgcv]{bam}}.}
 
 \item{plot_ci}{If \code{TRUE} CIs are plotted. Only used if \code{plot_type = 1}.}
 
@@ -22,7 +23,8 @@ plot_1Dsmooth(model, plot_ci = TRUE, select, alpha = 0.05, ylim = NULL)
 ggplot object
 }
 \description{
-Plots 1D smooth effects for a GAM model fitted with \code{\link[mgcv]{gam}}.
+Plots 1D smooth effects for a GAM model fitted with \code{\link[mgcv]{gam}}
+or \code{\link[mgcv]{bam}}.
 }
 \details{
 If the model was estimated with a log or logit link, the function

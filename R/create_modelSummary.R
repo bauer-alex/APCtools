@@ -2,9 +2,9 @@
 #' Create model summary tables for multiple estimated GAM models
 #' 
 #' Create publication-ready summary tables of all linear and nonlinear effects
-#' for models fitted with \code{\link[mgcv]{gam}}. The output format of the
-#' tables can be adjusted by passing arguments to \code{\link[knitr]{kable}} via
-#' the \code{...} argument.
+#' for models fitted with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
+#' The output format of the tables can be adjusted by passing arguments to
+#' \code{\link[knitr]{kable}} via the \code{...} argument.
 #' 
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effects.
@@ -96,12 +96,13 @@ create_modelSummary <- function(model_list, digits = 2, ...) {
 #' Internal helper to extract summary of linear effects in a gam model
 #' 
 #' Internal helper function to create a \code{data.frame} containing the linear
-#' effects summary of a model fitted with \code{\link[mgcv]{gam}}.
+#' effects summary of a model fitted with \code{\link[mgcv]{gam}} or
+#' \code{\link[mgcv]{bam}}.
 #' 
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effect.
 #' 
-#' @param model Model fitted with \code{\link[mgcv]{gam}}.
+#' @param model Model fitted with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
 #' 
 #' @import checkmate dplyr
 #' @importFrom mgcv summary.gam

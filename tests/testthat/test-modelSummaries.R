@@ -43,7 +43,7 @@ test_that("create_modelSummary", {
   
   data(travel)
   
-  model <- gam(mainTrip_distance ~ te(period, age) + household_size +
+  model <- bam(mainTrip_distance ~ te(period, age) + household_size +
                  residence_region, data = travel)
   model_logLink <- gam(mainTrip_distance ~ te(period, age) +
                          s(household_income) + household_size +

@@ -6,7 +6,7 @@
 #' specifying \code{dat} and the variable \code{y_var}, or by specifying
 #' \code{dat} and the \code{model} object, to plot some mean structure
 #' represented by an estimated two-dimensional tensor product surface. The model
-#' must be estimated with \code{\link[mgcv]{gam}}.
+#' must be estimated with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
 #' 
 #' See also \code{\link{plot_APChexamap}} to plot a hexagonal heatmap with
 #' adapted axes.
@@ -18,10 +18,11 @@
 #' @param dat Dataset with columns \code{period} and \code{age}. If \code{y_var}
 #' is specified, the dataset must contain the respective column. If \code{model}
 #' is specified, the dataset must have been used for model estimation with
-#' \code{gam}.
+#' \code{gam} or \code{bam}.
 #' @param y_var Optional character name of a metric variable to be plotted.
 #' @param model Optional regression model estimated with \code{\link[mgcv]{gam}}
-#' to estimate a smoothed APC surface. Only used if \code{y_var} is not
+#' or \code{\link[mgcv]{bam}} to estimate a smoothed APC surface. Only used if
+#' \code{y_var} is not
 #' specified.
 #' @param dimensions Character vector specifying the two APC dimensions that
 #' should be visualized along the x-axis and y-axis. Defaults to

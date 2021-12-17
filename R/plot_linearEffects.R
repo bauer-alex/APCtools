@@ -2,7 +2,7 @@
 #' Plot linear effects of a gam in an effect plot
 #' 
 #' Create an effect plot of linear effects of a model fitted with
-#' \code{\link[mgcv]{gam}}.
+#' \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
 #' 
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effect.

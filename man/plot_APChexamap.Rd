@@ -25,12 +25,13 @@ plot_APChexamap(
 \item{dat}{Dataset with columns \code{period} and \code{age}. If \code{y_var}
 is specified, the dataset must contain the respective column. If \code{model}
 is specified, the dataset must have been used for model estimation with
-\code{gam}.}
+\code{gam} or \code{bam}.}
 
 \item{y_var}{Optional character name of a metric variable to be plotted.}
 
 \item{model}{Optional regression model estimated with \code{\link[mgcv]{gam}}
-to estimate a smoothed APC surface. Only used if \code{y_var} is not
+or \code{\link[mgcv]{bam}} to estimate a smoothed APC surface. Only used if
+\code{y_var} is not
 specified.}
 
 \item{apc_range}{Optional list with one or multiple elements with names
@@ -76,7 +77,8 @@ The function can be used in two ways: Either to plot the observed mean
 structure of a metric variable, by specifying \code{dat} and the variable
 \code{y_var}, or by specifying \code{dat} and the \code{model} object, to
 plot some mean structure represented by an estimated two-dimensional tensor
-product surface. The model must be estimated with \code{\link[mgcv]{gam}}.
+product surface. The model must be estimated with \code{\link[mgcv]{gam}} or
+\code{\link[mgcv]{bam}}.
 }
 \details{
 See also \code{\link{plot_APCheatmap}} to plot a regular heatmap.

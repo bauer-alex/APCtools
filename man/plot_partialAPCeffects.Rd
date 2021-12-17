@@ -15,13 +15,14 @@ plot_partialAPCeffects(
 }
 \arguments{
 \item{model}{Optional regression model estimated with \code{\link[mgcv]{gam}}
-to estimate a smoothed APC surface. Only used if \code{y_var} is not
+or \code{\link[mgcv]{bam}} to estimate a smoothed APC surface. Only used if
+\code{y_var} is not
 specified.}
 
 \item{dat}{Dataset with columns \code{period} and \code{age}. If \code{y_var}
 is specified, the dataset must contain the respective column. If \code{model}
 is specified, the dataset must have been used for model estimation with
-\code{gam}.}
+\code{gam} or \code{bam}.}
 
 \item{variable}{One of \code{c("age","period","cohort")}, specifying the
 temporal dimension for which the partial effect plots should be created.}
@@ -45,7 +46,7 @@ created with \code{\link[ggpubr]{ggarrange}} (if FALSE).
 }
 \description{
 Create the partial APC plots based on an APC model estimated as a semiparametric
-additive regression model with \code{\link[mgcv]{gam}}.
+additive regression model with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
 }
 \details{
 If the model was estimated with a log or logit link, the function

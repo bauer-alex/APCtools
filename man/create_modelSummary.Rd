@@ -18,9 +18,9 @@ List of tables created with \code{\link[knitr]{kable}}.
 }
 \description{
 Create publication-ready summary tables of all linear and nonlinear effects
-for models fitted with \code{\link[mgcv]{gam}}. The output format of the
-tables can be adjusted by passing arguments to \code{\link[knitr]{kable}} via
-the \code{...} argument.
+for models fitted with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
+The output format of the tables can be adjusted by passing arguments to
+\code{\link[knitr]{kable}} via the \code{...} argument.
 }
 \details{
 If the model was estimated with a log or logit link, the function
