@@ -304,7 +304,7 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   # overall theme
   gg_theme <- theme(plot.title       = element_text(hjust = 0.5),
                     legend.position  = "bottom",
-                    legend.key.width = unit(1, "cm"))
+                    legend.key.width = unit(1.2, "cm"))
   
   # create the base heatmap plot
   gg_effect <- ggplot() +
