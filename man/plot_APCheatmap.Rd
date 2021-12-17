@@ -68,7 +68,9 @@ Only used if \code{y_var} is specified. Defaults to FALSE.}
 Only used if \code{y_var} is not specified. Defaults to TRUE.}
 }
 \value{
-Plot grid created with \code{\link[ggpubr]{ggarrange}}.
+Plot grid created with \code{\link[ggpubr]{ggarrange}} (if
+\code{plot_CI} is TRUE) or a \code{ggplot2} object (if \code{plot_CI} is
+FALSE).
 }
 \description{
 Plot the heatmap of an APC structure. The function can be used in two ways:

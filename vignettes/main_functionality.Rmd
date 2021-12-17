@@ -1,5 +1,5 @@
 ---
-title: "Main Functionality"
+title: "APC Analysis with APCtools"
 author: "Alexander Bauer, Maximilian Weigert, Pauline Hohenemser"
 date: "`r format(Sys.time(), '%d.%B %Y')`"
 output:

@@ -54,7 +54,9 @@
 #' @param plot_CI Indicator if the confidence intervals should be plotted.
 #' Only used if \code{y_var} is not specified. Defaults to TRUE.
 #' 
-#' @return Plot grid created with \code{\link[ggpubr]{ggarrange}}.
+#' @return Plot grid created with \code{\link[ggpubr]{ggarrange}} (if
+#' \code{plot_CI} is TRUE) or a \code{ggplot2} object (if \code{plot_CI} is
+#' FALSE).
 #' 
 #' @import checkmate dplyr ggplot2
 #' @importFrom ggpubr ggarrange
@@ -300,7 +302,9 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   
   
   # overall theme
-  gg_theme <- theme(plot.title = element_text(hjust = 0.5))
+  gg_theme <- theme(plot.title       = element_text(hjust = 0.5),
+                    legend.position  = "bottom",
+                    legend.key.width = unit(1, "cm"))
   
   # create the base heatmap plot
   gg_effect <- ggplot() +
@@ -349,12 +353,21 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
                                     markLines_displayLabels = markLines_displayLabels)
   }
   
-  # join the three plots
-  plots <- ggpubr::ggarrange(plotlist = gg_list, legend = "bottom",
-                             common.legend = TRUE, ncol = ifelse(plot_CI, 3, 1),
-                             widths = c(.34,.32,.32))
   
-  return(plots)
+  # create final plot output
+  if (!plot_CI) {
+    plot <- gg_list[[1]] +
+      theme(plot.title = element_blank())
+    
+  } else {
+    plot <- ggpubr::ggarrange(plotlist      = gg_list,
+                              legend        = "bottom",
+                              common.legend = TRUE,
+                              ncol          = 3,
+                              widths        = c(.34,.32,.32))
+  }
+  
+  return(plot)
 }
 
 
