@@ -77,7 +77,7 @@ A distance matrix can for example be used to visualize changes in travel distanc
 As can be seen in \autoref{fig:descriptive}, longer-distance travels are mainly
 undertaken by young age groups and in more recent years.
 
-![Density matrix of the main trips' travel distance in different age and period groups. \label{fig:descriptive}](figures/1_descriptiveMatrix.png){width=50%}
+![Density matrix of the main trips' travel distance in different age and period groups. \label{fig:descriptive}](figures/1_densityMatrix.png){width=50%}
 
 
 
@@ -119,7 +119,7 @@ This resolves the central problem of classical heatmaps where developments over
 the diagonal dimension are visually underrepresented compared to developments
 over the dimensions depicted on the x- and y-axis.
 
-![Hexamap of the estimated tensor product surface based on an additive model with the main trips travel distance as response and no further control variables. \label{fig:modelHexamap}](figures/2_modelHexamap.png)
+![Hexamap of the estimated tensor product surface based on an additive model with the main trips travel distance as response and no further control variables. \label{fig:modelHexamap}](figures/3_modelHexamap.png)
 
 `APCtools` further implements partial APC plots, which can be used to visualize
 the interdependencies between the different temporal dimensions (see @weigert_2021
