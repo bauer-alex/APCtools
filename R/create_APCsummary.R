@@ -71,6 +71,12 @@ create_APCsummary <- function(model_list, dat, digits = 2, apc_range = NULL,
   }) %>% dplyr::bind_rows()
   
   
+  # remove the 'model' column if only one model is in the table
+  if (length(model_list) == 1) {
+    tab <- tab %>% select(-model)
+  }
+  
+  
   return(knitr::kable(tab, digits = digits, ...))
 }
 
