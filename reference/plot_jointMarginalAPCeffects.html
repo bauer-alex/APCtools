@@ -67,12 +67,13 @@ cohort effect, each containing one lines for each estimated model.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>model_list</dt>
 <dd><p>A list of regression models estimated with
-<code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></code>. If the list is named, the names are used as labels.</p></dd>
+<code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></code> or <code><a href="https://rdrr.io/pkg/mgcv/man/bam.html" class="external-link">bam</a></code>. If the list is named, the
+names are used as labels.</p></dd>
 <dt>dat</dt>
 <dd><p>Dataset with columns <code>period</code> and <code>age</code>. If <code>y_var</code>
 is specified, the dataset must contain the respective column. If <code>model</code>
 is specified, the dataset must have been used for model estimation with
-<code>gam</code>.</p></dd>
+<code>gam</code> or <code>bam</code>.</p></dd>
 <dt>vlines_list</dt>
 <dd><p>Optional list that can be used to highlight the borders of
 specific age groups, time intervals or cohorts. Each element must be a
