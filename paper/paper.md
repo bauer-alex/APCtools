@@ -119,7 +119,7 @@ This resolves the central problem of classical heatmaps where developments over
 the diagonal dimension are visually underrepresented compared to developments
 over the dimensions depicted on the x- and y-axis.
 
-![Hexamap of the estimated tensor product surface based on an additive model with the main trips travel distance as response and no further control variables. \label{fig:modelHexamap}](figures/3_modelHexamap.png)
+![Hexamap of the estimated tensor product surface based on an additive model with the main trips travel distance as response and no further control variables. \label{fig:modelHexamap}](figures/3_modelHexamap.png){width=70%}
 
 `APCtools` further implements partial APC plots, which can be used to visualize
 the interdependencies between the different temporal dimensions (see @weigert_2021

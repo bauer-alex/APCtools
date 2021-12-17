@@ -58,7 +58,7 @@ ggsave("2_modelEffects.png", width = 14, height = 6)
 
 
 # hexamap -----------------------------------------------------------------
-png("3_modelHexamap.png", width = 1200, height = 1000, pointsize = 30)
+png("3_modelHexamap.png", width = 970, height = 1200, pointsize = 30)
 plot_APChexamap(dat   = travel,
                 model = model_pure)
 dev.off()
