@@ -53,6 +53,8 @@
 #' Only used if \code{y_var} is specified. Defaults to FALSE.
 #' @param plot_CI Indicator if the confidence intervals should be plotted.
 #' Only used if \code{y_var} is not specified. Defaults to TRUE.
+#' @param legend_limits Optional numeric vector passed as argument \code{limits}
+#' to \code{\link[ggplot2]{scale_fill_gradient2}}.
 #' 
 #' @return Plot grid created with \code{\link[ggpubr]{ggarrange}} (if
 #' \code{plot_CI} is TRUE) or a \code{ggplot2} object (if \code{plot_CI} is
@@ -123,7 +125,8 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
                             bin_heatmap = TRUE, bin_heatmapGrid_list = NULL,
                             markLines_list = NULL,
                             markLines_displayLabels = c("age","period","cohort"),
-                            y_var_logScale = FALSE, plot_CI = TRUE) {
+                            y_var_logScale = FALSE, plot_CI = TRUE,
+                            legend_limits = NULL) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_true(!is.null(y_var) | !is.null(model))
@@ -146,6 +149,7 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   checkmate::assert_subset(markLines_displayLabels, choices = c("age","period","cohort"))
   checkmate::assert_logical(y_var_logScale, len = 1)
   checkmate::assert_logical(plot_CI, len = 1)
+  checkmate::assert_numeric(legend_limits, len = 2, null.ok = TRUE)
   
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
@@ -338,7 +342,8 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   # color scale
   scale_midpoint <- ifelse(!is.null(model), 0, mean(plot_dat$plot_effect))
   gg_list <- lapply(gg_list, function(gg) {
-    gg + scale_fill_gradient2(legend_title, trans = y_trans, low = "dodgerblue4",
+    gg + scale_fill_gradient2(legend_title, limits = legend_limits,
+                              trans = y_trans, low = "dodgerblue4",
                               mid = "white", high = "firebrick3",
                               midpoint = scale_midpoint)
   })
