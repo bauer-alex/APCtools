@@ -21,7 +21,7 @@ affiliations:
    index: 1
  - name: Department of Health Policy and Management, Graduate School of Public Health, University of Pittsburgh.
    index: 2
-date: 03 December 2021
+date: 19 December 2021
 bibliography: paper.bib
 ---
 
@@ -48,6 +48,8 @@ The only relevant R package `apc` [@R_apc] implements specific generalized linea
 model and ordinary least squares approaches, which however are less flexible
 and harder to interpret compared to the semiparametric regression approach outlined
 below.
+@rosenberg_2014 developed an R-based web tool for the analysis of cancer rates,
+including different methods to separate the temporal effect structures.
 `APCtools` is the first comprehensive R package for APC analysis.
 It includes modern visualization techniques and routines to facilitate the
 interpretability of sophisticated statistical models.
@@ -59,7 +61,8 @@ In the following, we showcase the main functionalities of the `APCtools` package
 based on the included `travel` dataset, containing data from the German Reiseanalyse survey --
 a repeated cross-sectional study comprising information on German travelers between
 1971 and 2018.
-Focus is on the distances of each traveler's _main trip_ -- i.e. each traveler's
+Focus is on travelers between 14 and 89 years and the distance of each traveler's
+_main trip_ -- i.e. each traveler's
 most important trip in the respective year -- and how these distances change over the
 temporal dimensions.
 
@@ -73,11 +76,11 @@ dimension is depicted along the diagonals.
 Additional to heatmaps and _hexamaps_ (see below) this includes density matrices
 (called _ridgeline matrices_ in @weigert_2021) which can be used to flexibly
 visualize observed distributions along the temporal dimensions.
-A distance matrix can for example be used to visualize changes in travel distances.
-As can be seen in \autoref{fig:descriptive}, longer-distance travels are mainly
-undertaken by young age groups and in more recent years.
+Such visualizations can for example be used to visualize changes in travel distances.
+As can be seen in \autoref{fig:descriptive} and \autoref{fig:hexamaps},
+longer-distance travels are mainly undertaken by young age groups and in more recent years.
 
-![Density matrix of the main trips' travel distance in different age and period groups. \label{fig:descriptive}](figures/1_densityMatrix.png){width=50%}
+![Density matrix of the main trips' travel distance in different age and period groups. Two cohort groups are exemplarily highlighted. \label{fig:descriptive}](figures/1_densityMatrix.png){width=50%}
 
 
 
@@ -91,13 +94,13 @@ based on a nonlinear interaction surface between the other two dimensions
 This leads to a generalized additive regression model (GAM, @wood_2017) of the
 following form:
 $$
-g(\mu_i) = \beta_0 + f_{ap}(age_i, period_i) + \eta, \ \ \ \ \ i=1,\ldots,n,
+g(\mu_i) = \beta_0 + f_{ap}(age_i, period_i) + \eta_i, \ \ \ \ \ i=1,\ldots,n,
 $$
 with observation index $i$, $\mu_i$ the expected value of an exponential family
 response, link function $g(\cdot)$ and the intercept $\beta_0$.
 The interaction surface is included as a tensor product surface $f_{ap}(age_i, period_i)$,
 represented by a two-dimensional spline basis.
-$\eta$ represents an optional linear predictor that contains further control variables.
+$\eta_i$ represents an optional linear predictor that contains further control variables.
 Model estimation can be performed with functions `gam` or `bam` from R package
 `mgcv` [@wood_2017].
 As outlined in @weigert_2021 this modeling approach can both be applied to repeated
@@ -108,7 +111,7 @@ can be plotted (see \autoref{fig:modelEffects}). Additionally, marginal
 effects of the individual temporal dimensions can be extracted by averaging over
 each dimension.
 
-![Heatmap of the estimated tensor product surface and marginal APC effects based on an additive model with the main trips travel distance as response and no further control variables. \label{fig:modelEffects}](figures/2_modelEffects.png)
+![Heatmap of the estimated tensor product surface and marginal APC effects based on an additive model with the travel distance as response and no further control variables. \label{fig:modelEffects}](figures/2_modelEffects.png)
 
 As an alternative to classical heatmaps the raw observed APC structures or
 the subsequently estimated model-based tensor product surface can also be
@@ -119,17 +122,20 @@ This resolves the central problem of classical heatmaps where developments over
 the diagonal dimension are visually underrepresented compared to developments
 over the dimensions depicted on the x- and y-axis.
 
-![Hexamap of the estimated tensor product surface based on an additive model with the main trips travel distance as response and no further control variables. \label{fig:modelHexamap}](figures/3_modelHexamap.png){width=70%}
+![Hexamaps of the observed travel distances (left pane) and the estimated tensor product surface based on an additive model with the travel distance as response and no further control variables (right pane). \label{fig:hexamaps}](figures/3_joinedHexamaps.png)
 
 `APCtools` further implements partial APC plots, which can be used to visualize
 the interdependencies between the different temporal dimensions (see @weigert_2021
 for details). Also, several utility functions are available to plot covariate
-effects estimated in the model, as well as functions to create publication-ready
+effects as well as functions to create publication-ready
 summary tables of the central model results.
 
 
 # Acknowledgments
 
 We thank Helmut Küchenhoff for valuable methodological contributions.
+This work has been funded by the German Research Foundation (DFG) under Grant No.
+KU 1359/4-1 and by the German Federal Ministry of Education and
+Research (BMBF) under Grant No. 01IS18036A.
 
 # References

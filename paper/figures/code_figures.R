@@ -10,6 +10,9 @@ theme_set(theme_minimal(base_size = 16))
 # load the travel dataset
 data(travel)
 
+# restrict data to travelers with maximally 89 years of age
+travel <- travel %>% filter(age <= 89)
+
 
 
 # density matrix ----------------------------------------------------------
@@ -25,7 +28,7 @@ plot_densityMatrix(dat                 = travel,
                    highlight_diagonals = list("born 1950 - 1959" = 8,
                                               "born 1970 - 1979" = 10),
                    log_scale           = TRUE,
-                   xlab                = "main trips travel distance on log10 scale") +
+                   xlab                = "Travel distance on log10 scale") +
   theme(legend.position = "bottom")
 ggsave("1_densityMatrix.png", width = 7, height = 6.5)
 
@@ -43,7 +46,8 @@ gg1 <- plot_APCheatmap(dat            = travel,
                        plot_CI        = FALSE,
                        bin_heatmap    = FALSE,
                        markLines_list = list(cohort = c(1900,1920,1939,1946,
-                                                        1966,1982,1994)))
+                                                        1966,1982,1994)),
+                       legend_limits = c(-1,1) * 1234)
 
 # marginal effect plots
 gg2 <- plot_jointMarginalAPCeffects(list(model_pure), dat = travel)
@@ -58,7 +62,23 @@ ggsave("2_modelEffects.png", width = 14, height = 6)
 
 
 # hexamap -----------------------------------------------------------------
-png("3_modelHexamap.png", width = 970, height = 1200, pointsize = 30)
+# create the following two hexamaps with R and then manually merge them in
+# GIMP (s.t. the joined plot can be made a bit more compact by cutting out
+# some white space)
+
+# different color scale for the observed data
+color_palette <- grDevices::colorRampPalette(c("turquoise4", gray(0.95), "violetred1"))
+color_vec     <- color_palette(100)
+
+png("3_observedHexamap.png", width = 1940, height = 2400, pointsize = 60)
+plot_APChexamap(dat            = travel,
+                y_var          = "mainTrip_distance",
+                y_var_logScale = TRUE,
+                color_vec      = color_vec,
+                legend_title   = "Average\ntravel distance\non log10 scale")
+dev.off()
+
+png("3_modelHexamap.png", width = 1940, height = 2400, pointsize = 60)
 plot_APChexamap(dat   = travel,
                 model = model_pure)
 dev.off()
