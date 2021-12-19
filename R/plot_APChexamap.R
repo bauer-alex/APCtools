@@ -208,7 +208,11 @@ plot_APChexamap <- function (dat,
   
   # setting default values for missing parameters
   if (is.null(color_range)) {
-    color_range <- c(-1,1) * max(abs(range(mat, na.rm = TRUE)))
+    color_range <- range(mat, na.rm = TRUE)
+    # use a symmetric color scale if the value range spans zero
+    if (color_range[1] < 0 & color_range[2] > 0) {
+      color_range <- c(-1,1) * max(abs(range(mat, na.rm = TRUE)))
+    }
   }
   if (is.null(color_vec)) {
     color_palette <- grDevices::colorRampPalette(c("dodgerblue4", gray(0.95), "firebrick3"))
