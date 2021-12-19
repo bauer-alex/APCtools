@@ -15,7 +15,8 @@ plot_APCheatmap(
   markLines_list = NULL,
   markLines_displayLabels = c("age", "period", "cohort"),
   y_var_logScale = FALSE,
-  plot_CI = TRUE
+  plot_CI = TRUE,
+  legend_limits = NULL
 )
 }
 \arguments{
@@ -66,6 +67,9 @@ Only used if \code{y_var} is specified. Defaults to FALSE.}
 
 \item{plot_CI}{Indicator if the confidence intervals should be plotted.
 Only used if \code{y_var} is not specified. Defaults to TRUE.}
+
+\item{legend_limits}{Optional numeric vector passed as argument \code{limits}
+to \code{\link[ggplot2]{scale_fill_gradient2}}.}
 }
 \value{
 Plot grid created with \code{\link[ggpubr]{ggarrange}} (if
