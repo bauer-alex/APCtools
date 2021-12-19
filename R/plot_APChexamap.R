@@ -137,6 +137,9 @@ plot_APChexamap <- function (dat,
     
     if (is.null(legend_title)) {
       legend_title <- y_var
+      if (y_var_logScale) {
+        legend_title <- paste0("log10(", y_var, ")")
+      }
     }
     
     
@@ -275,6 +278,11 @@ plot_APChexamap <- function (dat,
   # convert the grid to the X-Y Coordinate
   X <- compute_xCoordinate(P0)
   Y <- compute_yCoordinate(P0, A0)
+
+  minX <- min(X) - 2*obs_interval
+  maxX <- max(X) + 2*obs_interval
+  minY <- min(Y) - 2*obs_interval
+  maxY <- max(Y) + 2*obs_interval
   
   # only keep those that have non-NA values
   X <- X[not_nan_mat]
@@ -292,14 +300,8 @@ plot_APChexamap <- function (dat,
   Xhex <- outer(Xvec, xv, '+') 
   Yhex <- outer(Yvec, yv, '+')
   
-  minX <- min(Xhex) - obs_interval
-  maxX <- max(Xhex) + obs_interval
-  minY <- min(Yhex) - obs_interval
-  maxY <- max(Yhex) + obs_interval
-  
   # plot layout with two columns - for the plot and the colorbar
   layout(t(1:2), widths = c(4,1))
-  
   par(mar = c(.5,.5,.5,.5))
   
   plot(x = NULL, y = NULL,
