@@ -67,7 +67,7 @@
       <img src="" class="logo" alt=""><h1>APC Analysis with APCtools</h1>
                         <h4 data-toc-skip class="author">Alexander Bauer, Maximilian Weigert, Pauline Hohenemser</h4>
             
-            <h4 data-toc-skip class="date">17.December 2021</h4>
+            <h4 data-toc-skip class="date">19.December 2021</h4>
       
       
       <div class="d-none name"><code>main_functionality.Rmd</code></div>
@@ -285,10 +285,10 @@ cohort = period - age
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-15-1.png" width="960"></p>
 </div>
 <div class="section level3">
-<h3 id="partial-effect-plots">Partial effect plots<a class="anchor" aria-label="anchor" href="#partial-effect-plots"></a>
+<h3 id="partial-apc-plots">Partial APC plots<a class="anchor" aria-label="anchor" href="#partial-apc-plots"></a>
 </h3>
-<p>Partial effect plots can be used to get deeper insights into a specific temporal effect and the interrelations between the temporal dimensions. These plots show the estimated effect for one temporal dimension dependent on the remaining two dimensions. The mean marginal effect is marked as a bold blue line, and one grayscale line is added for each partial effect, that is, for the estimated differences when just focusing on a specific age, period or cohort group.</p>
-<p>In the following example, the period effect is visualized, dependent on different age groups and cohorts.</p>
+<p>partial APC plots can be used to get deeper insights into a specific temporal effect and the interrelations between the temporal dimensions. These plots show the estimated effect for one temporal dimension dependent on the remaining two dimensions. The mean marginal effect is marked as a bold blue line, and one grayscale line is added for each partial effect, that is, for the estimated differences when just focusing on a specific age, period or cohort group.</p>
+<p>In the following example, the period effect is visualized, dependent on different age groups and cohorts. See <a href="https://doi.org/10.1177/1354816620987198" class="external-link">Weigert et al. (2021)</a> for details on the interpretation of partial APC plots.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot_partialAPCeffects.html">plot_partialAPCeffects</a></span><span class="op">(</span>model    <span class="op">=</span> <span class="va">model_pure</span>,
                        dat      <span class="op">=</span> <span class="va">travel</span>,
