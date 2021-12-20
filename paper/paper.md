@@ -21,7 +21,7 @@ affiliations:
    index: 1
  - name: Department of Health Policy and Management, Graduate School of Public Health, University of Pittsburgh.
    index: 2
-date: 19 December 2021
+date: 20 December 2021
 bibliography: paper.bib
 ---
 
@@ -32,33 +32,34 @@ long-term developments and is used in many fields of science [@yang_land_2013].
 The main focus is on disentangling the interconnected effects of age, period, and
 cohort.
 Long-term developments of an individual's characteristics can either be associated
-with changes in a person's lifecycle (age), macro-level developments over the years
-that simultaneously affect all age groups (period), and the generational
+with changes in a person's life cycle (age), macro-level developments over the years
+that simultaneously affect all age groups (period), or the generational
 membership, shaped by similar socialization processes and historical experiences
 (cohort).
 
-The critical challenge in APC analysis is that the main components age, period,
-and cohort are linearly dependent (cohort = period - age).
+The critical challenge in APC analysis is the linear dependency of the
+main components age, period, and cohort (cohort = period - age).
 Accordingly, flexible methods and visualization techniques are needed to properly
 disentangle observed temporal association structures.
-To this day, no packages for the statistical software R exist that cover all
-relevant aspects of APC analysis with state-of-the-art methods for visualization
-and modeling.
-The only relevant R package `apc` [@R_apc] implements specific generalized linear
-model and ordinary least squares approaches, which however are less flexible
-and harder to interpret compared to the semiparametric regression approach outlined
-below.
+Several packages for the statistical software R exist that tackle this problem.
+Package `apc` [@R_apc] implements methods based on the canonical parametrization
+of @kuang_2008, which however lack flexibility and
+robustness when compared to nonlinear regression approaches.
+Package `bamp` offers routines for the analysis of incidence and mortality
+data based on a Bayesian APC model with a nonlinear prior [@schmid_held_2007].
+R package `Epi` [@R_Epi] implements the methods introduced in @carstensen_2007
+to analyze disease and mortality rates, including the estimation of separate
+smooth effects for age, period and cohort.
 @rosenberg_2014 developed an R-based web tool for the analysis of cancer rates,
-including different methods to separate the temporal effect structures.
-`APCtools` is the first comprehensive R package for APC analysis.
-It includes modern visualization techniques and routines to facilitate the
-interpretability of sophisticated statistical models.
-Special focus is on enabling practical researchers to apply all methods
-and properly interpret the resulting temporal interdependencies.
-All methods are outlined in @weigert_2021 and @jalal_2020.
+including different estimates for marginal effect curves.
+In contrast to these packages, `APCtools` builds on the flexible and robust
+semiparametric regression approach of @clements_2005.
+The package includes modern visualization techniques and routines to facilitate
+the interpretability of the estimated temporal structures.
+Our methods are outlined in @weigert_2021 and @jalal_2020.
 
 In the following, we showcase the main functionalities of the `APCtools` package
-based on the included `travel` dataset, containing data from the German Reiseanalyse survey --
+on the included `travel` dataset, containing data from the German Reiseanalyse survey --
 a repeated cross-sectional study comprising information on German travelers between
 1971 and 2018.
 Focus is on travelers between 14 and 89 years and the distance of each traveler's
@@ -72,15 +73,15 @@ temporal dimensions.
 Several descriptive visualization techniques are implemented that are all based on
 the classical concept of Lexis diagrams where two temporal dimensions (of
 age, period, and cohort) are depicted on the x- and y-axis, and the remaining
-dimension is depicted along the diagonals.
+dimension along the diagonals.
 Additional to heatmaps and _hexamaps_ (see below) this includes density matrices
 (called _ridgeline matrices_ in @weigert_2021) which can be used to flexibly
 visualize observed distributions along the temporal dimensions.
-Such visualizations can for example be used to visualize changes in travel distances.
+Such visualizations can for example be used to illustrate changes in travel distances.
 As can be seen in \autoref{fig:descriptive} and \autoref{fig:hexamaps},
 longer-distance travels are mainly undertaken by young age groups and in more recent years.
 
-![Density matrix of the main trips' travel distance in different age and period groups. Two cohort groups are exemplarily highlighted. \label{fig:descriptive}](figures/1_densityMatrix.png){width=50%}
+![Density matrix of the main trips' travel distance in different age and period groups. Two cohort groups are exemplarily highlighted. \label{fig:descriptive}](figures/1_densityMatrix.png){width=60%}
 
 
 
@@ -100,7 +101,7 @@ with observation index $i$, $\mu_i$ the expected value of an exponential family
 response, link function $g(\cdot)$ and the intercept $\beta_0$.
 The interaction surface is included as a tensor product surface $f_{ap}(age_i, period_i)$,
 represented by a two-dimensional spline basis.
-$\eta_i$ represents an optional linear predictor that contains further control variables.
+$\eta_i$ represents an optional linear predictor that contains further covariates.
 Model estimation can be performed with functions `gam` or `bam` from R package
 `mgcv` [@wood_2017].
 As outlined in @weigert_2021 this modeling approach can both be applied to repeated
@@ -111,7 +112,7 @@ can be plotted (see \autoref{fig:modelEffects}). Additionally, marginal
 effects of the individual temporal dimensions can be extracted by averaging over
 each dimension.
 
-![Heatmap of the estimated tensor product surface and marginal APC effects based on an additive model with the travel distance as response and no further control variables. \label{fig:modelEffects}](figures/2_modelEffects.png)
+![Heatmap of the estimated tensor product surface (left pane) and marginal APC effects based on an additive model with the travel distance as response and no further control variables (right pane). \label{fig:modelEffects}](figures/2_modelEffects.png)
 
 As an alternative to classical heatmaps the raw observed APC structures or
 the subsequently estimated model-based tensor product surface can also be
@@ -125,7 +126,7 @@ over the dimensions depicted on the x- and y-axis.
 ![Hexamaps of the observed travel distances (left pane) and the estimated tensor product surface based on an additive model with the travel distance as response and no further control variables (right pane). \label{fig:hexamaps}](figures/3_joinedHexamaps.png)
 
 `APCtools` further implements partial APC plots, which can be used to visualize
-the interdependencies between the different temporal dimensions (see @weigert_2021
+interdependencies between the different temporal dimensions (see @weigert_2021
 for details). Also, several utility functions are available to plot covariate
 effects as well as functions to create publication-ready
 summary tables of the central model results.

@@ -28,9 +28,9 @@ plot_densityMatrix(dat                 = travel,
                    highlight_diagonals = list("born 1950 - 1959" = 8,
                                               "born 1970 - 1979" = 10),
                    log_scale           = TRUE,
-                   xlab                = "Travel distance on log10 scale") +
+                   xlab                = "Travel distance [km] on log10 scale") +
   theme(legend.position = "bottom")
-ggsave("1_densityMatrix.png", width = 7, height = 6.5)
+ggsave("1_densityMatrix.png", width = 10, height = 8)
 
 
 
@@ -75,7 +75,7 @@ plot_APChexamap(dat            = travel,
                 y_var          = "mainTrip_distance",
                 y_var_logScale = TRUE,
                 color_vec      = color_vec,
-                legend_title   = "Average\ntravel distance\non log10 scale")
+                legend_title   = "Average travel\ndistance [km]\non log10 scale")
 dev.off()
 
 png("3_modelHexamap.png", width = 1940, height = 2400, pointsize = 60)
