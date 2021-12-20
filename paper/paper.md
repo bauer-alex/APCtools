@@ -1,5 +1,5 @@
 ---
-title: 'APCtools: Visualization functions for APC analyses'
+title: 'APCtools: Descriptive and Model-based Age-Period-Cohort Analysis'
 tags:
   - R
   - Statistical analysis
@@ -31,22 +31,22 @@ Age-Period-Cohort (APC) analysis aims to determine relevant drivers for
 long-term developments and is used in many fields of science [@yang_land_2013].
 The main focus is on disentangling the interconnected effects of age, period, and
 cohort.
-Long-term developments of an individual's characteristics can either be associated
+Long-term developments of some characteristic can either be associated
 with changes in a person's life cycle (age), macro-level developments over the years
 that simultaneously affect all age groups (period), or the generational
-membership, shaped by similar socialization processes and historical experiences
+membership of an individual, shaped by similar socialization processes and historical experiences
 (cohort).
 
 The critical challenge in APC analysis is the linear dependency of the
-main components age, period, and cohort (cohort = period - age).
+components age, period, and cohort (cohort = period - age).
 Accordingly, flexible methods and visualization techniques are needed to properly
 disentangle observed temporal association structures.
 Several packages for the statistical software R exist that tackle this problem.
 Package `apc` [@R_apc] implements methods based on the canonical parametrization
 of @kuang_2008, which however lack flexibility and
 robustness when compared to nonlinear regression approaches.
-Package `bamp` offers routines for the analysis of incidence and mortality
-data based on a Bayesian APC model with a nonlinear prior [@schmid_held_2007].
+Package `bamp` [@schmid_held_2007] offers routines for the analysis of incidence and mortality
+data based on a Bayesian APC model with a nonlinear prior.
 R package `Epi` [@R_Epi] implements the methods introduced in @carstensen_2007
 to analyze disease and mortality rates, including the estimation of separate
 smooth effects for age, period and cohort.
@@ -68,7 +68,7 @@ most important trip in the respective year -- and how these distances change ove
 temporal dimensions.
 
 
-# Descriptive Visualizations
+# Descriptive Analysis
 
 Several descriptive visualization techniques are implemented that are all based on
 the classical concept of Lexis diagrams where two temporal dimensions (of
@@ -125,7 +125,7 @@ over the dimensions depicted on the x- and y-axis.
 
 ![Hexamaps of the observed travel distances (left pane) and the estimated tensor product surface based on an additive model with the travel distance as response and no further control variables (right pane). \label{fig:hexamaps}](figures/3_joinedHexamaps.png)
 
-`APCtools` further implements partial APC plots, which can be used to visualize
+`APCtools` further provides partial APC plots, which can be used to visualize
 interdependencies between the different temporal dimensions (see @weigert_2021
 for details). Also, several utility functions are available to plot covariate
 effects as well as functions to create publication-ready
