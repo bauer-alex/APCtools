@@ -6,19 +6,22 @@ test_that("plot_variable", {
   # metric variable
   gg1 <- plot_variable(dat = travel, y_var = "mainTrip_distance")
   gg2 <- plot_variable(dat = travel, y_var = "mainTrip_distance",
+                       plot_type = "line")
+  gg3 <- plot_variable(dat = travel, y_var = "mainTrip_distance",
                        apc_dimension = "cohort", log_scale = TRUE)
   
   expect_s3_class(gg1, class = c("gg","ggplot"))
   expect_s3_class(gg2, class = c("gg","ggplot"))
-
+  expect_s3_class(gg3, class = c("gg","ggplot"))
+  
     
   # categorical variable
-  gg3 <- plot_variable(dat = travel, y_var = "household_size")
-  gg4 <- plot_variable(dat = travel, y_var = "household_size",
+  gg4 <- plot_variable(dat = travel, y_var = "household_size")
+  gg5 <- plot_variable(dat = travel, y_var = "household_size",
                        geomBar_position = "stack")
   
-  expect_s3_class(gg3, class = c("gg","ggplot"))
   expect_s3_class(gg4, class = c("gg","ggplot"))
+  expect_s3_class(gg5, class = c("gg","ggplot"))
   
   
   # produce some error messages

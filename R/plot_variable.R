@@ -2,8 +2,9 @@
 #' Distribution plot of one variable against one APC dimension
 #' 
 #' Plot the distribution of one variable in the data against age, period or
-#' cohort. Creates a stacked bar plot for categorical variables and boxplots
-#' for metric variables.
+#' cohort. Creates a bar plot for categorical variables (see argument
+#' \code{geomBar_position}) and boxplots or a line plot of median values for
+#' metric variables (see \code{plot_type}).
 #' 
 #' @param dat Dataset containing columns \code{age} and \code{period}.
 #' @param y_var Character name of the variable to plot.
@@ -11,13 +12,18 @@
 #' \code{"period"}.
 #' @param log_scale Indicator if the visualized variable should be log10
 #' transformed. Only used if the variable is numeric. Defaults to FALSE.
+#' @param plot_type One of \code{c("boxplot","line")}, specifying if boxplots
+#' or a line plot of median values should be drawn for metric variables.
 #' @param geomBar_position Value passed to \code{\link[ggplot2]{geom_bar}} as
 #' \code{position} argument. Only used if the visualized variable is categorical.
 #' Defaults to \code{"fill"}.
+#' @param ylim Optional numeric vector of limits for the y-axis, passed to
+#' \code{\link[ggplot2]{ylim}}.
 #' 
 #' @return ggplot object
 #' 
 #' @import checkmate dplyr ggplot2
+#' @importFrom stats median
 #' @export
 #' 
 #' @author Alexander Bauer \email{alexander.bauer@@stat.uni-muenchen.de}
@@ -29,6 +35,8 @@
 #' # plot a metric variable
 #' plot_variable(dat = travel, y_var = "mainTrip_distance",
 #'               apc_dimension = "period", log_scale = TRUE)
+#' plot_variable(dat = travel, y_var = "mainTrip_distance",
+#'               apc_dimension = "period", log_scale = TRUE, plot_type = "line")
 #' 
 #' # plot a categorical variable
 #' plot_variable(dat = travel, y_var = "household_size", apc_dimension = "period")
@@ -36,7 +44,8 @@
 #'               geomBar_position = "stack")
 #' 
 plot_variable <- function(dat, y_var, apc_dimension = "period",
-                          log_scale = FALSE, geomBar_position = "fill") {
+                          log_scale = FALSE, plot_type = "boxplot",
+                          geomBar_position = "fill", ylim = NULL) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_choice("age", colnames(dat))
@@ -44,7 +53,9 @@ plot_variable <- function(dat, y_var, apc_dimension = "period",
   checkmate::assert_choice(y_var, choices = colnames(dat))
   checkmate::assert_choice(apc_dimension, choices = c("age","period","cohort"))
   checkmate::assert_logical(log_scale, len = 1)
+  checkmate::assert_choice(plot_type, choices = c("boxplot","line"), null.ok = TRUE)
   checkmate::assert_character(geomBar_position, len = 1)
+  checkmate::assert_numeric(ylim, len = 2, null.ok = TRUE)
   
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
@@ -62,9 +73,6 @@ plot_variable <- function(dat, y_var, apc_dimension = "period",
     dat <- dat[!is.na(dat[[y_var]]),]
   }
   
-  # recode the APC variable to factor
-  dat[,apc_dimension] <- factor(dat[[apc_dimension]])
-  
   # rename the variables for easier handling
   dat <- dat %>% dplyr::rename(x = apc_dimension,
                                y = y_var)
@@ -74,12 +82,21 @@ plot_variable <- function(dat, y_var, apc_dimension = "period",
     
     y_lab <- ifelse(geomBar_position == "fill", "Rel. frequency", "Frequency")
     
-    gg <- ggplot(dat, aes(x = x, fill = y)) + 
+    gg <- ggplot(dat, aes(x = factor(x), fill = y)) + 
       geom_bar(position = geomBar_position) +
       scale_fill_brewer(y_var, palette = "Set2") +
-      ylab(y_lab)
+      scale_y_continuous(y_lab, limits = ylim) +
+      scale_x_discrete(guide = guide_axis(check.overlap = TRUE))
     
   } else { # var_class == "metric"
+    
+    # compute the median values
+    if (plot_type == "line") {
+      dat <- dat %>% 
+        group_by(x) %>% 
+        summarize(y = stats::median(y, na.rm = TRUE)) %>% 
+        ungroup()
+    }
     
     # log10 transform the main variable, and create a function to accordingly
     # adjust the labels on the y axis (the function is passed to scale_y_continuous())
@@ -91,17 +108,33 @@ plot_variable <- function(dat, y_var, apc_dimension = "period",
       label_function <- function(x) { x } # identity function
     }
     
-    gg <- ggplot(dat, aes(x = x, y = y)) + 
-      geom_boxplot(col           = gray(0.3),
-                   outlier.color = gray(0.3),
-                   outlier.alpha = 0.2) +
-      scale_y_continuous(y_var, labels = label_function)
+    
+    # main plot
+    if (plot_type == "boxplot") {
+      
+      gg <- ggplot(dat, aes(x = factor(x), y = y)) + 
+        geom_boxplot(col           = gray(0.3),
+                     outlier.color = gray(0.3),
+                     outlier.alpha = 0.2) +
+        scale_x_discrete(guide = guide_axis(check.overlap = TRUE))
+        
+      y_lab <- y_var
+      
+    } else { # plot_type == "line"
+      
+      gg <- ggplot(dat, aes(x = x, y = y)) +
+        geom_line(col = gray(0.3))
+      y_lab <- paste0("median(",y_var,")")
+      
+    }
+    
+    gg <- gg +
+      scale_y_continuous(y_lab, labels = label_function, limits = ylim)
   }
   
   # final theme adjustments
   gg <- gg +
-    xlab(capitalize_firstLetter(apc_dimension)) +
-    scale_x_discrete(guide = guide_axis(check.overlap = TRUE))
+    xlab(capitalize_firstLetter(apc_dimension))
   
   return(gg)
 }

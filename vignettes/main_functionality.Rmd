@@ -111,14 +111,15 @@ ggpubr::ggarrange(gg1, gg2, gg3, nrow = 1)
 
 Plotting the distribution of a variable against age, period or cohort
 is possible with function `plot_variable`.
-The distribution of metric and categorical variables is visualized using boxplots
+The distribution of metric and categorical variables is visualized using
+boxplots or line charts (see argument `plot_type`)
 and bar charts, respectively. The latter by default show relative frequencies,
 but can be changed to show absolute numbers by specifying argument
 `geomBar_position = "stack"`.
 
 ```{r, message = FALSE, fig.height=4}
 plot_variable(dat = travel, y_var = "mainTrip_distance",
-              apc_dimension = "period", log_scale = TRUE)
+              apc_dimension = "period", plot_type = "line", ylim = c(0,1000))
 
 plot_variable(dat = travel, y_var = "household_size", apc_dimension = "period")
 ```

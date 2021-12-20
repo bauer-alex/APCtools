@@ -9,7 +9,9 @@ plot_variable(
   y_var,
   apc_dimension = "period",
   log_scale = FALSE,
-  geomBar_position = "fill"
+  plot_type = "boxplot",
+  geomBar_position = "fill",
+  ylim = NULL
 )
 }
 \arguments{
@@ -23,17 +25,24 @@ plot_variable(
 \item{log_scale}{Indicator if the visualized variable should be log10
 transformed. Only used if the variable is numeric. Defaults to FALSE.}
 
+\item{plot_type}{One of \code{c("boxplot","line")}, specifying if boxplots
+or a line plot of median values should be drawn for metric variables.}
+
 \item{geomBar_position}{Value passed to \code{\link[ggplot2]{geom_bar}} as
 \code{position} argument. Only used if the visualized variable is categorical.
 Defaults to \code{"fill"}.}
+
+\item{ylim}{Optional numeric vector of limits for the y-axis, passed to
+\code{\link[ggplot2]{ylim}}.}
 }
 \value{
 ggplot object
 }
 \description{
 Plot the distribution of one variable in the data against age, period or
-cohort. Creates a stacked bar plot for categorical variables and boxplots
-for metric variables.
+cohort. Creates a bar plot for categorical variables (see argument
+\code{geomBar_position}) and boxplots or a line plot of median values for
+metric variables (see \code{plot_type}).
 }
 \examples{
 library(APCtools)
@@ -42,6 +51,8 @@ data(travel)
 # plot a metric variable
 plot_variable(dat = travel, y_var = "mainTrip_distance",
               apc_dimension = "period", log_scale = TRUE)
+plot_variable(dat = travel, y_var = "mainTrip_distance",
+              apc_dimension = "period", log_scale = TRUE, plot_type = "line")
 
 # plot a categorical variable
 plot_variable(dat = travel, y_var = "household_size", apc_dimension = "period")
