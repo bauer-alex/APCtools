@@ -135,7 +135,7 @@ summary tables of the central model results.
 # Acknowledgments
 
 We thank Helmut Küchenhoff for valuable methodological contributions.
-This work has been funded by the German Research Foundation (DFG) under Grant No.
+This work has been partially funded by the German Research Foundation (DFG) under Grant No.
 KU 1359/4-1 and by the German Federal Ministry of Education and
 Research (BMBF) under Grant No. 01IS18036A.
 
