@@ -137,7 +137,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   
   dat_overallEffect <- dat_predictionGrid %>%
     mutate(effect = rowSums(mgcv::predict.gam(object  = model,
-                                              newdata = .,
+                                              newdata = dat_predictionGrid,
                                               type    = "terms",
                                               terms   = term_APCsurface))) %>% 
     mutate(effect = effect - mean(effect))

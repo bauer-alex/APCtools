@@ -217,7 +217,7 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
     
     prediction <- dat_predictionGrid %>% 
       mgcv::predict.gam(object  = model,
-                        newdata = .,
+                        newdata = dat_predictionGrid,
                         type    = "terms",
                         terms   = term_APCsurface,
                         se.fit  = TRUE)

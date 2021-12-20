@@ -71,9 +71,11 @@ create_modelSummary <- function(model_list, digits = 2, ...) {
   # create the summary table for all nonlinear effects
   tab_nonlinear <- lapply(1:length(model_list), function(i) {
     
-    tab <- mgcv::summary.gam(model_list[[i]])$s.table %>% 
-      as.data.frame() %>% 
-      mutate(param = row.names(.)) %>% 
+    tab_raw <- mgcv::summary.gam(model_list[[i]])$s.table %>% 
+      as.data.frame()
+    
+    tab <- tab_raw %>% 
+      mutate(param = row.names(tab_raw)) %>% 
       dplyr::rename(pvalue = "p-value") %>% 
       mutate(model = model_labels[i]) %>% 
       select(model, param, edf, pvalue) %>%

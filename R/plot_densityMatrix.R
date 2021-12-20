@@ -150,17 +150,17 @@ plot_densityMatrix <- function(dat, y_var, dimensions = c("period","age"),
   # define the APC groups
   if ("age" %in% dimensions) {
     dat <- dat %>% 
-      mutate(age_group = create_groupVariable(., "age", groups_list = age_groups)) %>% 
+      mutate(age_group = create_groupVariable(dat, "age", groups_list = age_groups)) %>% 
       filter(age_group != "not categorized")
   }
   if ("period" %in% dimensions) {
     dat <- dat %>% 
-      mutate(period_group = create_groupVariable(., "period", groups_list = period_groups)) %>% 
+      mutate(period_group = create_groupVariable(dat, "period", groups_list = period_groups)) %>% 
       filter(period_group != "not categorized")
   }
   if ("cohort" %in% dimensions) {
     dat <- dat %>% 
-      mutate(cohort_group = create_groupVariable(., "cohort", groups_list = cohort_groups)) %>% 
+      mutate(cohort_group = create_groupVariable(dat, "cohort", groups_list = cohort_groups)) %>% 
       filter(cohort_group != "not categorized")
   }
   

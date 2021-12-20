@@ -8,3 +8,6 @@
 ^appveyor\.yml$
 ^\.travis\.yml$
 ^\.github$
+^data-raw$
+^README\.Rmd$
+^paper$
