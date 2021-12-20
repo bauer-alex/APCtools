@@ -268,7 +268,7 @@ plot_density_categorical <- function(dat, y_var, dat_highlightDiagonals = NULL,
                                      ylab = NULL) {
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
-  x <- weight <- NULL
+  x <- weight <- ..count.. <- NULL
   
   
   # make sure the main variable is encoded as factor
