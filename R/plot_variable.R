@@ -17,8 +17,7 @@
 #' @param geomBar_position Value passed to \code{\link[ggplot2]{geom_bar}} as
 #' \code{position} argument. Only used if the visualized variable is categorical.
 #' Defaults to \code{"fill"}.
-#' @param ylim Optional numeric vector of limits for the y-axis, passed to
-#' \code{\link[ggplot2]{ylim}}.
+#' @param ylab,ylim Optional arguments for styling the ggplot.
 #' 
 #' @return ggplot object
 #' 
@@ -45,7 +44,7 @@
 #' 
 plot_variable <- function(dat, y_var, apc_dimension = "period",
                           log_scale = FALSE, plot_type = "boxplot",
-                          geomBar_position = "fill", ylim = NULL) {
+                          geomBar_position = "fill", ylab = NULL, ylim = NULL) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_choice("age", colnames(dat))
@@ -55,6 +54,7 @@ plot_variable <- function(dat, y_var, apc_dimension = "period",
   checkmate::assert_logical(log_scale, len = 1)
   checkmate::assert_choice(plot_type, choices = c("boxplot","line"), null.ok = TRUE)
   checkmate::assert_character(geomBar_position, len = 1)
+  checkmate::assert_character(ylab, len = 1, null.ok = TRUE)
   checkmate::assert_numeric(ylim, len = 2, null.ok = TRUE)
   
   
@@ -80,12 +80,14 @@ plot_variable <- function(dat, y_var, apc_dimension = "period",
   # create plot
   if (var_class == "categorical") {
     
-    y_lab <- ifelse(geomBar_position == "fill", "Rel. frequency", "Frequency")
+    if (is.null(ylab)) {
+      ylab <- ifelse(geomBar_position == "fill", "Rel. frequency", "Frequency")
+    }
     
     gg <- ggplot(dat, aes(x = factor(x), fill = y)) + 
       geom_bar(position = geomBar_position) +
       scale_fill_brewer(y_var, palette = "Set2") +
-      scale_y_continuous(y_lab, limits = ylim) +
+      scale_y_continuous(ylab, limits = ylim) +
       scale_x_discrete(guide = guide_axis(check.overlap = TRUE))
     
   } else { # var_class == "metric"
@@ -117,19 +119,24 @@ plot_variable <- function(dat, y_var, apc_dimension = "period",
                      outlier.color = gray(0.3),
                      outlier.alpha = 0.2) +
         scale_x_discrete(guide = guide_axis(check.overlap = TRUE))
-        
-      y_lab <- y_var
+      
+      if (is.null(ylab)) {
+        ylab <- y_var
+      }
       
     } else { # plot_type == "line"
       
       gg <- ggplot(dat, aes(x = x, y = y)) +
         geom_line(col = gray(0.3))
-      y_lab <- paste0("median(",y_var,")")
+      
+      if (is.null(ylab)) {
+        ylab <- paste0("median(",y_var,")")
+      }
       
     }
     
     gg <- gg +
-      scale_y_continuous(y_lab, labels = label_function, limits = ylim)
+      scale_y_continuous(ylab, labels = label_function, limits = ylim)
   }
   
   # final theme adjustments

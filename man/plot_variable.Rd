@@ -11,6 +11,7 @@ plot_variable(
   log_scale = FALSE,
   plot_type = "boxplot",
   geomBar_position = "fill",
+  ylab = NULL,
   ylim = NULL
 )
 }
@@ -32,8 +33,7 @@ or a line plot of median values should be drawn for metric variables.}
 \code{position} argument. Only used if the visualized variable is categorical.
 Defaults to \code{"fill"}.}
 
-\item{ylim}{Optional numeric vector of limits for the y-axis, passed to
-\code{\link[ggplot2]{ylim}}.}
+\item{ylab, ylim}{Optional arguments for styling the ggplot.}
 }
 \value{
 ggplot object
