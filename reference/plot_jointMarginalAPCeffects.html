@@ -60,7 +60,13 @@ cohort effect, each containing one lines for each estimated model.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_jointMarginalAPCeffects</span><span class="op">(</span><span class="va">model_list</span>, <span class="va">dat</span>, vlines_list <span class="op">=</span> <span class="cn">NULL</span>, ylab <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_jointMarginalAPCeffects</span><span class="op">(</span>
+  <span class="va">model_list</span>,
+  <span class="va">dat</span>,
+  vlines_list <span class="op">=</span> <span class="cn">NULL</span>,
+  ylab <span class="op">=</span> <span class="cn">NULL</span>,
+  ylim <span class="op">=</span> <span class="cn">NULL</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,8 +86,8 @@ specific age groups, time intervals or cohorts. Each element must be a
 numeric vector of values on the x-axis where vertical lines should be drawn.
 The list can maximally have three elements and must have names out of
 <code>c("age","period","cohort"</code>.</p></dd>
-<dt>ylab</dt>
-<dd><p>Optional title for the y-axis.</p></dd>
+<dt>ylab, ylim</dt>
+<dd><p>Optional ggplot2 styling arguments.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
