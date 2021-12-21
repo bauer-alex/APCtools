@@ -6,7 +6,7 @@ test_that("plot_variable", {
   # metric variable
   gg1 <- plot_variable(dat = travel, y_var = "mainTrip_distance")
   gg2 <- plot_variable(dat = travel, y_var = "mainTrip_distance",
-                       plot_type = "line")
+                       plot_type = "line-points")
   gg3 <- plot_variable(dat = travel, y_var = "mainTrip_distance",
                        apc_dimension = "cohort", log_scale = TRUE)
   
@@ -18,7 +18,7 @@ test_that("plot_variable", {
   # categorical variable
   gg4 <- plot_variable(dat = travel, y_var = "household_size")
   gg5 <- plot_variable(dat = travel, y_var = "household_size",
-                       geomBar_position = "stack")
+                       geomBar_position = "stack", legend_title = "my title")
   
   expect_s3_class(gg4, class = c("gg","ggplot"))
   expect_s3_class(gg5, class = c("gg","ggplot"))

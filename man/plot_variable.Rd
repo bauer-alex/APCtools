@@ -11,6 +11,7 @@ plot_variable(
   log_scale = FALSE,
   plot_type = "boxplot",
   geomBar_position = "fill",
+  legend_title = NULL,
   ylab = NULL,
   ylim = NULL
 )
@@ -26,12 +27,17 @@ plot_variable(
 \item{log_scale}{Indicator if the visualized variable should be log10
 transformed. Only used if the variable is numeric. Defaults to FALSE.}
 
-\item{plot_type}{One of \code{c("boxplot","line")}, specifying if boxplots
-or a line plot of median values should be drawn for metric variables.}
+\item{plot_type}{One of \code{c("boxplot","line","line-points")}, specifying
+if boxplots or a line plot of median values should be drawn for metric
+variables. \code{"line-points"} adds points to the line plot where
+observations are available.}
 
 \item{geomBar_position}{Value passed to \code{\link[ggplot2]{geom_bar}} as
 \code{position} argument. Only used if the visualized variable is categorical.
 Defaults to \code{"fill"}.}
+
+\item{legend_title}{Optional character title for the legend which is drawn
+for categorical variables.}
 
 \item{ylab, ylim}{Optional arguments for styling the ggplot.}
 }

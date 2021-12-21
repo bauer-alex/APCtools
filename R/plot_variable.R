@@ -12,11 +12,15 @@
 #' \code{"period"}.
 #' @param log_scale Indicator if the visualized variable should be log10
 #' transformed. Only used if the variable is numeric. Defaults to FALSE.
-#' @param plot_type One of \code{c("boxplot","line")}, specifying if boxplots
-#' or a line plot of median values should be drawn for metric variables.
+#' @param plot_type One of \code{c("boxplot","line","line-points")}, specifying
+#' if boxplots or a line plot of median values should be drawn for metric
+#' variables. \code{"line-points"} adds points to the line plot where
+#' observations are available.
 #' @param geomBar_position Value passed to \code{\link[ggplot2]{geom_bar}} as
 #' \code{position} argument. Only used if the visualized variable is categorical.
 #' Defaults to \code{"fill"}.
+#' @param legend_title Optional character title for the legend which is drawn
+#' for categorical variables.
 #' @param ylab,ylim Optional arguments for styling the ggplot.
 #' 
 #' @return ggplot object
@@ -44,7 +48,8 @@
 #' 
 plot_variable <- function(dat, y_var, apc_dimension = "period",
                           log_scale = FALSE, plot_type = "boxplot",
-                          geomBar_position = "fill", ylab = NULL, ylim = NULL) {
+                          geomBar_position = "fill", legend_title = NULL,
+                          ylab = NULL, ylim = NULL) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_choice("age", colnames(dat))
@@ -52,8 +57,10 @@ plot_variable <- function(dat, y_var, apc_dimension = "period",
   checkmate::assert_choice(y_var, choices = colnames(dat))
   checkmate::assert_choice(apc_dimension, choices = c("age","period","cohort"))
   checkmate::assert_logical(log_scale, len = 1)
-  checkmate::assert_choice(plot_type, choices = c("boxplot","line"), null.ok = TRUE)
+  checkmate::assert_choice(plot_type, choices = c("boxplot","line",
+                                                  "line-points"), null.ok = TRUE)
   checkmate::assert_character(geomBar_position, len = 1)
+  checkmate::assert_character(legend_title, len = 1, null.ok = TRUE)
   checkmate::assert_character(ylab, len = 1, null.ok = TRUE)
   checkmate::assert_numeric(ylim, len = 2, null.ok = TRUE)
   
@@ -83,17 +90,20 @@ plot_variable <- function(dat, y_var, apc_dimension = "period",
     if (is.null(ylab)) {
       ylab <- ifelse(geomBar_position == "fill", "Rel. frequency", "Frequency")
     }
+    if (is.null(legend_title)) {
+      legend_title <- y_var
+    }
     
     gg <- ggplot(dat, aes(x = factor(x), fill = y)) + 
       geom_bar(position = geomBar_position) +
-      scale_fill_brewer(y_var, palette = "Set2") +
+      scale_fill_brewer(legend_title, palette = "Set2") +
       scale_y_continuous(ylab, limits = ylim) +
       scale_x_discrete(guide = guide_axis(check.overlap = TRUE))
     
   } else { # var_class == "metric"
     
     # compute the median values
-    if (plot_type == "line") {
+    if (plot_type %in% c("line","line-points")) {
       dat <- dat %>% 
         group_by(x) %>% 
         summarize(y = stats::median(y, na.rm = TRUE)) %>% 
@@ -124,10 +134,14 @@ plot_variable <- function(dat, y_var, apc_dimension = "period",
         ylab <- y_var
       }
       
-    } else { # plot_type == "line"
+    } else { # plot_type %in% c("line","line-points")
       
-      gg <- ggplot(dat, aes(x = x, y = y)) +
-        geom_line(col = gray(0.3))
+      gg <- ggplot(dat, aes(x = x, y = y), col = gray(0.3)) +
+        geom_line()
+      
+      if (plot_type == "line-points") {
+        gg <- gg + geom_point()
+      }
       
       if (is.null(ylab)) {
         ylab <- paste0("median(",y_var,")")
