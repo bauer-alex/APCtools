@@ -4,7 +4,13 @@
 \alias{plot_jointMarginalAPCeffects}
 \title{Joint plot to compare the marginal APC effects of multiple models}
 \usage{
-plot_jointMarginalAPCeffects(model_list, dat, vlines_list = NULL, ylab = NULL)
+plot_jointMarginalAPCeffects(
+  model_list,
+  dat,
+  vlines_list = NULL,
+  ylab = NULL,
+  ylim = NULL
+)
 }
 \arguments{
 \item{model_list}{A list of regression models estimated with
@@ -22,7 +28,7 @@ numeric vector of values on the x-axis where vertical lines should be drawn.
 The list can maximally have three elements and must have names out of
 \code{c("age","period","cohort"}.}
 
-\item{ylab}{Optional title for the y-axis.}
+\item{ylab, ylim}{Optional ggplot2 styling arguments.}
 }
 \value{
 Plot grid created with \code{\link[ggpubr]{ggarrange}}.

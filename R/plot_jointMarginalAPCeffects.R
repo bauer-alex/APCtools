@@ -17,7 +17,7 @@
 #' numeric vector of values on the x-axis where vertical lines should be drawn.
 #' The list can maximally have three elements and must have names out of
 #' \code{c("age","period","cohort"}.
-#' @param ylab Optional title for the y-axis.
+#' @param ylab,ylim Optional ggplot2 styling arguments.
 #' 
 #' @return Plot grid created with \code{\link[ggpubr]{ggarrange}}.
 #' 
@@ -47,7 +47,7 @@
 #'                              vlines_list = list("cohort" = c(1966.5,1982.5,1994.5)))
 #' 
 plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
-                                         ylab = NULL) {
+                                         ylab = NULL, ylim = NULL) {
   
   checkmate::assert_list(model_list, types = "gam")
   checkmate::assert_data_frame(dat)
@@ -55,6 +55,7 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
                          types = "numeric", null.ok = TRUE)
   checkmate::assert_subset(names(vlines_list), choices = c("age","period","cohort"))
   checkmate::assert_character(ylab, len = 1, null.ok = TRUE)
+  checkmate::assert_numeric(ylim, len = 2, null.ok = TRUE)
   
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
@@ -73,8 +74,11 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
     plot_marginalAPCeffects(x, dat, return_plotData = TRUE)
   })
   
-  ylim <- lapply(datList_list, function(x) { dplyr::bind_rows(x) }) %>% 
-    dplyr::bind_rows() %>% pull(effect) %>% range()
+  if (is.null(ylim)) {
+    ylim <- lapply(datList_list, function(x) { dplyr::bind_rows(x) }) %>% 
+      dplyr::bind_rows() %>% pull(effect) %>% range()
+  }
+  
   used_logLink <- model_list[[1]]$family[[2]] %in% c("log","logit")
   if (is.null(ylab)) {
     ylab <- ifelse(used_logLink, "Odds Ratio", "Effect")
