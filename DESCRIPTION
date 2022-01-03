@@ -18,7 +18,7 @@ Description: Age-Period-Cohort (APC) analyses are used to differentiate relevant
     Such tensor product surfaces can also be estimated while accounting for
     further covariates in the regression model.
     See Weigert et al. (2021) <doi:10.1177/1354816620987198> for methodological details.
-License: GPL-3 + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

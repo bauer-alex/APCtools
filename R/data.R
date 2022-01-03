@@ -49,7 +49,7 @@
 #' H., and Schmude, J. (2021). Semiparametric APC analysis of destination choice
 #' patterns: Using generalized additive models to quantify the impact of age,
 #' period, and cohort on travel distances. \emph{Tourism Economics}.
-#' \href{https://doi.org/10.1177/1354816620987198}{doi:10.1177/1354816620987198}.
+#' \doi{10.1177/1354816620987198}.
 #' 
 #' Forschungsgemeinschaft Urlaub und Reisen e.V. (FUR) (2020b) \emph{Survey of
 #' tourist demand in Germany for holiday travel and short breaks}. Available at:
@@ -96,7 +96,7 @@
 #' Jalal, H., & Burke, D. S. (2020). Hexamaps for Age-Period-Cohort Data
 #' Visualization and Implementation in R. \emph{Epidemiology (Cambridge, Mass.)},
 #' 31(6), e47.
-#' \href{https://dx.doi.org/10.1097%2FEDE.0000000000001236}{doi:10.1097/EDE.0000000000001236}.
+#' \doi{10.1097/EDE.0000000000001236}.
 #' 
 #' Centers for Disease Control and Prevention, National Center for Health
 #' Statistics. Underlying Cause of Death 1999-2019 on CDC WONDER Online Database,

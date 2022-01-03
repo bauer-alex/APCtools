@@ -40,7 +40,7 @@ specific category \emph{Drug poisonings (overdose) Unintentional (X40-X44)}.
 Jalal, H., & Burke, D. S. (2020). Hexamaps for Age-Period-Cohort Data
 Visualization and Implementation in R. \emph{Epidemiology (Cambridge, Mass.)},
 31(6), e47.
-\href{https://dx.doi.org/10.1097\%2FEDE.0000000000001236}{doi:10.1097/EDE.0000000000001236}.
+\doi{10.1097/EDE.0000000000001236}.
 
 Centers for Disease Control and Prevention, National Center for Health
 Statistics. Underlying Cause of Death 1999-2019 on CDC WONDER Online Database,

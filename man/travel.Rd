@@ -55,7 +55,7 @@ Weigert, M., Bauer, A., Gernert, J., Karl, M., Nalmpatian, A., Küchenhoff,
 H., and Schmude, J. (2021). Semiparametric APC analysis of destination choice
 patterns: Using generalized additive models to quantify the impact of age,
 period, and cohort on travel distances. \emph{Tourism Economics}.
-\href{https://doi.org/10.1177/1354816620987198}{doi:10.1177/1354816620987198}.
+\doi{10.1177/1354816620987198}.
 
 Forschungsgemeinschaft Urlaub und Reisen e.V. (FUR) (2020b) \emph{Survey of
 tourist demand in Germany for holiday travel and short breaks}. Available at:
