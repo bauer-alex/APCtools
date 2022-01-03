@@ -97,6 +97,7 @@ plot_densityMatrix(dat              = travel,
                    period_groups    = period_groups,
                    log_scale        = TRUE)
 
+\donttest{
 # highlight two cohorts
 plot_densityMatrix(dat                 = travel,
                    y_var               = "mainTrip_distance",
@@ -146,6 +147,7 @@ plot_densityMatrix(dat                 = travel,
                    period_groups       = period_groups,
                    highlight_diagonals = list("born 1950 - 1959" = 8,
                                               "born 1970 - 1979" = 10))
+}
 
 }
 \references{
