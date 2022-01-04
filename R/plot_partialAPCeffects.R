@@ -9,6 +9,8 @@
 #' 
 #' @inheritParams plot_partialAPCeffects
 #' 
+#' @return ggplot object
+#' 
 #' @export
 #' 
 #' @references Weigert, M., Bauer, A., Gernert, J., Karl, M., Nalmpatian, A.,

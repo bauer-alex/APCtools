@@ -300,6 +300,10 @@ plot_APChexamap <- function (dat,
   Xhex <- outer(Xvec, xv, '+') 
   Yhex <- outer(Yvec, yv, '+')
   
+  # make sure to reset the plot layout when the function exits
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+  
   # plot layout with two columns - for the plot and the colorbar
   layout(t(1:2), widths = c(4,1))
   par(mar = c(.5,.5,.5,.5))

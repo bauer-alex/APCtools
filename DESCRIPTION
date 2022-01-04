@@ -1,5 +1,5 @@
 Package: APCtools
-Title: Routines and Visualization Techniques for Descriptive and Model-Based APC Analysis
+Title: Routines for Descriptive and Model-Based APC Analysis
 Version: 1.0.0
 Authors@R: c(
     person(given = "Alexander",  family = "Bauer",   email = "alexander.bauer@stat.uni-muenchen.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3495-5131")),
@@ -8,7 +8,7 @@ Authors@R: c(
     person(given = "Pauline",    family = "Hohenemser", role = "ctb"))
 Maintainer: Alexander Bauer <alexander.bauer@stat.uni-muenchen.de>
 Description: Age-Period-Cohort (APC) analyses are used to differentiate relevant drivers for long-term developments.
-    The APCtools package offers visualization techniques and general routines to simplify the workflow of an APC analysis.
+    The 'APCtools' package offers visualization techniques and general routines to simplify the workflow of an APC analysis.
     Sophisticated functions are available both for descriptive and regression model-based analyses.
     For the former, we use density (or ridgeline) matrices and (hexagonally binned) heatmaps as innovative visualization
     techniques building on the concept of Lexis diagrams.
