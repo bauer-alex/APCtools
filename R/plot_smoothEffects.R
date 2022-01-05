@@ -14,7 +14,14 @@
 #' @param alpha \code{(1-alpha)} CIs are calculated. The default 0.05 leads to
 #' 95% CIs.
 #' @param ylim Optional limits of the y-axis.
-#' 
+#' @param return_plotData If TRUE, the datasets prepared for plotting are
+#' returned, either in form of only the data.frame that contains the estimated
+#' effect with some additional information (if \code{plot_ci = FALSE}) or in
+#' form of a list with the two named data.frames \code{"dat_effect"} and
+#' \code{"dat_ci_polygon"} where the latter dataset is prepared to plot the
+#' confidence interval with \code{\link[ggplot2]{geom_polygon}}
+#' (if \code{plot_ci = TRUE}). Defaults to FALSE.
+#'  
 #' @return ggplot object
 #' 
 #' @importFrom grDevices gray
@@ -35,18 +42,19 @@
 #' plot_1Dsmooth(model, select = 2)
 #' 
 plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
-                          ylim = NULL) {
+                          ylim = NULL, return_plotData = FALSE) {
   
   checkmate::assert_class(model, classes = "gam")
   checkmate::assert_logical(plot_ci)
   checkmate::assert_numeric(select, lower = 1)
   checkmate::assert_numeric(alpha, lower = 0, upper = 1)
   checkmate::assert_numeric(ylim, len = 2, null.ok = TRUE)
+  checkmate::assert_logical(return_plotData, len = 1)
   
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
   fit <- se <- fit_exp <- se_exp <- CI_lower <- CI_upper <- CI_lower_exp <-
-    CI_upper_exp <- x <- y <- NULL
+    CI_upper_exp <- x <- y <- y_exp <- NULL
   
   
   used_logLink <- model$family[[2]] %in% c("log","logit")
@@ -55,21 +63,21 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
   plotObject <- get_plotGAMobject(model)
   
   plotObject <- plotObject[[select]]
-  plot_dat  <- data.frame(x   = plotObject$x,
-                          fit = plotObject$fit,
-                          se  = plotObject$se) %>% 
-    mutate(CI_lower = fit - qnorm(1 - alpha/2)*se,
-           CI_upper = fit + qnorm(1 - alpha/2)*se)
+  plot_dat  <- data.frame(x  = plotObject$x,
+                          y  = plotObject$fit,
+                          se = plotObject$se) %>% 
+    mutate(CI_lower = y - qnorm(1 - alpha/2)*se,
+           CI_upper = y + qnorm(1 - alpha/2)*se)
   
   if (used_logLink) {
     # confidence intervals on exp scale are computed based on the delta method
     plot_dat <- plot_dat %>%
-      mutate(fit_exp = exp(fit),
-             se_exp  = sqrt(se^2 * exp(fit)^2)) %>%
-      mutate(CI_lower_exp = fit_exp - qnorm(1 - alpha/2) * se_exp,
-             CI_upper_exp = fit_exp + qnorm(1 - alpha/2) * se_exp) %>% 
-      select(-fit, -se, -CI_lower, -CI_upper) %>% 
-      dplyr::rename(fit = fit_exp, se = se_exp,
+      mutate(y_exp = exp(y),
+             se_exp  = sqrt(se^2 * exp(y)^2)) %>%
+      mutate(CI_lower_exp = y_exp - qnorm(1 - alpha/2) * se_exp,
+             CI_upper_exp = y_exp + qnorm(1 - alpha/2) * se_exp) %>% 
+      select(-y, -se, -CI_lower, -CI_upper) %>% 
+      dplyr::rename(y = y_exp, se = se_exp,
                     CI_lower = CI_lower_exp, CI_upper = CI_upper_exp)
     
     # correct negative CI_lower borders
@@ -86,7 +94,18 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
                            y = c(plot_dat$CI_lower, rev(plot_dat$CI_upper)))
   }
   
-  gg <- ggplot(plot_dat, aes(x = x, y = fit))
+  if (return_plotData) {
+    if (!plot_ci) {
+      return(plot_dat)
+      
+    } else {
+      return(list(dat_effect     = plot_dat,
+                  dat_ci_polygon = poly_dat))
+    }
+  }
+  
+  # plot
+  gg <- ggplot(plot_dat, aes(x = x, y = y))
   if (plot_ci) {
     gg <- gg + geom_polygon(data = poly_dat, aes(x = x, y = y), fill = gray(0.75))
   }

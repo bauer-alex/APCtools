@@ -46,6 +46,16 @@ test_that("plot_1Dsmooth", {
   
   expect_error(plot_1Dsmooth(model, select = 20))
   
+  # plot_1Dsmooth - return_plotData
+  gg_dat1 <- plot_1Dsmooth(model, select = 2, return_plotData = TRUE)
+  gg_dat2 <- plot_1Dsmooth(model, select = 2, return_plotData = TRUE,
+                           plot_ci = FALSE)
+  
+  expect_list(gg_dat1)
+  expect_named(gg_dat1, expected = c("dat_effect","dat_ci_polygon"))
+  expect_data_frame(gg_dat2)
+  
+  
   # get_plotGAMobject
   x <- APCtools:::get_plotGAMobject(model)
   
