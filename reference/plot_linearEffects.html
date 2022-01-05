@@ -60,13 +60,19 @@ gam or bam."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_linearEffects</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_linearEffects</span><span class="op">(</span><span class="va">model</span>, variables <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>model</dt>
 <dd><p>Model fitted with <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></code> or <code><a href="https://rdrr.io/pkg/mgcv/man/bam.html" class="external-link">bam</a></code>.</p></dd>
+<dt>variables</dt>
+<dd><p>Optional character vector of variable names specifying which
+effects should be plotted. The order of the vector corresponds determines
+the order in the effect plot. If the argument is not specified, all linear
+effects are plotted according to the order of their appearance in the model
+output.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
