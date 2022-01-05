@@ -9,10 +9,12 @@
 #' 
 #' @inheritParams extract_summary_linearEffects
 #' @param variables Optional character vector of variable names specifying which
-#' effects should be plotted. The order of the vector corresponds determines
+#' effects should be plotted. The order of the vector corresponds to
 #' the order in the effect plot. If the argument is not specified, all linear
 #' effects are plotted according to the order of their appearance in the model
 #' output.
+#' @param return_plotData If TRUE, the dataset prepared for plotting is
+#' returned. Defaults to FALSE.
 #' 
 #' 
 #' @return ggplot object
@@ -33,7 +35,8 @@
 #' 
 #' plot_linearEffects(model)
 #' 
-plot_linearEffects <- function(model, variables = NULL) {
+plot_linearEffects <- function(model, variables = NULL,
+                               return_plotData = FALSE) {
   
   checkmate::assert_class(model, classes = "gam")
   checkmate::assert_character(variables, null.ok = TRUE)
@@ -79,6 +82,10 @@ plot_linearEffects <- function(model, variables = NULL) {
   if (used_logLink) {
     plot_dat <- plot_dat %>% select(-coef, -CI_lower, -CI_upper) %>%
       dplyr::rename(coef = coef_exp, CI_lower = CI_lower_exp, CI_upper = CI_upper_exp)
+  }
+  
+  if (return_plotData) {
+    return(plot_dat)
   }
   
   # create plot
