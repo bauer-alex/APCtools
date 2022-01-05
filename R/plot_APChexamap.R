@@ -166,7 +166,7 @@ plot_APChexamap <- function (dat,
     
     prediction <- dat_predictionGrid %>% 
       mgcv::predict.gam(object  = model,
-                        newdata = dat_predictionGrid,
+                        newdata = .,
                         type    = "terms",
                         terms   = term_APCsurface,
                         se.fit  = TRUE)
