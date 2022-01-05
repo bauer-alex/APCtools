@@ -91,7 +91,7 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
     gg <- gg + geom_polygon(data = poly_dat, aes(x = x, y = y), fill = gray(0.75))
   }
   gg <- gg + 
-    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2", lty = 2) +
+    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
     geom_line() + xlab(plotObject$xlab) +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
                        name  = ylab, limits = ylim)

@@ -66,7 +66,7 @@ plot_linearEffects <- function(model) {
   
   # create plot
   gg <- ggplot(plot_dat, mapping = aes(x = param, y = coef)) +
-    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = "firebrick2", lty = 2) +
+    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
     geom_pointrange(mapping = aes(ymin = CI_lower, ymax = CI_upper, col = vargroup), size = 1) +
     geom_point(mapping = aes(col = vargroup), size = 1) +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
