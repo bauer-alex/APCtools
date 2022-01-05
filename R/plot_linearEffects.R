@@ -8,6 +8,12 @@
 #' automatically performs an exponential transformation of the effect.
 #' 
 #' @inheritParams extract_summary_linearEffects
+#' @param variables Optional character vector of variable names specifying which
+#' effects should be plotted. The order of the vector corresponds determines
+#' the order in the effect plot. If the argument is not specified, all linear
+#' effects are plotted according to the order of their appearance in the model
+#' output.
+#' 
 #' 
 #' @return ggplot object
 #' 
@@ -27,9 +33,10 @@
 #' 
 #' plot_linearEffects(model)
 #' 
-plot_linearEffects <- function(model) {
+plot_linearEffects <- function(model, variables = NULL) {
   
   checkmate::assert_class(model, classes = "gam")
+  checkmate::assert_character(variables, null.ok = TRUE)
   
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
@@ -49,6 +56,10 @@ plot_linearEffects <- function(model) {
   }
   # remove the intercept
   plot_dat <- plot_dat[-1,]
+  # select variables to plot:
+  if (!is.null(variables)) {
+    plot_dat <- plot_dat %>% filter(vargroup %in% variables)
+  }
   # remove the vargroup label from the coefficient labels for categorical variables
   plot_dat$param <- as.character(plot_dat$param)
   cat_coefs      <- which(nchar(plot_dat$param) > nchar(plot_dat$vargroup))
@@ -57,6 +68,12 @@ plot_linearEffects <- function(model) {
                                         nchar(plot_dat$vargroup[cat_coefs]) + 1,
                                         100)
   }
+  
+  # reorder dataset according to specified variable vector
+  var_levels <- if(is.null(variables)) unique(plot_dat$vargroup) else variables
+  plot_dat <- plot_dat %>%
+     mutate(vargroup = factor(x = vargroup, levels = var_levels)) %>%
+     arrange(vargroup)
   
   # final preparations
   if (used_logLink) {

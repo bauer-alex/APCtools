@@ -4,10 +4,16 @@
 \alias{plot_linearEffects}
 \title{Plot linear effects of a gam in an effect plot}
 \usage{
-plot_linearEffects(model)
+plot_linearEffects(model, variables = NULL)
 }
 \arguments{
 \item{model}{Model fitted with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.}
+
+\item{variables}{Optional character vector of variable names specifying which
+effects should be plotted. The order of the vector corresponds determines
+the order in the effect plot. If the argument is not specified, all linear
+effects are plotted according to the order of their appearance in the model
+output.}
 }
 \value{
 ggplot object

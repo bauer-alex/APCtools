@@ -14,10 +14,13 @@ test_that("plot_linearEffects", {
                        family = Gamma(link = "log"), data = travel)
   
   gg1 <- plot_linearEffects(model)
-  gg2 <- plot_linearEffects(model_logLink)
+  gg2 <- plot_linearEffects(model,
+                            variables = c("residence_region", "household_size"))
+  gg3 <- plot_linearEffects(model_logLink)
   
   expect_s3_class(gg1, class = c("gg","ggplot"))
   expect_s3_class(gg2, class = c("gg","ggplot"))
+  expect_s3_class(gg3, class = c("gg", "ggplot"))
 })
 
 
