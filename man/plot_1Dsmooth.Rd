@@ -26,13 +26,8 @@ plot_1Dsmooth(
 
 \item{ylim}{Optional limits of the y-axis.}
 
-\item{return_plotData}{If TRUE, the datasets prepared for plotting are
-returned, either in form of only the data.frame that contains the estimated
-effect with some additional information (if \code{plot_ci = FALSE}) or in
-form of a list with the two named data.frames \code{"dat_effect"} and
-\code{"dat_ci_polygon"} where the latter dataset is prepared to plot the
-confidence interval with \code{\link[ggplot2]{geom_polygon}}
-(if \code{plot_ci = TRUE}). Defaults to FALSE.}
+\item{return_plotData}{If TRUE, the dataset prepared for plotting is
+returned. Defaults to FALSE.}
 }
 \value{
 ggplot object

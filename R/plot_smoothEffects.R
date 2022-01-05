@@ -14,13 +14,8 @@
 #' @param alpha \code{(1-alpha)} CIs are calculated. The default 0.05 leads to
 #' 95% CIs.
 #' @param ylim Optional limits of the y-axis.
-#' @param return_plotData If TRUE, the datasets prepared for plotting are
-#' returned, either in form of only the data.frame that contains the estimated
-#' effect with some additional information (if \code{plot_ci = FALSE}) or in
-#' form of a list with the two named data.frames \code{"dat_effect"} and
-#' \code{"dat_ci_polygon"} where the latter dataset is prepared to plot the
-#' confidence interval with \code{\link[ggplot2]{geom_polygon}}
-#' (if \code{plot_ci = TRUE}). Defaults to FALSE.
+#' @param return_plotData If TRUE, the dataset prepared for plotting is
+#' returned. Defaults to FALSE.
 #'  
 #' @return ggplot object
 #' 
@@ -89,25 +84,14 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
     }
   }
   
-  if (plot_ci) {
-    poly_dat <- data.frame(x = c(plot_dat$x, rev(plot_dat$x)),
-                           y = c(plot_dat$CI_lower, rev(plot_dat$CI_upper)))
-  }
-  
   if (return_plotData) {
-    if (!plot_ci) {
-      return(plot_dat)
-      
-    } else {
-      return(list(dat_effect     = plot_dat,
-                  dat_ci_polygon = poly_dat))
-    }
+    return(plot_dat)
   }
   
   # plot
   gg <- ggplot(plot_dat, aes(x = x, y = y))
   if (plot_ci) {
-    gg <- gg + geom_polygon(data = poly_dat, aes(x = x, y = y), fill = gray(0.75))
+    gg <- gg + geom_ribbon(aes(ymin = CI_lower, ymax = CI_upper), fill = gray(0.75))
   }
   gg <- gg + 
     geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +

@@ -215,12 +215,11 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
     terms_index_APC <- which(grepl("age", terms_model) | grepl("period", terms_model))
     term_APCsurface <- terms_model[terms_index_APC]
     
-    prediction <- dat_predictionGrid %>% 
-      mgcv::predict.gam(object  = model,
-                        newdata = .,
-                        type    = "terms",
-                        terms   = term_APCsurface,
-                        se.fit  = TRUE)
+    prediction <- mgcv::predict.gam(object  = model,
+                                    newdata = dat_predictionGrid,
+                                    type    = "terms",
+                                    terms   = term_APCsurface,
+                                    se.fit  = TRUE)
     
     plot_dat <- dat_predictionGrid %>%
       mutate(effect = as.vector(prediction$fit),
