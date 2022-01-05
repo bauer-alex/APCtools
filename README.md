@@ -11,8 +11,7 @@ coverage](https://codecov.io/gh/bauer-alex/APCtools/branch/main/graph/badge.svg?
 license](https://img.shields.io/badge/license-GPL--3.0-brightgreen.svg)](https://opensource.org/licenses/GPL-3.0)
 <!-- badges: end -->
 
-Routines and visualization techniques for descriptive and model-based
-APC analyses.
+Routines for Descriptive and Model-Based APC Analysis
 
 -   Authors: [Alexander
     Bauer](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/bauer1/index.html),
@@ -21,7 +20,7 @@ APC analyses.
     [Hawre
     Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal)
 -   Contributors: Pauline Hohenemser
--   Version: 1.0
+-   Version: 1.0.0
 
 ## Overview
 

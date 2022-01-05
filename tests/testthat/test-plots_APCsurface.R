@@ -46,8 +46,8 @@ test_that("plot_APChexamap", {
   data(drug_deaths)
   
   # helper functions
-  expect_identical(compute_xCoordinate(period_vec = c(1980,1999)),
-                   c(1714.7302994931883,1731.1847821650927))
+  expect_identical(round(compute_xCoordinate(period_vec = c(1980,1999)), 2),
+                   c(1714.73,1731.18))
   expect_identical(compute_yCoordinate(period_vec = c(1990, 1999), age_vec = c(20,50)),
                    c(-975.0, -949.5))
   

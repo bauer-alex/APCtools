@@ -6,7 +6,7 @@ output:
   html_document:
     toc: yes
   vignette: >
-    %\VignetteIndexEntry{Functionality of TouristClust package}
+    %\VignetteIndexEntry{APC Analysis with APCtools}
     %\usepackage[utf8]{inputenc}
     %\VignetteEngine{knitr::rmarkdown}
   rmarkdown::html_vignette: default
