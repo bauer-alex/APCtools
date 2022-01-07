@@ -7,6 +7,7 @@
 status](https://github.com/bauer-alex/APCtools/workflows/R-CMD-check/badge.svg)](https://github.com/bauer-alex/APCtools/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/bauer-alex/APCtools/branch/main/graph/badge.svg?token=KrjDYWRi2W)](https://app.codecov.io/gh/bauer-alex/APCtools)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/APCtools)](https://cran.r-project.org/package=APCtools)
 [![GPL-3
 license](https://img.shields.io/badge/license-GPL--3.0-brightgreen.svg)](https://opensource.org/licenses/GPL-3.0)
 <!-- badges: end -->
