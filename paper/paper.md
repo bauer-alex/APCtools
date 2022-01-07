@@ -21,11 +21,11 @@ affiliations:
    index: 1
  - name: Department of Health Policy and Management, Graduate School of Public Health, University of Pittsburgh.
    index: 2
-date: 20 December 2021
+date: 7 January 2022
 bibliography: paper.bib
 ---
 
-# Introduction
+# Statement of Need
 
 Age-Period-Cohort (APC) analysis aims to determine relevant drivers for
 long-term developments and is used in many fields of science [@yang_land_2013].
@@ -58,6 +58,9 @@ The package includes modern visualization techniques and routines to facilitate
 the interpretability of the estimated temporal structures.
 Our methods are outlined in @weigert_2021 and @jalal_2020.
 
+
+# Descriptive Analysis
+
 In the following, we showcase the main functionalities of the `APCtools` package
 on the included `travel` dataset, containing data from the German Reiseanalyse survey --
 a repeated cross-sectional study comprising information on German travelers between
@@ -66,9 +69,6 @@ Focus is on travelers between 14 and 89 years and the distance of each traveler'
 _main trip_ -- i.e. each traveler's
 most important trip in the respective year -- and how these distances change over the
 temporal dimensions.
-
-
-# Descriptive Analysis
 
 Several descriptive visualization techniques are implemented that are all based on
 the classical concept of Lexis diagrams where two temporal dimensions (of
