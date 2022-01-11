@@ -21,7 +21,7 @@ Routines for Descriptive and Model-Based APC Analysis
     [Hawre
     Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal)
 -   Contributors: Pauline Hohenemser
--   Version: 1.0.0
+-   Version: 1.0.1
 
 ## Overview
 
