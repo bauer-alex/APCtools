@@ -91,13 +91,16 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
   # plot
   gg <- ggplot(plot_dat, aes(x = x, y = y))
   if (plot_ci) {
-    gg <- gg + geom_ribbon(aes(ymin = CI_lower, ymax = CI_upper), fill = gray(0.75))
+    gg <- gg + geom_ribbon(aes(ymin = CI_lower, ymax = CI_upper, fill = "")) +
+      scale_fill_manual(values = gray(0.75))
   }
   gg <- gg + 
     geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
-    geom_line() + xlab(plotObject$xlab) +
+    geom_line(aes(col = "")) + xlab(plotObject$xlab) +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
-                       name  = ylab, limits = ylim)
+                       name  = ylab, limits = ylim) +
+    scale_color_manual(values = "black") +
+    theme(legend.position = "none")
   
   return(gg)
 }
