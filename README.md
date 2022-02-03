@@ -20,7 +20,6 @@ Routines for Descriptive and Model-Based APC Analysis
     Weigert](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/weigert/index.html),
     [Hawre
     Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal)
--   Contributors: Pauline Hohenemser
 -   Version: 1.0.1
 
 ## Overview

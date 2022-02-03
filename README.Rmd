@@ -19,7 +19,6 @@ opts_chunk$set(warning=FALSE)
 Routines for Descriptive and Model-Based APC Analysis
 
 * Authors: [Alexander Bauer](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/bauer1/index.html), [Maximilian Weigert](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/weigert/index.html), [Hawre Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal)
-* Contributors: Pauline Hohenemser
 * Version: 1.0.1
 
 
