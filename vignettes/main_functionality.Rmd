@@ -1,6 +1,6 @@
 ---
 title: "APC Analysis with APCtools"
-author: "Alexander Bauer, Maximilian Weigert, Pauline Hohenemser"
+author: "Alexander Bauer, Maximilian Weigert"
 date: "`r format(Sys.time(), '%d.%B %Y')`"
 output:
   html_document:
