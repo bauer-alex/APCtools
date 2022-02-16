@@ -22,22 +22,40 @@ Routines for Descriptive and Model-Based APC Analysis
     Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal)
 -   Version: 1.0.1
 
-## Overview
+## Aim of this Package
 
-Age-Period-Cohort (APC) analyses are used to differentiate relevant
-drivers for long-term developments. The `APCtools` package offers
-visualization techniques and general routines to simplify the workflow
-of an APC analysis. Sophisticated functions are available both for
-descriptive and regression model-based analyses. For the former, we use
-density (or ridgeline) matrices, classical heatmaps and *hexamaps*
-(hexagonally binned heatmaps) as innovative visualization techniques
-building on the concept of Lexis diagrams. Model-based analyses build on
-the separation of the temporal dimensions based on generalized additive
-models, where a tensor product interaction surface (usually between age
-and period) is utilized to represent the third dimension (usually
-cohort) on its diagonal. Such tensor product surfaces can also be
-estimated while accounting for further covariates in the regression
-model.
+Age-Period-Cohort (APC) analysis aims to determine relevant drivers for
+long-term developments and is used in many fields of science. The main
+focus is on disentangling the interconnected effects of age, period, and
+cohort. Long-term developments of some characteristic can either be
+associated with changes in a person’s life cycle (age), macro-level
+developments over the years that simultaneously affect all age groups
+(period), or the generational membership of an individual, shaped by
+similar socialization processes and historical experiences (cohort). The
+critical challenge in APC analysis is the linear dependency of the
+components age, period, and cohort (cohort = period - age). Accordingly,
+flexible methods and visualization techniques are needed to properly
+disentangle observed temporal association structures.
+
+In contrast to other software packages, `APCtools` builds on a flexible
+and robust semiparametric regression approach to circumvent this
+identification problem. The package includes modern visualization
+techniques and general routines to facilitate the interpretability of
+the estimated temporal structures and simplify the workflow of an APC
+analysis.
+
+## Main Functionality
+
+Sophisticated functions are available both for descriptive and
+regression model-based analyses. For the former, we use density (or
+ridgeline) matrices, classical heatmaps and *hexamaps* (hexagonally
+binned heatmaps) as innovative visualization techniques building on the
+concept of Lexis diagrams. Model-based analyses build on the separation
+of the temporal dimensions based on generalized additive models, where a
+tensor product interaction surface (usually between age and period) is
+utilized to represent the third dimension (usually cohort) on its
+diagonal. Such tensor product surfaces can also be estimated while
+accounting for further covariates in the regression model.
 
 Useful materials:
 
