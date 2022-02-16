@@ -63,12 +63,13 @@ The most current version from GitHub can be installed via
 devtools::install_github("bauer-alex/APCtools")
 ```
 
-## Getting help
+## How to Contribute
 
-Please open a [GitHub
-issue](https://github.com/bauer-alex/APCtools/issues) if you encounter a
-bug or have suggestions for additional functionalities of the package.
-Alternatively, feel free to contact us directly via email.
+If you encounter problems with the package, find bugs or have
+suggestions for additional functionalities please open a [GitHub
+issue](https://github.com/bauer-alex/APCtools/issues). Alternatively,
+feel free to contact us directly via email. Contributions (via pull
+requests or otherwise) are welcome.
 
 ## References
 
