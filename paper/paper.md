@@ -57,7 +57,7 @@ based on generalized additive models, where a tensor product interaction surface
 (usually cohort) on its diagonal. Such tensor product surfaces can also be
 estimated while accounting for further covariates in the regression model.
 
-Several alternative packages for the statistical software R exist that tackle this problem.
+Several alternative packages for APC analysis exist for the statistical software R.
 Package `apc` [@R_apc] implements methods based on the canonical parametrization
 of @kuang_2008, which however lack flexibility and
 robustness when compared to nonlinear regression approaches.
