@@ -41,7 +41,23 @@ The critical challenge in APC analysis is the linear dependency of the
 components age, period, and cohort (cohort = period - age).
 Accordingly, flexible methods and visualization techniques are needed to properly
 disentangle observed temporal association structures.
-Several packages for the statistical software R exist that tackle this problem.
+In contrast to other packages, `APCtools` builds on a flexible and robust
+semiparametric regression approach to circumvent this identification problem.
+The package includes modern visualization techniques and general routines to facilitate
+the interpretability of the estimated temporal structures and simplify the workflow
+of an APC analysis.
+As is outlined below in further detail,
+sophisticated functions are available both for descriptive and regression model-based analyses.
+For the former, we use density (or ridgeline) matrices, classical heatmaps and
+*hexamaps* (hexagonally binned heatmaps) as innovative visualization techniques
+building on the concept of Lexis diagrams.
+Model-based analyses build on the separation of the temporal dimensions
+based on generalized additive models, where a tensor product interaction surface
+(usually between age and period) is utilized to represent the third dimension
+(usually cohort) on its diagonal. Such tensor product surfaces can also be
+estimated while accounting for further covariates in the regression model.
+
+Several alternative packages for the statistical software R exist that tackle this problem.
 Package `apc` [@R_apc] implements methods based on the canonical parametrization
 of @kuang_2008, which however lack flexibility and
 robustness when compared to nonlinear regression approaches.
@@ -52,17 +68,13 @@ to analyze disease and mortality rates, including the estimation of separate
 smooth effects for age, period and cohort.
 @rosenberg_2014 developed an R-based web tool for the analysis of cancer rates,
 including different estimates for marginal effect curves.
-In contrast to these packages, `APCtools` builds on the flexible and robust
-semiparametric regression approach of @clements_2005.
-The package includes modern visualization techniques and routines to facilitate
-the interpretability of the estimated temporal structures.
-Our methods are outlined in @weigert_2021 and @jalal_2020.
+
 
 
 # Descriptive Analysis
 
 In the following, we showcase the main functionalities of the `APCtools` package
-on the included `travel` dataset, containing data from the German Reiseanalyse survey --
+on the included `travel` dataset, containing data from the German *Reiseanalyse* survey --
 a repeated cross-sectional study comprising information on German travelers between
 1971 and 2018.
 Focus is on travelers between 14 and 89 years and the distance of each traveler's
@@ -87,8 +99,8 @@ longer-distance travels are mainly undertaken by young age groups and in more re
 
 # Model-based Analysis
 
-To properly estimate and disentangle the association of a process with age, period,
-and cohort, we utilize the approach introduced by @clements_2005 who solve the
+To properly estimate the association of a process with the individual dimensions age, period,
+and cohort, we utilize the approach introduced by @clements_2005 who circumvent the
 identification problem by representing the effect of one temporal dimension (e.g. cohort)
 based on a nonlinear interaction surface between the other two dimensions
 (age and period).
