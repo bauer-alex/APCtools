@@ -84,7 +84,14 @@ If you encounter problems with the package, find bugs or have suggestions for
 additional functionalities please open a
 [GitHub issue](https://github.com/bauer-alex/APCtools/issues).
 Alternatively, feel free to contact us directly via email.
+
 Contributions (via pull requests or otherwise) are welcome.
+Before you open a pull request or share your updates with us, please make sure
+that all unit tests pass without errors or warning messages. You can run the unit
+tests by calling
+```r
+devtools::test()
+```
 
 ## References
 

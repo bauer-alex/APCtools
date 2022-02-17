@@ -70,8 +70,8 @@ Useful materials:
     for methodological details.
 
 -   Hexamaps as a concept for the visualization of APC structures are
-    outlined in [Jalal &
-    Burke (2020)](https://doi.org/10.1097/EDE.0000000000001236).
+    outlined in [Jalal & Burke
+    (2020)](https://doi.org/10.1097/EDE.0000000000001236).
 
 ## Installation
 
@@ -86,8 +86,16 @@ devtools::install_github("bauer-alex/APCtools")
 If you encounter problems with the package, find bugs or have
 suggestions for additional functionalities please open a [GitHub
 issue](https://github.com/bauer-alex/APCtools/issues). Alternatively,
-feel free to contact us directly via email. Contributions (via pull
-requests or otherwise) are welcome.
+feel free to contact us directly via email.
+
+Contributions (via pull requests or otherwise) are welcome. Before you
+open a pull request or share your updates with us, please make sure that
+all unit tests pass without errors or warning messages. You can run the
+unit tests by calling
+
+``` r
+devtools::test()
+```
 
 ## References
 
