@@ -101,7 +101,7 @@ Such visualizations can for example be used to illustrate changes in travel dist
 As can be seen in \autoref{fig:descriptive} and \autoref{fig:hexamaps},
 longer-distance travels are mainly undertaken by young age groups and in more recent years.
 
-![Density matrix of the main trips' travel distance in different age and period groups. Two cohort groups are exemplarily highlighted. \label{fig:descriptive}](figures/1_densityMatrix.png){width=60%}
+![Density matrix of the main trips' travel distance in different age and period groups. Two cohort groups are exemplarily highlighted. \label{fig:descriptive}](figures/1_densityMatrix.png){width=80%}
 
 
 
