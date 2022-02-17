@@ -25,12 +25,23 @@ date: 7 January 2022
 bibliography: paper.bib
 ---
 
-# Statement of Need
+# Summary
 
 Age-Period-Cohort (APC) analysis aims to determine relevant drivers for
 long-term developments and is used in many fields of science [@yang_land_2013].
-The main focus is on disentangling the interconnected effects of age, period, and
-cohort.
+The R package `APCtools` offers modern visualization techniques and general
+routines to facilitate the interpretability of the interdependent temporal
+structures and to simplify the workflow of an APC analysis.
+The model-based analysis builds on a semiparametric regression approach to
+separate the temporal effects.
+We shortly discuss the challenges of APC analysis, give an overview of existing
+statistical software packages and outline the main functionalities of the package.
+
+
+# Statement of Need
+
+The main focus in APC analysis is on disentangling the interconnected effects
+of age, period, and cohort.
 Long-term developments of some characteristic can either be associated
 with changes in a person's life cycle (age), macro-level developments over the years
 that simultaneously affect all age groups (period), or the generational
@@ -41,10 +52,22 @@ The critical challenge in APC analysis is the linear dependency of the
 components age, period, and cohort (cohort = period - age).
 Accordingly, flexible methods and visualization techniques are needed to properly
 disentangle observed temporal association structures.
-In contrast to other packages, `APCtools` builds on a flexible and robust
+Several packages for APC analysis exist for the statistical software R.
+Package `apc` [@R_apc] implements methods based on the canonical parametrization
+of @kuang_2008, which however lack flexibility and
+robustness when compared to nonlinear regression approaches.
+Package `bamp` [@schmid_held_2007] offers routines for the analysis of incidence and mortality
+data based on a Bayesian APC model with a nonlinear prior.
+R package `Epi` [@R_Epi] implements the methods introduced in @carstensen_2007
+to analyze disease and mortality rates, including the estimation of separate
+smooth effects for age, period and cohort.
+@rosenberg_2014 developed an R-based web tool for the analysis of cancer rates,
+including different estimates for marginal effect curves.
+
+In contrast to the above software packages, `APCtools` builds on a flexible and robust
 semiparametric regression approach to circumvent this identification problem.
 The package includes modern visualization techniques and general routines to facilitate
-the interpretability of the estimated temporal structures and simplify the workflow
+the interpretability of the estimated temporal structures and to simplify the workflow
 of an APC analysis.
 As is outlined below in further detail,
 sophisticated functions are available both for descriptive and regression model-based analyses.
@@ -56,18 +79,6 @@ based on generalized additive models, where a tensor product interaction surface
 (usually between age and period) is utilized to represent the third dimension
 (usually cohort) on its diagonal. Such tensor product surfaces can also be
 estimated while accounting for further covariates in the regression model.
-
-Several alternative packages for APC analysis exist for the statistical software R.
-Package `apc` [@R_apc] implements methods based on the canonical parametrization
-of @kuang_2008, which however lack flexibility and
-robustness when compared to nonlinear regression approaches.
-Package `bamp` [@schmid_held_2007] offers routines for the analysis of incidence and mortality
-data based on a Bayesian APC model with a nonlinear prior.
-R package `Epi` [@R_Epi] implements the methods introduced in @carstensen_2007
-to analyze disease and mortality rates, including the estimation of separate
-smooth effects for age, period and cohort.
-@rosenberg_2014 developed an R-based web tool for the analysis of cancer rates,
-including different estimates for marginal effect curves.
 
 
 
