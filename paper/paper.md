@@ -32,9 +32,8 @@ long-term developments and is used in many fields of science [@yang_land_2013].
 The R package `APCtools` offers modern visualization techniques and general
 routines to facilitate the interpretability of the interdependent temporal
 structures and to simplify the workflow of an APC analysis.
-The model-based analysis builds on a semiparametric regression approach to
-separate the temporal effects.
-We shortly discuss the challenges of APC analysis, give an overview of existing
+Separation of the temporal effects is performed utilizing a semiparametric
+regression approach. We shortly discuss the challenges of APC analysis, give an overview of existing
 statistical software packages and outline the main functionalities of the package.
 
 
@@ -49,9 +48,7 @@ membership of an individual, shaped by similar socialization processes and histo
 (cohort).
 
 The critical challenge in APC analysis is the linear dependency of the
-components age, period, and cohort (cohort = period - age).
-Accordingly, flexible methods and visualization techniques are needed to properly
-disentangle observed temporal association structures.
+components age, period, and cohort (cohort = period - age). Flexible methods and visualization techniques are needed to circumvent this *identification problem*.
 Several packages for APC analysis exist for the statistical software R.
 Package `apc` [@R_apc] implements methods based on the canonical parametrization
 of @kuang_2008, which however lack flexibility and
@@ -65,7 +62,7 @@ smooth effects for age, period and cohort.
 including different estimates for marginal effect curves.
 
 In contrast to the above software packages, `APCtools` builds on a flexible and robust
-semiparametric regression approach to circumvent this identification problem.
+semiparametric regression approach.
 The package includes modern visualization techniques and general routines to facilitate
 the interpretability of the estimated temporal structures and to simplify the workflow
 of an APC analysis.
