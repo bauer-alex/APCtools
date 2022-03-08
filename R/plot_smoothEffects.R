@@ -96,6 +96,12 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
     return(plot_dat)
   }
   
+  # if 'ylim' is set and the CIs exceed it, trim them accordingly
+  if (!is.null(ylim)) {
+    plot_dat$CI_lower[plot_dat$CI_lower < ylim[1]] <- ylim[1]
+    plot_dat$CI_upper[plot_dat$CI_upper > ylim[2]] <- ylim[2]
+  }
+  
   # plot
   gg <- ggplot(plot_dat, aes(x = x, y = y))
   if (plot_ci) {
