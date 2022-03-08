@@ -65,22 +65,30 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
            CI_upper = y + qnorm(1 - alpha/2)*se)
   
   if (used_logLink) {
-    # confidence intervals on exp scale are computed based on the delta method
-    plot_dat <- plot_dat %>%
-      mutate(y_exp = exp(y),
-             se_exp  = sqrt(se^2 * exp(y)^2)) %>%
-      mutate(CI_lower_exp = y_exp - qnorm(1 - alpha/2) * se_exp,
-             CI_upper_exp = y_exp + qnorm(1 - alpha/2) * se_exp) %>% 
-      select(-y, -se, -CI_lower, -CI_upper) %>% 
-      dplyr::rename(y = y_exp, se = se_exp,
-                    CI_lower = CI_lower_exp, CI_upper = CI_upper_exp)
     
-    # correct negative CI_lower borders
-    if (any(plot_dat$CI_lower < 0)) {
-      warning("Note: After the delta method transformation some values of the
+    # transform the point estimates
+    plot_dat <- plot_dat %>%
+      mutate(y_exp = exp(y)) %>%
+      select(-y) %>% 
+      dplyr::rename(y = y_exp)
+    
+    # transform the confidence intervals (based on the delta method)
+    if (plot_ci) {
+      
+      plot_dat <- plot_dat %>%
+        mutate(se_exp  = sqrt(se^2 * exp(y)^2)) %>%
+        mutate(CI_lower_exp = y - qnorm(1 - alpha/2) * se_exp,
+               CI_upper_exp = y + qnorm(1 - alpha/2) * se_exp) %>% 
+        select(-se, -CI_lower, -CI_upper) %>% 
+        dplyr::rename(se = se_exp, CI_lower = CI_lower_exp, CI_upper = CI_upper_exp)
+      
+      # correct negative CI_lower borders
+      if (any(plot_dat$CI_lower < 0)) {
+        warning("Note: After the delta method transformation some values of the
               lower confidence interval border resulted were negative. These
               values were set to 0.01")
-      plot_dat$CI_lower[plot_dat$CI_lower < 0] <- 0.01
+        plot_dat$CI_lower[plot_dat$CI_lower < 0] <- 0.01
+      }
     }
   }
   
