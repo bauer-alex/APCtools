@@ -1,6 +1,6 @@
 Package: APCtools
 Title: Routines for Descriptive and Model-Based APC Analysis
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person(given = "Alexander",  family = "Bauer",   email = "alexander.bauer@stat.uni-muenchen.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3495-5131")),
     person(given = "Maximilian", family = "Weigert", email = "maximilian.weigert@stat.uni-muenchen.de", role = "aut", comment = c(ORCID = "0000-0003-4400-134X")),

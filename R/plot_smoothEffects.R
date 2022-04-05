@@ -76,7 +76,7 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
     if (plot_ci) {
       
       plot_dat <- plot_dat %>%
-        mutate(se_exp  = sqrt(se^2 * exp(y)^2)) %>%
+        mutate(se_exp  = sqrt(se^2 * y^2)) %>%
         mutate(CI_lower_exp = y - qnorm(1 - alpha/2) * se_exp,
                CI_upper_exp = y + qnorm(1 - alpha/2) * se_exp) %>% 
         select(-se, -CI_lower, -CI_upper) %>% 
