@@ -18,7 +18,7 @@ x-axis or the y-axis."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
     
     <a class="navbar-brand me-2" href="../index.html">APCtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,12 +99,13 @@ main variable specified through argument <code>y_var</code>.</p></dd>
 should be visualized along the x-axis and y-axis. Defaults to
 <code>c("period","age")</code>.</p></dd>
 <dt>age_groups, period_groups, cohort_groups</dt>
-<dd><p>Each a list with one element
-specifying the borders of one row or column in the density matrix. E.g., if
-the period should be visualized in decade columns from 1980 to 2009, specify
+<dd><p>Each a list. Either containing
+purely scalar values or with each element specifying the two borders of one
+row or column in the density matrix. E.g., if the period should be visualized
+in decade columns from 1980 to 2009, specify
 <code>period_groups = list(c(1980,1989), c(1990,1999), c(2000,2009))</code>.
 The list can be named to specify labels for the categories. Only the two
-arguments should be passed that were specified by the <code>dimensions</code>
+arguments must be passed that were specified by the <code>dimensions</code>
 argument.</p></dd>
 <dt>plot_type</dt>
 <dd><p>One of <code>c("density","boxplot")</code>. Only used if the
@@ -164,7 +165,7 @@ Maximilian Weigert <a href="mailto:maximilian.weigert@stat.uni-muenchen.de">maxi
 <span class="r-in">                     <span class="st">"2,000 - 6,000 km"</span>, <span class="st">"&gt; 6,000 km"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">age_groups</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>,<span class="fl">89</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">70</span>,<span class="fl">79</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>,<span class="fl">69</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>,<span class="fl">59</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">49</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">39</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">29</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">period_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1971</span>,<span class="fl">1979</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1980</span>,<span class="fl">1989</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1990</span>,<span class="fl">1999</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span>,<span class="fl">2009</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span>,<span class="fl">2018</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">period_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1970</span>,<span class="fl">1979</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1980</span>,<span class="fl">1989</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1990</span>,<span class="fl">1999</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span>,<span class="fl">2009</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span>,<span class="fl">2019</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">cohort_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1980</span>,<span class="fl">1989</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1970</span>,<span class="fl">1979</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1960</span>,<span class="fl">1969</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1950</span>,<span class="fl">1959</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1940</span>,<span class="fl">1949</span><span class="op">)</span>,</span>
 <span class="r-in">                      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1930</span>,<span class="fl">1939</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1920</span>,<span class="fl">1929</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -182,8 +183,7 @@ Maximilian Weigert <a href="mailto:maximilian.weigert@stat.uni-muenchen.de">maxi
 <span class="r-in">                   y_var               <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span class="r-in">                   age_groups          <span class="op">=</span> <span class="va">age_groups</span>,</span>
 <span class="r-in">                   period_groups       <span class="op">=</span> <span class="va">period_groups</span>,</span>
-<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"born 1950 - 1959"</span> <span class="op">=</span> <span class="fl">8</span>,</span>
-<span class="r-in">                                              <span class="st">"born 1970 - 1979"</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span>,</span>
 <span class="r-in">                   log_scale           <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluding 9149 missing observations of mainTrip_distance...</span>
 <span class="r-plt img"><img src="plot_densityMatrix-2.png" alt="" width="700" height="433"></span>
@@ -196,8 +196,7 @@ Maximilian Weigert <a href="mailto:maximilian.weigert@stat.uni-muenchen.de">maxi
 <span class="r-in">                   log_scale        <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span class="r-in">                   y_var_cat_breaks <span class="op">=</span> <span class="va">dist_cat_breaks</span>,</span>
 <span class="r-in">                   y_var_cat_labels <span class="op">=</span> <span class="va">dist_cat_labels</span>,</span>
-<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"born 1950 - 1959"</span> <span class="op">=</span> <span class="fl">8</span>,</span>
-<span class="r-in">                                              <span class="st">"born 1970 - 1979"</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span>,</span>
 <span class="r-in">                   legend_title     <span class="op">=</span> <span class="st">"Distance category"</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluding 9149 missing observations of mainTrip_distance...</span>
 <span class="r-plt img"><img src="plot_densityMatrix-3.png" alt="" width="700" height="433"></span>
@@ -222,8 +221,7 @@ Maximilian Weigert <a href="mailto:maximilian.weigert@stat.uni-muenchen.de">maxi
 <span class="r-in">                   age_groups    <span class="op">=</span> <span class="va">age_groups</span>,</span>
 <span class="r-in">                   period_groups <span class="op">=</span> <span class="va">period_groups</span>,</span>
 <span class="r-in">                   log_scale     <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"born 1950 - 1959"</span> <span class="op">=</span> <span class="fl">8</span>,</span>
-<span class="r-in">                                              <span class="st">"born 1970 - 1979"</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluding 9149 missing observations of mainTrip_distance...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Solution may be nonunique</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Solution may be nonunique</span>
@@ -252,8 +250,7 @@ Maximilian Weigert <a href="mailto:maximilian.weigert@stat.uni-muenchen.de">maxi
 <span class="r-in">                   y_var               <span class="op">=</span> <span class="st">"household_size"</span>,</span>
 <span class="r-in">                   age_groups          <span class="op">=</span> <span class="va">age_groups</span>,</span>
 <span class="r-in">                   period_groups       <span class="op">=</span> <span class="va">period_groups</span>,</span>
-<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"born 1950 - 1959"</span> <span class="op">=</span> <span class="fl">8</span>,</span>
-<span class="r-in">                                              <span class="st">"born 1970 - 1979"</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="plot_densityMatrix-6.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
