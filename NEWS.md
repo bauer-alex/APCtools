@@ -1,4 +1,9 @@
-# APCtools 1.0.2 (2022-02)
+# APCtools 1.0.3 (2022-04)
+
+- Fixed plot_densityMatrix, which wrongly assigned data to some cells in some situations
+
+
+# APCtools 1.0.2 (2022-04)
 
 - Fixed computation of confidence intervals for smooth effects 
 

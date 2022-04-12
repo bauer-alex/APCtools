@@ -31,12 +31,13 @@ main variable specified through argument \code{y_var}.}
 should be visualized along the x-axis and y-axis. Defaults to
 \code{c("period","age")}.}
 
-\item{age_groups, period_groups, cohort_groups}{Each a list with one element
-specifying the borders of one row or column in the density matrix. E.g., if
-the period should be visualized in decade columns from 1980 to 2009, specify
+\item{age_groups, period_groups, cohort_groups}{Each a list. Either containing
+purely scalar values or with each element specifying the two borders of one
+row or column in the density matrix. E.g., if the period should be visualized
+in decade columns from 1980 to 2009, specify
 \code{period_groups = list(c(1980,1989), c(1990,1999), c(2000,2009))}.
 The list can be named to specify labels for the categories. Only the two
-arguments should be passed that were specified by the \code{dimensions}
+arguments must be passed that were specified by the \code{dimensions}
 argument.}
 
 \item{plot_type}{One of \code{c("density","boxplot")}. Only used if the
@@ -87,7 +88,7 @@ dist_cat_labels <- c("< 500 km","500 - 1,000 km", "1,000 - 2,000 km",
                      "2,000 - 6,000 km", "> 6,000 km")
 
 age_groups    <- list(c(80,89),c(70,79),c(60,69),c(50,59),c(40,49),c(30,39),c(20,29))
-period_groups <- list(c(1971,1979),c(1980,1989),c(1990,1999),c(2000,2009),c(2010,2018))
+period_groups <- list(c(1970,1979),c(1980,1989),c(1990,1999),c(2000,2009),c(2010,2019))
 cohort_groups <- list(c(1980,1989),c(1970,1979),c(1960,1969),c(1950,1959),c(1940,1949),
                       c(1930,1939),c(1920,1929))
 
@@ -103,8 +104,7 @@ plot_densityMatrix(dat                 = travel,
                    y_var               = "mainTrip_distance",
                    age_groups          = age_groups,
                    period_groups       = period_groups,
-                   highlight_diagonals = list("born 1950 - 1959" = 8,
-                                              "born 1970 - 1979" = 10),
+                   highlight_diagonals = list(8, 10),
                    log_scale           = TRUE)
 
 # also mark different distance categories
@@ -115,8 +115,7 @@ plot_densityMatrix(dat              = travel,
                    log_scale        = TRUE,
                    y_var_cat_breaks = dist_cat_breaks,
                    y_var_cat_labels = dist_cat_labels,
-                   highlight_diagonals = list("born 1950 - 1959" = 8,
-                                              "born 1970 - 1979" = 10),
+                   highlight_diagonals = list(8, 10),
                    legend_title     = "Distance category")
 
 # flexibly assign the APC dimensions to the x-axis and y-axis
@@ -137,16 +136,14 @@ plot_densityMatrix(dat           = travel,
                    age_groups    = age_groups,
                    period_groups = period_groups,
                    log_scale     = TRUE,
-                   highlight_diagonals = list("born 1950 - 1959" = 8,
-                                              "born 1970 - 1979" = 10))
+                   highlight_diagonals = list(8, 10))
 
 # plot categorical variables instead of metric ones
 plot_densityMatrix(dat                 = travel,
                    y_var               = "household_size",
                    age_groups          = age_groups,
                    period_groups       = period_groups,
-                   highlight_diagonals = list("born 1950 - 1959" = 8,
-                                              "born 1970 - 1979" = 10))
+                   highlight_diagonals = list(8, 10))
 }
 
 }
