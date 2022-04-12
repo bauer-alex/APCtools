@@ -5,3 +5,5 @@
 .Ruserdata
 .Rbuildignore
 docs
+
+paper/*.html
