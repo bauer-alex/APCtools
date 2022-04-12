@@ -18,15 +18,15 @@ travel <- travel %>% filter(age <= 89)
 # density matrix ----------------------------------------------------------
 age_groups    <- list(c(80,89),c(70,79),c(60,69),c(50,59),
                       c(40,49),c(30,39),c(20,29))
-period_groups <- list(c(1971,1979),c(1980,1989),c(1990,1999),
-                      c(2000,2009),c(2010,2018))
+period_groups <- list("1971 - 1979" = c(1970,1979), "1980 - 1989" = c(1980,1989),
+                      "1990 - 1999" = c(1990,1999), "2000 - 2009" = c(2000,2009),
+                      "2010 - 2018" = c(2010,2019))
 
 plot_densityMatrix(dat                 = travel,
                    y_var               = "mainTrip_distance",
                    age_groups          = age_groups,
                    period_groups       = period_groups,
-                   highlight_diagonals = list("born 1950 - 1959" = 8,
-                                              "born 1970 - 1979" = 10),
+                   highlight_diagonals = list(8, 10),
                    log_scale           = TRUE,
                    xlab                = "Travel distance [km] on log10 scale") +
   theme(legend.position = "bottom")
