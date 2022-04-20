@@ -47,8 +47,17 @@ that simultaneously affect all age groups (period), or the generational
 membership of an individual, shaped by similar socialization processes and historical experiences
 (cohort).
 
-The critical challenge in APC analysis is the linear dependency of the
-components age, period, and cohort (cohort = period - age). Flexible methods and visualization techniques are needed to circumvent this *identification problem*.
+The critical challenge in APC analysis is to deal with the perfect linear
+dependency of the components age, period, and cohort (cohort = period - age).
+As of this *identification problem*, the estimation of a linear regression model
+with all three components as individual main effects is only possible when
+imposing additional constraints in the estimation process, like restricting one
+main effect to zero [@yang_land_2013].
+Such explicit constraints, however, typically result in effect structures that are
+hard to interpret.
+Accordingly, flexible methods and visualization techniques are needed that rely
+on less restrictive assumptions to circumvent the identification problem.
+
 Several packages for APC analysis exist for the statistical software R.
 Package `apc` [@R_apc] implements methods based on the canonical parametrization
 of @kuang_2008, which however lack flexibility and
@@ -82,7 +91,7 @@ estimated while accounting for further covariates in the regression model.
 # Descriptive Analysis
 
 In the following, we showcase the main functionalities of the `APCtools` package
-on the included `travel` dataset, containing data from the German *Reiseanalyse* survey --
+on the included `travel` dataset, containing data from the German *Reiseanalyse* survey [@FUR_2022] --
 a repeated cross-sectional study comprising information on German travelers between
 1971 and 2018.
 Focus is on travelers between 14 and 89 years and the distance of each traveler's
