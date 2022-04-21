@@ -49,7 +49,12 @@ membership of an individual, shaped by similar socialization processes and histo
 
 The critical challenge in APC analysis is to deal with the perfect linear
 dependency of the components age, period, and cohort (cohort = period - age).
-As of this *identification problem*, the estimation of a linear regression model
+Due to this *identification problem*, inferring on the actual drivers behind
+observed temporal developments is difficult.
+For example, changes in recent years could be explained by developments related
+to the period, or by the fact that the respective observations only comprise
+later cohorts.
+The estimation of a linear regression model
 with all three components as individual main effects is only possible when
 imposing additional constraints in the estimation process, like restricting one
 main effect to zero [@yang_land_2013].
