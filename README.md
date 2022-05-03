@@ -20,7 +20,7 @@ Routines for Descriptive and Model-Based APC Analysis
     Weigert](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/weigert/index.html),
     [Hawre
     Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal)
--   Version: 1.0.2
+-   Version: 1.0.1
 
 ## Aim of this Package
 
@@ -57,7 +57,7 @@ utilized to represent the third dimension (usually cohort) on its
 diagonal. Such tensor product surfaces can also be estimated while
 accounting for further covariates in the regression model.
 
-Useful materials:
+## Documentation and Useful Materials
 
 -   To get an overview of the functionalities of the package, check out
     the [package
@@ -70,8 +70,8 @@ Useful materials:
     for methodological details.
 
 -   Hexamaps as a concept for the visualization of APC structures are
-    outlined in [Jalal & Burke
-    (2020)](https://doi.org/10.1097/EDE.0000000000001236).
+    outlined in [Jalal &
+    Burke (2020)](https://doi.org/10.1097/EDE.0000000000001236).
 
 ## Installation
 

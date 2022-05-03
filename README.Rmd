@@ -57,7 +57,7 @@ based on generalized additive models, where a tensor product interaction surface
 (usually cohort) on its diagonal. Such tensor product surfaces can also be
 estimated while accounting for further covariates in the regression model.
 
-Useful materials:
+## Documentation and Useful Materials
 
 * To get an overview of the functionalities of the package, check out the
 [package vignette](https://bauer-alex.github.io/APCtools/articles/main_functionality.html).
