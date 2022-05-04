@@ -14,13 +14,13 @@ license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://open
 
 Routines for Descriptive and Model-Based APC Analysis
 
--   Authors: [Alexander
+  - Authors: [Alexander
     Bauer](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/bauer1/index.html),
     [Maximilian
     Weigert](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/weigert/index.html),
     [Hawre
     Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal)
--   Version: 1.0.1
+  - Version: 1.0.1
 
 ## Aim of this Package
 
@@ -59,19 +59,21 @@ accounting for further covariates in the regression model.
 
 ## Documentation and Useful Materials
 
--   To get an overview of the functionalities of the package, check out
+  - To get an overview of the functionalities of the package, check out
+    the [JOSS
+    publication](https://joss.theoj.org/papers/10.21105/joss.04056) or
     the [package
     vignette](https://bauer-alex.github.io/APCtools/articles/main_functionality.html).
 
--   See [Weigert et
+  - See [Weigert et
     al. (2021)](https://doi.org/10.1177/1354816620987198) or our
     corresponding [research
     poster](https://www.researchgate.net/publication/353852226_Visualization_techniques_for_semiparametric_APC_analysis_Using_Generalized_Additive_Models_to_examine_touristic_travel_distances)
     for methodological details.
 
--   Hexamaps as a concept for the visualization of APC structures are
-    outlined in [Jalal &
-    Burke (2020)](https://doi.org/10.1097/EDE.0000000000001236).
+  - Hexamaps as a concept for the visualization of APC structures are
+    outlined in [Jalal & Burke
+    (2020)](https://doi.org/10.1097/EDE.0000000000001236).
 
 ## Installation
 
@@ -98,6 +100,10 @@ devtools::test()
 ```
 
 ## References
+
+Bauer, A., Weigert, M., and Jalal, H. (2022). APCtools: Descriptive and
+Model-based Age-Period-Cohort Analysis. Journal of Open Source Software,
+7(73), 4056, <https://doi.org/10.21105/joss.04056>.
 
 Weigert, M., Bauer, A., Gernert, J., Karl, M., Nalmpatian, A.,
 Küchenhoff, H., and Schmude, J. (2021). Semiparametric APC analysis of
