@@ -3,7 +3,7 @@
 (i.e., a ridgeline matrix) or boxplots (for
 metric variables) or of individual barplots (for categorical variables).
 The age, period or cohort information can each either be plotted on the
-x-axis or the y-axis."><title>Create a matrix of density plots — plot_densityMatrix • APCtools</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Create a matrix of density plots — plot_densityMatrix"><meta property="og:description" content="This function creates a matrix of individual density plots
+x-axis or the y-axis."><title>Create a matrix of density plots — plot_densityMatrix • APCtools</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Create a matrix of density plots — plot_densityMatrix"><meta property="og:description" content="This function creates a matrix of individual density plots
 (i.e., a ridgeline matrix) or boxplots (for
 metric variables) or of individual barplots (for categorical variables).
 The age, period or cohort information can each either be plotted on the
@@ -69,22 +69,22 @@ x-axis or the y-axis.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_densityMatrix</span><span class="op">(</span>
-  <span class="va">dat</span>,
-  <span class="va">y_var</span>,
-  dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"period"</span>, <span class="st">"age"</span><span class="op">)</span>,
-  age_groups <span class="op">=</span> <span class="cn">NULL</span>,
-  period_groups <span class="op">=</span> <span class="cn">NULL</span>,
-  cohort_groups <span class="op">=</span> <span class="cn">NULL</span>,
-  plot_type <span class="op">=</span> <span class="st">"density"</span>,
-  highlight_diagonals <span class="op">=</span> <span class="cn">NULL</span>,
-  y_var_cat_breaks <span class="op">=</span> <span class="cn">NULL</span>,
-  y_var_cat_labels <span class="op">=</span> <span class="cn">NULL</span>,
-  weights_var <span class="op">=</span> <span class="cn">NULL</span>,
-  log_scale <span class="op">=</span> <span class="cn">FALSE</span>,
-  legend_title <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_densityMatrix</span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  <span class="va">y_var</span>,</span>
+<span>  dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"period"</span>, <span class="st">"age"</span><span class="op">)</span>,</span>
+<span>  age_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  period_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cohort_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot_type <span class="op">=</span> <span class="st">"density"</span>,</span>
+<span>  highlight_diagonals <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y_var_cat_breaks <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y_var_cat_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weights_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  log_scale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  legend_title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -92,12 +92,18 @@ x-axis or the y-axis.</p>
     <dl><dt>dat</dt>
 <dd><p>Dataset with columns <code>period</code> and <code>age</code> and the
 main variable specified through argument <code>y_var</code>.</p></dd>
+
+
 <dt>y_var</dt>
 <dd><p>Character name of the main variable to be plotted.</p></dd>
+
+
 <dt>dimensions</dt>
 <dd><p>Character vector specifying the two APC dimensions that
 should be visualized along the x-axis and y-axis. Defaults to
 <code>c("period","age")</code>.</p></dd>
+
+
 <dt>age_groups, period_groups, cohort_groups</dt>
 <dd><p>Each a list. Either containing
 purely scalar values or with each element specifying the two borders of one
@@ -107,39 +113,58 @@ in decade columns from 1980 to 2009, specify
 The list can be named to specify labels for the categories. Only the two
 arguments must be passed that were specified by the <code>dimensions</code>
 argument.</p></dd>
+
+
 <dt>plot_type</dt>
 <dd><p>One of <code>c("density","boxplot")</code>. Only used if the
 <code>y_var</code> column is metric.</p></dd>
+
+
 <dt>highlight_diagonals</dt>
 <dd><p>Optional list to define diagonals in the density
 that should be highlighted with different colors. Each list element should be
 a numeric vector stating the index of the diagonals (counted from the top
 left) that should be highlighted in the same color. If the list is named, the
 names are used as legend labels.</p></dd>
+
+
 <dt>y_var_cat_breaks</dt>
 <dd><p>Optional numeric vector of breaks to categorize
 <code>y_var</code> based on calling function <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></code>. Only used to
 highlight the categories based on different colors. And only used if the
 <code>y_var</code> column is numeric.</p></dd>
+
+
 <dt>y_var_cat_labels</dt>
 <dd><p>Optional character vector for the names of the
 categories that were defined based on <code>y_var_cat_breaks</code>. The length of
 this vector must be one shorter than <code>length(y_var_cat_breaks)</code>. Only
 used if the <code>y_var</code> column is numeric.</p></dd>
+
+
 <dt>weights_var</dt>
 <dd><p>Optional character name of a weights variable used to
 project the results in the sample to some population.</p></dd>
+
+
 <dt>log_scale</dt>
 <dd><p>Indicator if the main variable should be log10 transformed.
 Only used if the <code>y_var</code> column is numeric. Defaults to FALSE.</p></dd>
+
+
 <dt>legend_title</dt>
 <dd><p>Optional plot annotations.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments passed to <code><a href="plot_density.html">plot_density</a></code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>ggplot object</p>
+    
+
+<p>ggplot object</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -157,71 +182,71 @@ Maximilian Weigert <a href="mailto:maximilian.weigert@stat.uni-muenchen.de">maxi
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bauer-alex.github.io/APCtools/" class="external-link">APCtools</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># define categorizations for the main trip distance</span></span>
-<span class="r-in"><span class="va">dist_cat_breaks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">500</span>,<span class="fl">1000</span>,<span class="fl">2000</span>,<span class="fl">6000</span>,<span class="fl">100000</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dist_cat_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt; 500 km"</span>,<span class="st">"500 - 1,000 km"</span>, <span class="st">"1,000 - 2,000 km"</span>,</span>
-<span class="r-in">                     <span class="st">"2,000 - 6,000 km"</span>, <span class="st">"&gt; 6,000 km"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">age_groups</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>,<span class="fl">89</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">70</span>,<span class="fl">79</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>,<span class="fl">69</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>,<span class="fl">59</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">49</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">39</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">29</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">period_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1970</span>,<span class="fl">1979</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1980</span>,<span class="fl">1989</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1990</span>,<span class="fl">1999</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span>,<span class="fl">2009</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span>,<span class="fl">2019</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">cohort_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1980</span>,<span class="fl">1989</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1970</span>,<span class="fl">1979</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1960</span>,<span class="fl">1969</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1950</span>,<span class="fl">1959</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1940</span>,<span class="fl">1949</span><span class="op">)</span>,</span>
-<span class="r-in">                      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1930</span>,<span class="fl">1939</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1920</span>,<span class="fl">1929</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat              <span class="op">=</span> <span class="va">travel</span>,</span>
-<span class="r-in">                   y_var            <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
-<span class="r-in">                   age_groups       <span class="op">=</span> <span class="va">age_groups</span>,</span>
-<span class="r-in">                   period_groups    <span class="op">=</span> <span class="va">period_groups</span>,</span>
-<span class="r-in">                   log_scale        <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bauer-alex.github.io/APCtools/" class="external-link">APCtools</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># define categorizations for the main trip distance</span></span></span>
+<span class="r-in"><span><span class="va">dist_cat_breaks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">500</span>,<span class="fl">1000</span>,<span class="fl">2000</span>,<span class="fl">6000</span>,<span class="fl">100000</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dist_cat_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt; 500 km"</span>,<span class="st">"500 - 1,000 km"</span>, <span class="st">"1,000 - 2,000 km"</span>,</span></span>
+<span class="r-in"><span>                     <span class="st">"2,000 - 6,000 km"</span>, <span class="st">"&gt; 6,000 km"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">age_groups</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>,<span class="fl">89</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">70</span>,<span class="fl">79</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>,<span class="fl">69</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>,<span class="fl">59</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">49</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">39</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">29</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">period_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1970</span>,<span class="fl">1979</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1980</span>,<span class="fl">1989</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1990</span>,<span class="fl">1999</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span>,<span class="fl">2009</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span>,<span class="fl">2019</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">cohort_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1980</span>,<span class="fl">1989</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1970</span>,<span class="fl">1979</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1960</span>,<span class="fl">1969</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1950</span>,<span class="fl">1959</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1940</span>,<span class="fl">1949</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1930</span>,<span class="fl">1939</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1920</span>,<span class="fl">1929</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat              <span class="op">=</span> <span class="va">travel</span>,</span></span>
+<span class="r-in"><span>                   y_var            <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span></span>
+<span class="r-in"><span>                   age_groups       <span class="op">=</span> <span class="va">age_groups</span>,</span></span>
+<span class="r-in"><span>                   period_groups    <span class="op">=</span> <span class="va">period_groups</span>,</span></span>
+<span class="r-in"><span>                   log_scale        <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluding 9149 missing observations of mainTrip_distance...</span>
 <span class="r-plt img"><img src="plot_densityMatrix-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co"># highlight two cohorts</span></span>
-<span class="r-in"><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat                 <span class="op">=</span> <span class="va">travel</span>,</span>
-<span class="r-in">                   y_var               <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
-<span class="r-in">                   age_groups          <span class="op">=</span> <span class="va">age_groups</span>,</span>
-<span class="r-in">                   period_groups       <span class="op">=</span> <span class="va">period_groups</span>,</span>
-<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">                   log_scale           <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># highlight two cohorts</span></span></span>
+<span class="r-in"><span><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat                 <span class="op">=</span> <span class="va">travel</span>,</span></span>
+<span class="r-in"><span>                   y_var               <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span></span>
+<span class="r-in"><span>                   age_groups          <span class="op">=</span> <span class="va">age_groups</span>,</span></span>
+<span class="r-in"><span>                   period_groups       <span class="op">=</span> <span class="va">period_groups</span>,</span></span>
+<span class="r-in"><span>                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   log_scale           <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluding 9149 missing observations of mainTrip_distance...</span>
 <span class="r-plt img"><img src="plot_densityMatrix-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># also mark different distance categories</span></span>
-<span class="r-in"><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat              <span class="op">=</span> <span class="va">travel</span>,</span>
-<span class="r-in">                   y_var            <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
-<span class="r-in">                   age_groups       <span class="op">=</span> <span class="va">age_groups</span>,</span>
-<span class="r-in">                   period_groups    <span class="op">=</span> <span class="va">period_groups</span>,</span>
-<span class="r-in">                   log_scale        <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">                   y_var_cat_breaks <span class="op">=</span> <span class="va">dist_cat_breaks</span>,</span>
-<span class="r-in">                   y_var_cat_labels <span class="op">=</span> <span class="va">dist_cat_labels</span>,</span>
-<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">                   legend_title     <span class="op">=</span> <span class="st">"Distance category"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># also mark different distance categories</span></span></span>
+<span class="r-in"><span><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat              <span class="op">=</span> <span class="va">travel</span>,</span></span>
+<span class="r-in"><span>                   y_var            <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span></span>
+<span class="r-in"><span>                   age_groups       <span class="op">=</span> <span class="va">age_groups</span>,</span></span>
+<span class="r-in"><span>                   period_groups    <span class="op">=</span> <span class="va">period_groups</span>,</span></span>
+<span class="r-in"><span>                   log_scale        <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                   y_var_cat_breaks <span class="op">=</span> <span class="va">dist_cat_breaks</span>,</span></span>
+<span class="r-in"><span>                   y_var_cat_labels <span class="op">=</span> <span class="va">dist_cat_labels</span>,</span></span>
+<span class="r-in"><span>                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   legend_title     <span class="op">=</span> <span class="st">"Distance category"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluding 9149 missing observations of mainTrip_distance...</span>
 <span class="r-plt img"><img src="plot_densityMatrix-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># flexibly assign the APC dimensions to the x-axis and y-axis</span></span>
-<span class="r-in"><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat              <span class="op">=</span> <span class="va">travel</span>,</span>
-<span class="r-in">                   y_var            <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
-<span class="r-in">                   dimensions       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"period"</span>,<span class="st">"cohort"</span><span class="op">)</span>,</span>
-<span class="r-in">                   period_groups    <span class="op">=</span> <span class="va">period_groups</span>,</span>
-<span class="r-in">                   cohort_groups    <span class="op">=</span> <span class="va">cohort_groups</span>,</span>
-<span class="r-in">                   log_scale        <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">                   y_var_cat_breaks <span class="op">=</span> <span class="va">dist_cat_breaks</span>,</span>
-<span class="r-in">                   y_var_cat_labels <span class="op">=</span> <span class="va">dist_cat_labels</span>,</span>
-<span class="r-in">                   legend_title     <span class="op">=</span> <span class="st">"Distance category"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># flexibly assign the APC dimensions to the x-axis and y-axis</span></span></span>
+<span class="r-in"><span><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat              <span class="op">=</span> <span class="va">travel</span>,</span></span>
+<span class="r-in"><span>                   y_var            <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span></span>
+<span class="r-in"><span>                   dimensions       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"period"</span>,<span class="st">"cohort"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   period_groups    <span class="op">=</span> <span class="va">period_groups</span>,</span></span>
+<span class="r-in"><span>                   cohort_groups    <span class="op">=</span> <span class="va">cohort_groups</span>,</span></span>
+<span class="r-in"><span>                   log_scale        <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                   y_var_cat_breaks <span class="op">=</span> <span class="va">dist_cat_breaks</span>,</span></span>
+<span class="r-in"><span>                   y_var_cat_labels <span class="op">=</span> <span class="va">dist_cat_labels</span>,</span></span>
+<span class="r-in"><span>                   legend_title     <span class="op">=</span> <span class="st">"Distance category"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluding 7922 missing observations of mainTrip_distance...</span>
 <span class="r-plt img"><img src="plot_densityMatrix-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># use boxplots instead of densities</span></span>
-<span class="r-in"><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat           <span class="op">=</span> <span class="va">travel</span>,</span>
-<span class="r-in">                   y_var         <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
-<span class="r-in">                   plot_type     <span class="op">=</span> <span class="st">"boxplot"</span>,</span>
-<span class="r-in">                   age_groups    <span class="op">=</span> <span class="va">age_groups</span>,</span>
-<span class="r-in">                   period_groups <span class="op">=</span> <span class="va">period_groups</span>,</span>
-<span class="r-in">                   log_scale     <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># use boxplots instead of densities</span></span></span>
+<span class="r-in"><span><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat           <span class="op">=</span> <span class="va">travel</span>,</span></span>
+<span class="r-in"><span>                   y_var         <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span></span>
+<span class="r-in"><span>                   plot_type     <span class="op">=</span> <span class="st">"boxplot"</span>,</span></span>
+<span class="r-in"><span>                   age_groups    <span class="op">=</span> <span class="va">age_groups</span>,</span></span>
+<span class="r-in"><span>                   period_groups <span class="op">=</span> <span class="va">period_groups</span>,</span></span>
+<span class="r-in"><span>                   log_scale     <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluding 9149 missing observations of mainTrip_distance...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Solution may be nonunique</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Solution may be nonunique</span>
@@ -244,16 +269,16 @@ Maximilian Weigert <a href="mailto:maximilian.weigert@stat.uni-muenchen.de">maxi
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Solution may be nonunique</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Solution may be nonunique</span>
 <span class="r-plt img"><img src="plot_densityMatrix-5.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot categorical variables instead of metric ones</span></span>
-<span class="r-in"><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat                 <span class="op">=</span> <span class="va">travel</span>,</span>
-<span class="r-in">                   y_var               <span class="op">=</span> <span class="st">"household_size"</span>,</span>
-<span class="r-in">                   age_groups          <span class="op">=</span> <span class="va">age_groups</span>,</span>
-<span class="r-in">                   period_groups       <span class="op">=</span> <span class="va">period_groups</span>,</span>
-<span class="r-in">                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot categorical variables instead of metric ones</span></span></span>
+<span class="r-in"><span><span class="fu">plot_densityMatrix</span><span class="op">(</span>dat                 <span class="op">=</span> <span class="va">travel</span>,</span></span>
+<span class="r-in"><span>                   y_var               <span class="op">=</span> <span class="st">"household_size"</span>,</span></span>
+<span class="r-in"><span>                   age_groups          <span class="op">=</span> <span class="va">age_groups</span>,</span></span>
+<span class="r-in"><span>                   period_groups       <span class="op">=</span> <span class="va">period_groups</span>,</span></span>
+<span class="r-in"><span>                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_densityMatrix-6.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -265,7 +290,7 @@ Maximilian Weigert <a href="mailto:maximilian.weigert@stat.uni-muenchen.de">maxi
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>
