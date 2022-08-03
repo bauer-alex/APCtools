@@ -41,6 +41,14 @@ cohort effect, each containing one lines for each estimated model.
 \details{
 If the model was estimated with a log or logit link, the function
 automatically performs an exponential transformation of the effect.
+
+Since the plot output created by the function is no \code{ggplot2} object,
+but an object created with \code{ggpubr::ggarrange}, the overall theme
+of the plot cannot be changed by adding the theme in the form of
+'\code{plot_jointMarginalAPCeffects(...) + theme_minimal(...)}'.
+Instead, you can call \code{theme_set(theme_minimal(...))} as an individual
+call before calling \code{plot_jointMarginalAPCeffects(...)}. The latter
+function will then use this global plotting theme.
 }
 \examples{
 library(APCtools)
