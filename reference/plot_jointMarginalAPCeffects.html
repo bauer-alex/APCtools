@@ -109,6 +109,13 @@ The list can maximally have three elements and must have names out of
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>If the model was estimated with a log or logit link, the function
 automatically performs an exponential transformation of the effect.</p>
+<p>Since the plot output created by the function is no <code>ggplot2</code> object,
+but an object created with <code><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html" class="external-link">ggpubr::ggarrange</a></code>, the overall theme
+of the plot cannot be changed by adding the theme in the form of
+'<code>plot_jointMarginalAPCeffects(...) + theme_minimal(...)</code>'.
+Instead, you can call <code>theme_set(theme_minimal(...))</code> as an individual
+call before calling <code>plot_jointMarginalAPCeffects(...)</code>. The latter
+function will then use this global plotting theme.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
