@@ -80,6 +80,13 @@ plot_linearEffects <- function(model, variables = NULL,
   
   # final preparations
   if (used_logLink) {
+    if (any(plot_dat$CI_lower_exp < 0)) {
+      warning("Note: After the delta method transformation some values of the
+              lower confidence interval border resulted were negative. These
+              values were set to 0.01")
+      plot_dat$CI_lower_exp[plot_dat$CI_lower_exp < 0] <- 0.01
+    }
+    
     plot_dat <- plot_dat %>% select(-coef, -CI_lower, -CI_upper) %>%
       dplyr::rename(coef = coef_exp, CI_lower = CI_lower_exp, CI_upper = CI_upper_exp)
   }
