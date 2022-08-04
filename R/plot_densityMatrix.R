@@ -24,6 +24,7 @@
 #' a numeric vector stating the index of the diagonals (counted from the top
 #' left) that should be highlighted in the same color. If the list is named, the
 #' names are used as legend labels.
+#' @param legend_title Optional plot annotation.
 #' @param ... Additional arguments passed to \code{\link{plot_density}}.
 #' 
 #' @return ggplot object

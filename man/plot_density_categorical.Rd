@@ -25,6 +25,8 @@ in a density matrix.}
 
 \item{weights_var}{Optional character name of a weights variable used to
 project the results in the sample to some population.}
+
+\item{xlab, ylab}{Optional plot annotations.}
 }
 \description{
 Internal helper function to plot one categorical density, to be called from

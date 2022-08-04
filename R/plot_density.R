@@ -260,6 +260,7 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
 #' within \code{\link{plot_density}}.
 #' 
 #' @inheritParams plot_density_metric
+#' @param xlab,ylab Optional plot annotations.
 #' 
 #' @import dplyr ggplot2
 #' 

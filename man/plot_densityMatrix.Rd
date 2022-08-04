@@ -65,6 +65,8 @@ project the results in the sample to some population.}
 \item{log_scale}{Indicator if the main variable should be log10 transformed.
 Only used if the \code{y_var} column is numeric. Defaults to FALSE.}
 
+\item{legend_title}{Optional plot annotation.}
+
 \item{...}{Additional arguments passed to \code{\link{plot_density}}.}
 }
 \value{
