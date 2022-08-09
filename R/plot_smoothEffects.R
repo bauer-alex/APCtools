@@ -53,7 +53,7 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
   
   
   used_logLink <- model$family[[2]] %in% c("log","logit")
-  ylab         <- ifelse(used_logLink, "Odds Ratio", "Effect")
+  ylab         <- ifelse(used_logLink, "exp(Effect)", "Effect")
   
   plotObject <- get_plotGAMobject(model)
   
