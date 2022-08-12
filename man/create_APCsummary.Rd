@@ -9,7 +9,7 @@ create_APCsummary(model_list, dat, digits = 2, apc_range = NULL, ...)
 \arguments{
 \item{model_list}{A list of regression models estimated with
 \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}. If the list is named, the
-names are used as labels.}
+names are used as labels. Can also be a single model object instead of a list.}
 
 \item{dat}{Dataset with columns \code{period} and \code{age}. If \code{y_var}
 is specified, the dataset must contain the respective column. If \code{model}
@@ -43,13 +43,16 @@ library(APCtools)
 library(mgcv)
 
 data(travel)
+
+# create the summary table for one model
 model_pure <- gam(mainTrip_distance ~ te(age, period), data = travel)
+create_APCsummary(model_pure, dat = travel)
+
+# create the summary table for multiple models
 model_cov  <- gam(mainTrip_distance ~ te(age, period) + s(household_income),
                   data = travel)
-
 model_list <- list("pure model"      = model_pure,
                    "covariate model" = model_cov)
-
 create_APCsummary(model_list, dat = travel)
 
 }
