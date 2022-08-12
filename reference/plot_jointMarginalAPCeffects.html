@@ -77,7 +77,7 @@ cohort effect, each containing one lines for each estimated model.</p>
     <dl><dt>model_list</dt>
 <dd><p>A list of regression models estimated with
 <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></code> or <code><a href="https://rdrr.io/pkg/mgcv/man/bam.html" class="external-link">bam</a></code>. If the list is named, the
-names are used as labels.</p></dd>
+names are used as labels. Can also be a single model object instead of a list.</p></dd>
 
 
 <dt>dat</dt>
@@ -129,20 +129,24 @@ Maximilian Weigert <a href="mailto:maximilian.weigert@stat.uni-muenchen.de">maxi
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mgcv</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">travel</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot marginal effects of one model</span></span></span>
 <span class="r-in"><span><span class="va">model_pure</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></span><span class="op">(</span><span class="va">mainTrip_distance</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/te.html" class="external-link">te</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">period</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plot_jointMarginalAPCeffects</span><span class="op">(</span><span class="va">model_pure</span>, dat <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_jointMarginalAPCeffects-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot marginal effects of multiple models</span></span></span>
 <span class="r-in"><span><span class="va">model_cov</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></span><span class="op">(</span><span class="va">mainTrip_distance</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/te.html" class="external-link">te</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">period</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html" class="external-link">s</a></span><span class="op">(</span><span class="va">household_income</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  data <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"pure model"</span>      <span class="op">=</span> <span class="va">model_pure</span>,</span></span>
 <span class="r-in"><span>                   <span class="st">"covariate model"</span> <span class="op">=</span> <span class="va">model_cov</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">plot_jointMarginalAPCeffects</span><span class="op">(</span><span class="va">model_list</span>, dat <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_jointMarginalAPCeffects-1.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_jointMarginalAPCeffects-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># mark specific cohorts</span></span></span>
 <span class="r-in"><span><span class="fu">plot_jointMarginalAPCeffects</span><span class="op">(</span><span class="va">model_list</span>, dat <span class="op">=</span> <span class="va">travel</span>,</span></span>
 <span class="r-in"><span>                             vlines_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"cohort"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1966.5</span>,<span class="fl">1982.5</span>,<span class="fl">1994.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_jointMarginalAPCeffects-2.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_jointMarginalAPCeffects-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

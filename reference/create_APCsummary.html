@@ -74,7 +74,7 @@ arguments to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="ext
     <dl><dt>model_list</dt>
 <dd><p>A list of regression models estimated with
 <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></code> or <code><a href="https://rdrr.io/pkg/mgcv/man/bam.html" class="external-link">bam</a></code>. If the list is named, the
-names are used as labels.</p></dd>
+names are used as labels. Can also be a single model object instead of a list.</p></dd>
 
 
 <dt>dat</dt>
@@ -123,13 +123,23 @@ automatically performs an exponential transformation of the effect.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> This is mgcv 1.8-40. For overview type 'help("mgcv-package")'.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">travel</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create the summary table for one model</span></span></span>
 <span class="r-in"><span><span class="va">model_pure</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></span><span class="op">(</span><span class="va">mainTrip_distance</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/te.html" class="external-link">te</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">period</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">create_APCsummary</span><span class="op">(</span><span class="va">model_pure</span>, dat <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |effect | value_withMaxEffect| value_withMinEffect| max_effect| min_effect| difference|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------------------:|-------------------:|----------:|----------:|----------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |age    |                  21|                  99|     350.58|    -727.80|    1078.38|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |period |                2018|                1971|     428.09|    -504.89|     932.97|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |cohort |                2004|                1872|     888.11|    -780.49|    1668.60|</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create the summary table for multiple models</span></span></span>
 <span class="r-in"><span><span class="va">model_cov</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></span><span class="op">(</span><span class="va">mainTrip_distance</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/te.html" class="external-link">te</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">period</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html" class="external-link">s</a></span><span class="op">(</span><span class="va">household_income</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  data <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"pure model"</span>      <span class="op">=</span> <span class="va">model_pure</span>,</span></span>
 <span class="r-in"><span>                   <span class="st">"covariate model"</span> <span class="op">=</span> <span class="va">model_cov</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">create_APCsummary</span><span class="op">(</span><span class="va">model_list</span>, dat <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
