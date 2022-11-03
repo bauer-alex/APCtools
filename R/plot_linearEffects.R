@@ -15,6 +15,8 @@
 #' output.
 #' @param return_plotData If TRUE, the dataset prepared for plotting is
 #' returned. Defaults to FALSE.
+#' @param ... Additional arguments passed to
+#' \code{\link{extract_summary_linearEffects}}.
 #' 
 #' 
 #' @return ggplot object
@@ -36,7 +38,7 @@
 #' plot_linearEffects(model)
 #' 
 plot_linearEffects <- function(model, variables = NULL,
-                               return_plotData = FALSE) {
+                               return_plotData = FALSE, ...) {
   
   checkmate::assert_class(model, classes = "gam")
   checkmate::assert_character(variables, null.ok = TRUE)
@@ -51,7 +53,7 @@ plot_linearEffects <- function(model, variables = NULL,
   ylab         <- ifelse(used_logLink, "Odds Ratio", "Effect")
   
   # extract model information
-  plot_dat <- extract_summary_linearEffects(model)
+  plot_dat <- extract_summary_linearEffects(model, ...)
   
   # categorize the coefficients in groups (one for each variable)
   for (i in names(eval(model$call$data))) {

@@ -103,15 +103,22 @@ create_modelSummary <- function(model_list, digits = 2, ...) {
 #' 
 #' If the model was estimated with a log or logit link, the function
 #' automatically performs an exponential transformation of the effect.
+#' The type of transformation can be set with argument \code{method_expTransform},
+#' defaulting to \code{"simple"}, where standard errors and confidence interval
+#' limits on the original scale are simply exp transformed.
+#' Method \code{"delta"} uses the delta method, which can, however, be unstable
+#' in situations and lead to negative confidence interval limits.
 #' 
 #' @param model Model fitted with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
+#' @param method_expTransform
 #' 
 #' @import checkmate dplyr
 #' @importFrom mgcv summary.gam
 #' 
-extract_summary_linearEffects <- function(model) {
+extract_summary_linearEffects <- function(model, method_expTransform = "simple") {
   
   checkmate::assert_class(model, classes = "gam")
+  checkmate::assert_choice(method_expTransform, choices = c("simple","delta"))
   
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
@@ -132,14 +139,26 @@ extract_summary_linearEffects <- function(model) {
     mutate(param = factor(param, levels = row.names(x)))
   
   if (used_logLink) {
-    # confidence intervals on exp scale are computed based on delta method
-    dat <- dat %>%
-      mutate(coef_exp = exp(coef),
-             se_exp = sqrt(se^2 * exp(coef)^2)) %>%
-      mutate(CI_lower_exp = coef_exp - qnorm(0.975) * se_exp,
-             CI_upper_exp = coef_exp + qnorm(0.975) * se_exp) %>%
-      select(param, coef, se, CI_lower, CI_upper,
-             coef_exp, se_exp, CI_lower_exp, CI_upper_exp, pvalue)
+    
+    if (method_expTransform == "simple") {
+      dat <- dat %>%
+        mutate(coef_exp = exp(coef),
+               se_exp = exp(se)) %>%
+        mutate(CI_lower_exp = exp(CI_lower),
+               CI_upper_exp = exp(CI_upper)) %>%
+        select(param, coef, se, CI_lower, CI_upper,
+               coef_exp, se_exp, CI_lower_exp, CI_upper_exp, pvalue)
+      
+    } else { # method_expTransform == "delta"
+      # confidence intervals on exp scale are computed based on delta method
+      dat <- dat %>%
+        mutate(coef_exp = exp(coef),
+               se_exp = sqrt(se^2 * exp(coef)^2)) %>%
+        mutate(CI_lower_exp = coef_exp - qnorm(0.975) * se_exp,
+               CI_upper_exp = coef_exp + qnorm(0.975) * se_exp) %>%
+        select(param, coef, se, CI_lower, CI_upper,
+               coef_exp, se_exp, CI_lower_exp, CI_upper_exp, pvalue)
+    }
   }
   
   return(dat)
