@@ -121,7 +121,8 @@ create_oneAPCsummaryTable <- function(model, dat, apc_range = NULL) {
   # retrieve datasets with the marginal effects
   dat_list <- plot_marginalAPCeffects(model, dat, return_plotData = TRUE)
   
-  used_logLink <- model$family[[2]] %in% c("log","logit")
+  used_logLink <- (model$family[[2]] %in% c("log","logit")) |
+    grepl("Ordered Categorical", model$family[[1]])
   
   vars <- c("age","period","cohort")
   

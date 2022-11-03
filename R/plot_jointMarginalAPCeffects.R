@@ -98,7 +98,8 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
       dplyr::bind_rows() %>% pull(effect) %>% range()
   }
   
-  used_logLink <- model_list[[1]]$family[[2]] %in% c("log","logit")
+  used_logLink <- (model_list[[1]]$family[[2]] %in% c("log","logit")) |
+    grepl("Ordered Categorical", model_list[[1]]$family[[1]])
   if (is.null(ylab)) {
     ylab <- ifelse(used_logLink, "Odds Ratio", "Effect")
   }

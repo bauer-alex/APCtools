@@ -126,7 +126,8 @@ extract_summary_linearEffects <- function(model, method_expTransform = "simple")
     CI_lower_exp <- CI_upper_exp <- pvalue <- NULL
   
   
-  used_logLink <- model$family[[2]] %in% c("log","logit")
+  used_logLink <- (model$family[[2]] %in% c("log","logit")) |
+    grepl("Ordered Categorical", model$family[[1]])
   
   x <- mgcv::summary.gam(model)$p.table
   dat <- data.frame(param    = row.names(x),

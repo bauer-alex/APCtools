@@ -174,7 +174,8 @@ plot_APChexamap <- function (dat,
       mutate(effect = as.vector(prediction$fit)) %>% 
       mutate(effect = effect - mean(effect)) 
     
-    used_logLink <- model$family[[2]] %in% c("log","logit")
+    used_logLink <- (model$family[[2]] %in% c("log","logit")) |
+      grepl("Ordered Categorical", model$family[[1]])
     if (is.null(legend_title)) {
       legend_title <- ifelse(used_logLink, "Mean exp effect", "Mean effect")
     }

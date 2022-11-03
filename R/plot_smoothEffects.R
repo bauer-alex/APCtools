@@ -60,7 +60,8 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
     CI_upper_exp <- x <- y <- y_exp <- NULL
   
   
-  used_logLink <- model$family[[2]] %in% c("log","logit")
+  used_logLink <- (model$family[[2]] %in% c("log","logit")) |
+    grepl("Ordered Categorical", model$family[[1]])
   ylab         <- ifelse(used_logLink, "exp(Effect)", "Effect")
   
   plotObject <- get_plotGAMobject(model)

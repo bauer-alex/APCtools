@@ -228,7 +228,8 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
       mutate(lower  = effect - qnorm(0.95) * se,
              upper  = effect + qnorm(0.95) * se)
     
-    used_logLink <- model$family[[2]] %in% c("log","logit")
+    used_logLink <- (model$family[[2]] %in% c("log","logit")) |
+      grepl("Ordered Categorical", model$family[[1]])
     legend_title <- ifelse(used_logLink, "Mean exp effect", "Mean effect")
     y_trans      <- ifelse(used_logLink, "log", "identity")
     

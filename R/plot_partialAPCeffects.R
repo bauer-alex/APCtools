@@ -143,7 +143,8 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
                                               type    = "terms",
                                               terms   = term_APCsurface))) %>% 
     mutate(effect = effect - mean(effect))
-  used_logLink <- model$family[[2]] %in% c("log","logit")
+  used_logLink <- (model$family[[2]] %in% c("log","logit")) |
+    grepl("Ordered Categorical", model$family[[1]])
   if (used_logLink) {
     dat_overallEffect <- dat_overallEffect %>% mutate(exp_effect = exp(effect))
   }
