@@ -73,18 +73,18 @@ effects summary of a model fitted with <code><a href="https://rdrr.io/pkg/mgcv/m
 
 
 <dt>method_expTransform</dt>
-<dd></dd>
+<dd><p>One of <code>c("simple","delta")</code>, stating if
+standard errors and confidence interval limits should be transformed by
+a simple exp transformation or using the delta method. The delta method can
+be unstable in situations and lead to negative confidence interval limits.
+Only used when the model was estimated with a log or logit link.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>If the model was estimated with a log or logit link, the function
-automatically performs an exponential transformation of the effect.
-The type of transformation can be set with argument <code>method_expTransform</code>,
-defaulting to <code>"simple"</code>, where standard errors and confidence interval
-limits on the original scale are simply exp transformed.
-Method <code>"delta"</code> uses the delta method, which can, however, be unstable
-in situations and lead to negative confidence interval limits.</p>
+automatically performs an exponential transformation of the effect,
+see argument <code>method_expTransform</code>.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

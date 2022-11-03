@@ -66,6 +66,7 @@ or <code><a href="https://rdrr.io/pkg/mgcv/man/bam.html" class="external-link">b
 <span>  <span class="va">select</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  ylim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  method_expTransform <span class="op">=</span> <span class="st">"simple"</span>,</span>
 <span>  return_plotData <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -94,6 +95,14 @@ or <code><a href="https://rdrr.io/pkg/mgcv/man/bam.html" class="external-link">b
 <dd><p>Optional limits of the y-axis.</p></dd>
 
 
+<dt>method_expTransform</dt>
+<dd><p>One of <code>c("simple","delta")</code>, stating if
+standard errors and confidence interval limits should be transformed by
+a simple exp transformation or using the delta method. The delta method can
+be unstable in situations and lead to negative confidence interval limits.
+Only used when the model was estimated with a log or logit link.</p></dd>
+
+
 <dt>return_plotData</dt>
 <dd><p>If TRUE, the dataset prepared for plotting is
 returned. Defaults to FALSE.</p></dd>
@@ -108,7 +117,8 @@ returned. Defaults to FALSE.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>If the model was estimated with a log or logit link, the function
-automatically performs an exponential transformation of the effect.</p>
+automatically performs an exponential transformation of the effect,
+see argument <code>method_expTransform</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
