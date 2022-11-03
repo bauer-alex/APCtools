@@ -10,6 +10,7 @@ plot_1Dsmooth(
   select,
   alpha = 0.05,
   ylim = NULL,
+  method_expTransform = "simple",
   return_plotData = FALSE
 )
 }
@@ -26,6 +27,12 @@ plot_1Dsmooth(
 
 \item{ylim}{Optional limits of the y-axis.}
 
+\item{method_expTransform}{One of \code{c("simple","delta")}, stating if
+standard errors and confidence interval limits should be transformed by
+a simple exp transformation or using the delta method. The delta method can
+be unstable in situations and lead to negative confidence interval limits.
+Only used when the model was estimated with a log or logit link.}
+
 \item{return_plotData}{If TRUE, the dataset prepared for plotting is
 returned. Defaults to FALSE.}
 }
@@ -38,7 +45,8 @@ or \code{\link[mgcv]{bam}}.
 }
 \details{
 If the model was estimated with a log or logit link, the function
-automatically performs an exponential transformation of the effect.
+automatically performs an exponential transformation of the effect,
+see argument \code{method_expTransform}.
 }
 \examples{
 library(APCtools)

@@ -5,7 +5,8 @@
 #' or \code{\link[mgcv]{bam}}.
 #'
 #' If the model was estimated with a log or logit link, the function
-#' automatically performs an exponential transformation of the effect.
+#' automatically performs an exponential transformation of the effect,
+#' see argument \code{method_expTransform}.
 #' 
 #' @param model GAM model fitted with \code{\link[mgcv]{gam}} or
 #' \code{\link[mgcv]{bam}}.
@@ -14,6 +15,11 @@
 #' @param alpha \code{(1-alpha)} CIs are calculated. The default 0.05 leads to
 #' 95% CIs.
 #' @param ylim Optional limits of the y-axis.
+#' @param method_expTransform One of \code{c("simple","delta")}, stating if
+#' standard errors and confidence interval limits should be transformed by
+#' a simple exp transformation or using the delta method. The delta method can
+#' be unstable in situations and lead to negative confidence interval limits.
+#' Only used when the model was estimated with a log or logit link.
 #' @param return_plotData If TRUE, the dataset prepared for plotting is
 #' returned. Defaults to FALSE.
 #'  
@@ -37,13 +43,15 @@
 #' plot_1Dsmooth(model, select = 2)
 #' 
 plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
-                          ylim = NULL, return_plotData = FALSE) {
+                          ylim = NULL, method_expTransform = "simple",
+                          return_plotData = FALSE) {
   
   checkmate::assert_class(model, classes = "gam")
   checkmate::assert_logical(plot_ci)
   checkmate::assert_numeric(select, lower = 1)
   checkmate::assert_numeric(alpha, lower = 0, upper = 1)
   checkmate::assert_numeric(ylim, len = 2, null.ok = TRUE)
+  checkmate::assert_choice(method_expTransform, choices = c("simple","delta"))
   checkmate::assert_logical(return_plotData, len = 1)
   
   
@@ -72,22 +80,34 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
       select(-y) %>% 
       dplyr::rename(y = y_exp)
     
-    # transform the confidence intervals (based on the delta method)
+    # transform the confidence intervals
     if (plot_ci) {
       
-      plot_dat <- plot_dat %>%
-        mutate(se_exp  = sqrt(se^2 * y^2)) %>%
-        mutate(CI_lower_exp = y - qnorm(1 - alpha/2) * se_exp,
-               CI_upper_exp = y + qnorm(1 - alpha/2) * se_exp) %>% 
-        select(-se, -CI_lower, -CI_upper) %>% 
-        dplyr::rename(se = se_exp, CI_lower = CI_lower_exp, CI_upper = CI_upper_exp)
-      
-      # correct negative CI_lower borders
-      if (any(plot_dat$CI_lower < 0)) {
-        warning("Note: After the delta method transformation some values of the
+      if (method_expTransform == "simple") {
+
+        plot_dat <- plot_dat %>%
+          mutate(se_exp       = exp(se),
+                 CI_lower_exp = exp(CI_lower),
+                 CI_upper_exp = exp(CI_upper)) %>%
+          select(-se, -CI_lower, -CI_upper) %>% 
+          dplyr::rename(se = se_exp, CI_lower = CI_lower_exp, CI_upper = CI_upper_exp)
+        
+      } else { # method_expTransform == "delta"
+        
+        plot_dat <- plot_dat %>%
+          mutate(se_exp  = sqrt(se^2 * y^2)) %>%
+          mutate(CI_lower_exp = y - qnorm(1 - alpha/2) * se_exp,
+                 CI_upper_exp = y + qnorm(1 - alpha/2) * se_exp) %>% 
+          select(-se, -CI_lower, -CI_upper) %>% 
+          dplyr::rename(se = se_exp, CI_lower = CI_lower_exp, CI_upper = CI_upper_exp)
+        
+        # correct negative CI_lower borders
+        if (any(plot_dat$CI_lower < 0)) {
+          warning("Note: After the delta method transformation some values of the
               lower confidence interval border resulted were negative. These
               values were set to 0.01")
-        plot_dat$CI_lower[plot_dat$CI_lower < 0] <- 0.01
+          plot_dat$CI_lower[plot_dat$CI_lower < 0] <- 0.01
+        }
       }
     }
   }

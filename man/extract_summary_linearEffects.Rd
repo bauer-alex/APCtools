@@ -9,7 +9,11 @@ extract_summary_linearEffects(model, method_expTransform = "simple")
 \arguments{
 \item{model}{Model fitted with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.}
 
-\item{method_expTransform}{}
+\item{method_expTransform}{One of \code{c("simple","delta")}, stating if
+standard errors and confidence interval limits should be transformed by
+a simple exp transformation or using the delta method. The delta method can
+be unstable in situations and lead to negative confidence interval limits.
+Only used when the model was estimated with a log or logit link.}
 }
 \description{
 Internal helper function to create a \code{data.frame} containing the linear
@@ -18,10 +22,6 @@ effects summary of a model fitted with \code{\link[mgcv]{gam}} or
 }
 \details{
 If the model was estimated with a log or logit link, the function
-automatically performs an exponential transformation of the effect.
-The type of transformation can be set with argument \code{method_expTransform},
-defaulting to \code{"simple"}, where standard errors and confidence interval
-limits on the original scale are simply exp transformed.
-Method \code{"delta"} uses the delta method, which can, however, be unstable
-in situations and lead to negative confidence interval limits.
+automatically performs an exponential transformation of the effect,
+see argument \code{method_expTransform}.
 }

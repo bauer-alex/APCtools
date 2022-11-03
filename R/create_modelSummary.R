@@ -102,15 +102,15 @@ create_modelSummary <- function(model_list, digits = 2, ...) {
 #' \code{\link[mgcv]{bam}}.
 #' 
 #' If the model was estimated with a log or logit link, the function
-#' automatically performs an exponential transformation of the effect.
-#' The type of transformation can be set with argument \code{method_expTransform},
-#' defaulting to \code{"simple"}, where standard errors and confidence interval
-#' limits on the original scale are simply exp transformed.
-#' Method \code{"delta"} uses the delta method, which can, however, be unstable
-#' in situations and lead to negative confidence interval limits.
+#' automatically performs an exponential transformation of the effect,
+#' see argument \code{method_expTransform}.
 #' 
 #' @param model Model fitted with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
-#' @param method_expTransform
+#' @param method_expTransform One of \code{c("simple","delta")}, stating if
+#' standard errors and confidence interval limits should be transformed by
+#' a simple exp transformation or using the delta method. The delta method can
+#' be unstable in situations and lead to negative confidence interval limits.
+#' Only used when the model was estimated with a log or logit link.
 #' 
 #' @import checkmate dplyr
 #' @importFrom mgcv summary.gam
@@ -142,9 +142,9 @@ extract_summary_linearEffects <- function(model, method_expTransform = "simple")
     
     if (method_expTransform == "simple") {
       dat <- dat %>%
-        mutate(coef_exp = exp(coef),
-               se_exp = exp(se)) %>%
-        mutate(CI_lower_exp = exp(CI_lower),
+        mutate(coef_exp     = exp(coef),
+               se_exp       = exp(se),
+               CI_lower_exp = exp(CI_lower),
                CI_upper_exp = exp(CI_upper)) %>%
         select(param, coef, se, CI_lower, CI_upper,
                coef_exp, se_exp, CI_lower_exp, CI_upper_exp, pvalue)
