@@ -1,3 +1,8 @@
+# APCtools 1.0.4 (2022-11)
+
+- Fixed a bug in plot_1Dsmooth, which caused the confidence bounds to be twice as wide as they should be (on the level of the linear predictor)
+
+
 # APCtools 1.0.3 (2022-04)
 
 - Fixed plot_densityMatrix, which wrongly assigned data to some cells in some situations

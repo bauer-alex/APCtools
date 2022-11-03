@@ -68,7 +68,7 @@ plot_1Dsmooth <- function(model, plot_ci = TRUE, select, alpha = 0.05,
   plotObject <- plotObject[[select]]
   plot_dat  <- data.frame(x  = plotObject$x,
                           y  = plotObject$fit,
-                          se = plotObject$se) %>% 
+                          se = plotObject$se / plotObject$se.mult) %>% 
     mutate(CI_lower = y - qnorm(1 - alpha/2)*se,
            CI_upper = y + qnorm(1 - alpha/2)*se)
   
