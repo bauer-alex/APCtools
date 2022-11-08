@@ -101,7 +101,7 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
   used_logLink <- (model_list[[1]]$family[[2]] %in% c("log","logit")) |
     grepl("Ordered Categorical", model_list[[1]]$family[[1]])
   if (is.null(ylab)) {
-    ylab <- ifelse(used_logLink, "Odds Ratio", "Effect")
+    ylab <- ifelse(used_logLink, "exp(Effect)", "Effect")
   }
   
   # base plots

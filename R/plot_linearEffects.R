@@ -51,7 +51,7 @@ plot_linearEffects <- function(model, variables = NULL,
   
   used_logLink <- (model$family[[2]] %in% c("log","logit")) |
     grepl("Ordered Categorical", model$family[[1]])
-  ylab         <- ifelse(used_logLink, "Odds Ratio", "Effect")
+  ylab         <- ifelse(used_logLink, "exp(Effect)", "Effect")
   
   # extract model information
   plot_dat <- extract_summary_linearEffects(model, ...)
