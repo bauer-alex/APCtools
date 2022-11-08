@@ -73,7 +73,7 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' @return ggplot object (if \code{hide_partialEffects} is TRUE) or a plot grid
 #' created with \code{\link[ggpubr]{ggarrange}} (if FALSE).
 #' 
-#' @import checkmate dplyr ggplot2
+#' @import checkmate dplyr ggplot2 stringr
 #' @importFrom ggpubr ggarrange
 #' @importFrom mgcv predict.gam
 #' @export
@@ -126,6 +126,10 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   # necessary for calling mgcv:::predict.gam
   covars <- attr(model$terms, "term.labels")
   covars <- covars[!(covars %in% c("age","period","cohort"))]
+  str_detect(string = covars, pattern = "(?<=\\().*(?=\\))")
+  covars <- if_else(str_detect(string = covars, pattern = "(?<=\\().*(?=\\))"),
+                    str_extract(string = covars, pattern = "(?<=\\().*(?=\\))"),
+                                covars)
   if (length(covars) > 0) {
     dat_cov <- dat[,covars, drop = FALSE]
     row     <- which(apply(dat_cov, 1, function(x) { all(!is.na(x)) }))[1]
