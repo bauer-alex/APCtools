@@ -46,9 +46,10 @@ test_that("plot_1Dsmooth", {
   
   # plot_1Dsmooth
   gg1 <- plot_1Dsmooth(model, select = 2, alpha = 0.1)
-  expect_warning({
-    gg2 <- plot_1Dsmooth(model_logLink, select = 2, alpha = 0.1)
-  })
+  #expect_warning({
+    gg2 <- plot_1Dsmooth(model_logLink, select = 2, alpha = 0.5,
+                         method_expTransform = "delta")
+  #})
   
   expect_s3_class(gg1, class = c("gg","ggplot"))
   expect_s3_class(gg2, class = c("gg","ggplot"))
