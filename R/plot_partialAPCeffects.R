@@ -126,10 +126,11 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   # necessary for calling mgcv:::predict.gam
   covars <- attr(model$terms, "term.labels")
   covars <- covars[!(covars %in% c("age","period","cohort"))]
-  str_detect(string = covars, pattern = "(?<=\\().*(?=\\))")
-  covars <- if_else(str_detect(string = covars, pattern = "(?<=\\().*(?=\\))"),
-                    str_extract(string = covars, pattern = "(?<=\\().*(?=\\))"),
-                                covars)
+  covars <- if_else(stringr::str_detect(string = covars,
+                                        pattern = "(?<=\\().*(?=\\))"),
+                    stringr::str_extract(string = covars,
+                                         pattern = "(?<=\\().*(?=\\))"),
+                    covars)
   if (length(covars) > 0) {
     dat_cov <- dat[,covars, drop = FALSE]
     row     <- which(apply(dat_cov, 1, function(x) { all(!is.na(x)) }))[1]
