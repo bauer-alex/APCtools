@@ -212,9 +212,18 @@ plot_APChexamap <- function (dat,
   # setting default values for missing parameters
   if (is.null(color_range)) {
     color_range <- range(mat, na.rm = TRUE)
-    # use a symmetric color scale if the value range spans zero
-    if (color_range[1] < 0 & color_range[2] > 0) {
-      color_range <- c(-1,1) * max(abs(range(mat, na.rm = TRUE)))
+    # use a symmetric color scale if the value range spans zero (or one with
+    # log or logit link)
+    if (!used_logLink) {
+      if (color_range[1] < 0 & color_range[2] > 0) {
+        color_range <- c(-1,1) * max(abs(range(mat, na.rm = TRUE)))
+      }
+    }
+    if (used_logLink) {
+      if (color_range[1] < 1 & color_range[2] > 1) {
+        max_scale <- max(color_range, 1 / color_range)
+        color_range <- c(1 / max_scale, max_scale)
+      }
     }
   }
   if (is.null(color_vec)) {
@@ -260,9 +269,17 @@ plot_APChexamap <- function (dat,
   not_nan_mat <- !is.na(mat) & !is.nan(mat)
   
   v_mat <- as.vector(mat[not_nan_mat])
+  # Define color sequence:
+  if (!used_logLink) {
+    color_seq <- seq(from = color_range[1], to = color_range[2],
+                     length.out = ncol + 1)
+  }
+  if (used_logLink) {
+    color_seq <- exp(seq(from = log(color_range[1]), to = log(color_range[2]),
+                         length.out = ncol + 1))
+  }
   matc  <- cut(mat[not_nan_mat], # discretize the data 
-               breaks         = seq(from = color_range[1], to = color_range[2],
-                                    length.out = ncol), 
+               breaks         = color_seq, 
                include.lowest = TRUE,
                labels         = FALSE)
   
@@ -388,10 +405,20 @@ plot_APChexamap <- function (dat,
   # create the colorbar
   par(las = 2)
   par(mar = c(10,2,10,2.5))
-  cb_range <- seq(from = color_range[1], to = color_range[2], length.out = ncol)
-  image(y = cb_range, z = t(cb_range), col = color_vec, axes = FALSE,
-        main = legend_title, cex.main = .8)
-  axis(4, cex.axis = label_size, mgp = c(0,.5,0))
+  if (!used_logLink) {
+    image(y = color_seq, z = t(color_seq), breaks = color_seq, col = color_vec,
+          axes = FALSE, main = legend_title, cex.main = .8)
+    axis(4, cex.axis = label_size, mgp = c(0,.5,0))
+  }
+  if (used_logLink) {
+    image(y = color_seq, z = t(color_seq), breaks = color_seq, col = color_vec,
+          axes = FALSE, main = legend_title, cex.main = .8, log = "y")
+    axis(4, cex.axis = label_size, mgp = c(0,.5,0)) 
+  }
   
   invisible(NULL)
 }
+
+
+
+
