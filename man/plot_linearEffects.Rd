@@ -4,7 +4,13 @@
 \alias{plot_linearEffects}
 \title{Plot linear effects of a gam in an effect plot}
 \usage{
-plot_linearEffects(model, variables = NULL, return_plotData = FALSE, ...)
+plot_linearEffects(
+  model,
+  variables = NULL,
+  return_plotData = FALSE,
+  refCat = FALSE,
+  ...
+)
 }
 \arguments{
 \item{model}{Model fitted with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.}
@@ -17,6 +23,9 @@ output.}
 
 \item{return_plotData}{If TRUE, the dataset prepared for plotting is
 returned. Defaults to FALSE.}
+
+\item{refCat}{If TRUE, reference categories are added to the output for
+categorical covariates. Defaults to FALSE.}
 
 \item{...}{Additional arguments passed to
 \code{\link{extract_summary_linearEffects}}.}
