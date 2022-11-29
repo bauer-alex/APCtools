@@ -46,7 +46,7 @@ plot_linearEffects <- function(model, variables = NULL,
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
   coef <- CI_lower <- CI_upper <- coef_exp <- CI_lower_exp <- CI_upper_exp <-
-    param <- vargroup <- NULL
+    param <- vargroup <- varnames <- vars <- var_classes <- NULL
   
   
   used_logLink <- (model$family[[2]] %in% c("log","logit")) |
@@ -55,10 +55,21 @@ plot_linearEffects <- function(model, variables = NULL,
   
   # extract model information
   plot_dat <- extract_summary_linearEffects(model, ...)
+  plot_dat$vargroup <- NA
   
   # categorize the coefficients in groups (one for each variable)
-  for (i in names(eval(model$call$data))) {
-    plot_dat$vargroup[grepl(i, plot_dat$param)] <- i
+  var_classes <- attributes(model$pterms)$dataClasses[-1]
+  vars <- names(var_classes)
+  for (i in vars) {
+    # potentially more than one coefficient for factor or character variables:
+    if (var_classes[i] %in% c("character", "factor")) {
+      varnames <- paste0(i, unlist(unname(model$xlevels[i])))
+      plot_dat$vargroup[which(plot_dat$param %in% varnames)] <- i
+    }
+    # only a single coefficient for numeric variables
+    else {
+      plot_dat$vargroup[which(plot_dat$param == i)] <- i
+    }
   }
   # remove the intercept
   plot_dat <- plot_dat[-1,]
