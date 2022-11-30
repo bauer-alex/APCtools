@@ -57,7 +57,7 @@ plot_linearEffects <- function(model, variables = NULL,
   ylab         <- ifelse(used_logLink, "exp(Effect)", "Effect")
   
   # extract model information
-  plot_dat <- extract_summary_linearEffects(model) %>%
+  plot_dat <- extract_summary_linearEffects(model, ...) %>%
     mutate(param = as.character(param))
   plot_dat$vargroup <- NA
   
@@ -126,6 +126,7 @@ plot_linearEffects <- function(model, variables = NULL,
   plot_dat <- plot_dat %>%
      mutate(vargroup = factor(x = vargroup, levels = var_levels)) %>%
      arrange(vargroup)
+  plot_dat$param <- factor(plot_dat$param, levels = unique(plot_dat$param))
   
   # final preparations
   if (used_logLink) {
