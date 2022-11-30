@@ -57,7 +57,7 @@ plot_linearEffects <- function(model, variables = NULL,
   ylab         <- ifelse(used_logLink, "exp(Effect)", "Effect")
   
   # extract model information
-  plot_dat <- extract_summary_linearEffects(model, ...) %>%
+  plot_dat <- extract_summary_linearEffects(model) %>%
     mutate(param = as.character(param))
   plot_dat$vargroup <- NA
   
@@ -120,7 +120,6 @@ plot_linearEffects <- function(model, variables = NULL,
                                         nchar(plot_dat$vargroup[cat_coefs]) + 1,
                                         100)
   }
-  plot_dat$param <- factor(plot_dat$param, levels = plot_dat$param)
   
   # reorder dataset according to specified variable vector
   var_levels <- if(is.null(variables)) unique(plot_dat$vargroup) else variables
