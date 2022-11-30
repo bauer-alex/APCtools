@@ -1,7 +1,7 @@
-pandoc: 2.7.3
+pandoc: 2.19.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   main_functionality: main_functionality.html
-last_built: 2022-11-29T16:45Z
+last_built: 2022-11-30T17:05Z
 

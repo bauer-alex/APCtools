@@ -68,12 +68,14 @@
 
 
 
-<script src="main_functionality_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>APC Analysis with APCtools</h1>
-                        <h4 data-toc-skip class="author">Alexander Bauer, Maximilian Weigert</h4>
+                        <h4 data-toc-skip class="author">Alexander
+Bauer, Maximilian Weigert</h4>
             
-            <h4 data-toc-skip class="date">29.November 2022</h4>
+            <h4 data-toc-skip class="date">30.November 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bauer-alex/APCtools/blob/HEAD/vignettes/main_functionality.Rmd" class="external-link"><code>vignettes/main_functionality.Rmd</code></a></small>
       <div class="d-none name"><code>main_functionality.Rmd</code></div>
@@ -81,22 +83,42 @@
 
     
     
-<p>This document gives an overview of the functionality provided by the R package <code>APCtools</code>.</p>
-<p>Age-Period-Cohort (APC) analysis is used to disentangle observed trends (e.g. of social, economic, medical or epidemiological data) to enable conclusions about the developments over three temporal dimensions:</p>
+<p>This document gives an overview of the functionality provided by the
+R package <code>APCtools</code>.</p>
+<p>Age-Period-Cohort (APC) analysis is used to disentangle observed
+trends (e.g. of social, economic, medical or epidemiological data) to
+enable conclusions about the developments over three temporal
+dimensions:</p>
 <ul>
-<li>Age, representing the developments associated with chronological age over someones life cycle.</li>
-<li>Period, representing the developments over calendar time which affect all age groups simultaneously.</li>
-<li>Cohort, representing the developments observed over different birth cohorts and generations.</li>
+<li>Age, representing the developments associated with chronological age
+over someones life cycle.</li>
+<li>Period, representing the developments over calendar time which
+affect all age groups simultaneously.</li>
+<li>Cohort, representing the developments observed over different birth
+cohorts and generations.</li>
 </ul>
-<p>The critical challenge in APC analysis is that these main components are linearly dependent: <span class="math display">\[
+<p>The critical challenge in APC analysis is that these main components
+are linearly dependent: <span class="math display">\[
 cohort = period - age
 \]</span></p>
-<p>Accordingly, flexible methods and visualization techniques are needed to properly disentagle observed temporal association structures. The <code>APCtools</code> package comprises different methods that tackle this problem and aims to cover all steps of an APC analysis. This includes state-of-the-art descriptive visualizations as well as visualization and summary functions based on the estimation of a generalized additive regression model (GAM). The main functionalities of the package are highlighted in the following.</p>
-<p>For details on the statistical methodology see <a href="https://doi.org/10.1177/1354816620987198" class="external-link">Weigert et al. (2021)</a> or our corresponding <a href="https://www.researchgate.net/publication/353852226_Visualization_techniques_for_semiparametric_APC_analysis_Using_Generalized_Additive_Models_to_examine_touristic_travel_distances" class="external-link">research poster</a>. The <em>hexamaps</em> (hexagonally binned heatmaps) are outlined in <a href="https://doi.org/10.1097/EDE.0000000000001236" class="external-link">Jalal &amp; Burke (2020)</a>.</p>
+<p>Accordingly, flexible methods and visualization techniques are needed
+to properly disentagle observed temporal association structures. The
+<code>APCtools</code> package comprises different methods that tackle
+this problem and aims to cover all steps of an APC analysis. This
+includes state-of-the-art descriptive visualizations as well as
+visualization and summary functions based on the estimation of a
+generalized additive regression model (GAM). The main functionalities of
+the package are highlighted in the following.</p>
+<p>For details on the statistical methodology see <a href="https://doi.org/10.1177/1354816620987198" class="external-link">Weigert et
+al. (2021)</a> or our corresponding <a href="https://www.researchgate.net/publication/353852226_Visualization_techniques_for_semiparametric_APC_analysis_Using_Generalized_Additive_Models_to_examine_touristic_travel_distances" class="external-link">research
+poster</a>. The <em>hexamaps</em> (hexagonally binned heatmaps) are
+outlined in <a href="https://doi.org/10.1097/EDE.0000000000001236" class="external-link">Jalal
+&amp; Burke (2020)</a>.</p>
 <div class="section level2">
 <h2 id="load-relevant-packages">Load relevant packages<a class="anchor" aria-label="anchor" href="#load-relevant-packages"></a>
 </h2>
-<p>Before we start, let’s load the relevant packages for the following analyses.</p>
+<p>Before we start, let’s load the relevant packages for the following
+analyses.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bauer-alex.github.io/APCtools/" class="external-link">APCtools</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>    <span class="co"># general data handling</span></span>
@@ -110,19 +132,37 @@ cohort = period - age
 <div class="section level2">
 <h2 id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a>
 </h2>
-<p>APC analyses require long-term panel or repeated cross-sectional data. The package includes two exemplary datasets on the travel behavior of German tourists (dataset <code>travel</code>) and the number of unintentional drug overdose deaths in the United States (<code>drug_deaths</code>). See the respective help pages <code><a href="../reference/travel.html">?travel</a></code> and <code><a href="../reference/drug_deaths.html">?drug_deaths</a></code> for details.</p>
-<p>In the following, we will use the <code>travel</code> dataset to investigate if travel distances of the main trip of German travelers mainly change over the life cycle of a person (age effect), macro-level developments like decreasing air travel prices in the last decades (period effect) or the generational membership of a person, which is shaped by similar socialization and historical experiences (cohort effect).</p>
+<p>APC analyses require long-term panel or repeated cross-sectional
+data. The package includes two exemplary datasets on the travel behavior
+of German tourists (dataset <code>travel</code>) and the number of
+unintentional drug overdose deaths in the United States
+(<code>drug_deaths</code>). See the respective help pages
+<code><a href="../reference/travel.html">?travel</a></code> and <code><a href="../reference/drug_deaths.html">?drug_deaths</a></code> for details.</p>
+<p>In the following, we will use the <code>travel</code> dataset to
+investigate if travel distances of the main trip of German travelers
+mainly change over the life cycle of a person (age effect), macro-level
+developments like decreasing air travel prices in the last decades
+(period effect) or the generational membership of a person, which is
+shaped by similar socialization and historical experiences (cohort
+effect).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">travel</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="descriptive-visualizations">Descriptive visualizations<a class="anchor" aria-label="anchor" href="#descriptive-visualizations"></a>
 </h2>
-<p>Different functions are available for descriptively visualizing observed structures. This includes plots for the marginal distribution of some variable of interest, 1D plots for the development of some variable over age, period or cohort, as well as density matrices that visualize the development over all temporal dimensions.</p>
+<p>Different functions are available for descriptively visualizing
+observed structures. This includes plots for the marginal distribution
+of some variable of interest, 1D plots for the development of some
+variable over age, period or cohort, as well as density matrices that
+visualize the development over all temporal dimensions.</p>
 <div class="section level3">
 <h3 id="marginal-distribution-of-one-variable">Marginal distribution of one variable<a class="anchor" aria-label="anchor" href="#marginal-distribution-of-one-variable"></a>
 </h3>
-<p>The marginal distribution of a variable can be visualized using <code>plot_density</code>. Metric variables can be plotted using a density plot or a boxplot, while categorical variables can be plotted using a bar chart.</p>
+<p>The marginal distribution of a variable can be visualized using
+<code>plot_density</code>. Metric variables can be plotted using a
+density plot or a boxplot, while categorical variables can be plotted
+using a bar chart.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_density.html">plot_density</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">travel</span>, y_var <span class="op">=</span> <span class="st">"mainTrip_distance"</span>, log_scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">gg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_density.html">plot_density</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">travel</span>, y_var <span class="op">=</span> <span class="st">"mainTrip_distance"</span>, log_scale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -135,7 +175,13 @@ cohort = period - age
 <div class="section level3">
 <h3 id="d-one-variable-against-age-period-or-cohort">1D: One variable against age, period or cohort<a class="anchor" aria-label="anchor" href="#d-one-variable-against-age-period-or-cohort"></a>
 </h3>
-<p>Plotting the distribution of a variable against age, period or cohort is possible with function <code>plot_variable</code>. The distribution of metric and categorical variables is visualized using boxplots or line charts (see argument <code>plot_type</code>) and bar charts, respectively. The latter by default show relative frequencies, but can be changed to show absolute numbers by specifying argument <code>geomBar_position = "stack"</code>.</p>
+<p>Plotting the distribution of a variable against age, period or cohort
+is possible with function <code>plot_variable</code>. The distribution
+of metric and categorical variables is visualized using boxplots or line
+charts (see argument <code>plot_type</code>) and bar charts,
+respectively. The latter by default show relative frequencies, but can
+be changed to show absolute numbers by specifying argument
+<code>geomBar_position = "stack"</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_variable.html">plot_variable</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">travel</span>, y_var <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span>              apc_dimension <span class="op">=</span> <span class="st">"period"</span>, plot_type <span class="op">=</span> <span class="st">"line"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -147,8 +193,22 @@ cohort = period - age
 <div class="section level3">
 <h3 id="d-density-matrices">2D: Density matrices<a class="anchor" aria-label="anchor" href="#d-density-matrices"></a>
 </h3>
-<p>To include all temporal dimensions in one plot, <code>APCtools</code> contains function <code>plot_densityMatrix</code>. In Weigert et al. (2021), this plot type was referred to as <em>ridgeline matrix</em> when plotting multiple density plots for a metric variable. The basic principle of a density matrix is to (i) visualize two of the temporal dimensions on the x- and y-axis (specified using the argument <code>dimensions</code>), s.t. the third temporal dimension is represented on the diagonals of the matrix, and (ii) to categorize the respective variables on the x- and y-axis in meaningful groups. The function then creates a grid, where each cell contains the distribution of the selected <code>y_var</code> variable in the respective category.</p>
-<p>By default, age and period are depicted on the x- and y-axis, respectively, and cohort on the diagonals. The categorization is defined by specifying two of the arguments <code>age_groups</code>, <code>period_groups</code> and <code>cohort_groups</code>.</p>
+<p>To include all temporal dimensions in one plot, <code>APCtools</code>
+contains function <code>plot_densityMatrix</code>. In Weigert et
+al. (2021), this plot type was referred to as <em>ridgeline matrix</em>
+when plotting multiple density plots for a metric variable. The basic
+principle of a density matrix is to (i) visualize two of the temporal
+dimensions on the x- and y-axis (specified using the argument
+<code>dimensions</code>), s.t. the third temporal dimension is
+represented on the diagonals of the matrix, and (ii) to categorize the
+respective variables on the x- and y-axis in meaningful groups. The
+function then creates a grid, where each cell contains the distribution
+of the selected <code>y_var</code> variable in the respective
+category.</p>
+<p>By default, age and period are depicted on the x- and y-axis,
+respectively, and cohort on the diagonals. The categorization is defined
+by specifying two of the arguments <code>age_groups</code>,
+<code>period_groups</code> and <code>cohort_groups</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">age_groups</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>,<span class="fl">89</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">70</span>,<span class="fl">79</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>,<span class="fl">69</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>,<span class="fl">59</span><span class="op">)</span>,</span>
 <span>                      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">49</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">39</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">29</span><span class="op">)</span><span class="op">)</span></span>
@@ -161,7 +221,9 @@ cohort = period - age
 <span>                   period_groups    <span class="op">=</span> <span class="va">period_groups</span>,</span>
 <span>                   log_scale        <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-4-1.png" width="768"></p>
-<p>To highlight the effect of the variable depicted on the diagonal (here: cohort), different diagonals can be highlighted using argument <code>highlight_diagonals</code>.</p>
+<p>To highlight the effect of the variable depicted on the diagonal
+(here: cohort), different diagonals can be highlighted using argument
+<code>highlight_diagonals</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_densityMatrix.html">plot_densityMatrix</a></span><span class="op">(</span>dat                 <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                   y_var               <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
@@ -171,7 +233,10 @@ cohort = period - age
 <span>                                              <span class="st">"born 1970 - 1979"</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>                   log_scale           <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-5-1.png" width="960"></p>
-<p>For metric variables it is further possible to use a color scale for the density function (arguments <code>y_var_cat_breaks</code> and <code>y_var_cat_labels</code>) to highlight local developments over the APC dimensions.</p>
+<p>For metric variables it is further possible to use a color scale for
+the density function (arguments <code>y_var_cat_breaks</code> and
+<code>y_var_cat_labels</code>) to highlight local developments over the
+APC dimensions.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dist_cat_breaks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">500</span>,<span class="fl">1000</span>,<span class="fl">2000</span>,<span class="fl">6000</span>,<span class="fl">100000</span><span class="op">)</span></span>
 <span><span class="va">dist_cat_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt; 500 km"</span>,<span class="st">"500 - 1,000 km"</span>, <span class="st">"1,000 - 2,000 km"</span>, <span class="st">"2,000 - 6,000 km"</span>, <span class="st">"&gt; 6,000 km"</span><span class="op">)</span></span>
@@ -187,7 +252,10 @@ cohort = period - age
 <span>                                              <span class="st">"born 1970 - 1979"</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>                   legend_title     <span class="op">=</span> <span class="st">"Distance category"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-6-1.png" width="960"></p>
-<p>Alternatively to plotting a conditional density in each matrix cell, metric variables can also be visualized using boxplots by specifying <code>plot_type = "boxplot"</code>. Categorical variables are automatically plotted using conditional bar plots.</p>
+<p>Alternatively to plotting a conditional density in each matrix cell,
+metric variables can also be visualized using boxplots by specifying
+<code>plot_type = "boxplot"</code>. Categorical variables are
+automatically plotted using conditional bar plots.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_densityMatrix.html">plot_densityMatrix</a></span><span class="op">(</span>dat                 <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                   y_var               <span class="op">=</span> <span class="st">"household_size"</span>,</span>
@@ -200,7 +268,15 @@ cohort = period - age
 <div class="section level3">
 <h3 id="d-heatmaps">2D: Heatmaps<a class="anchor" aria-label="anchor" href="#d-heatmaps"></a>
 </h3>
-<p>Similar to density matrices, heatmaps simultaneously visualize all three APC dimensions. Instead of individual distributions in separated categories, however, a color scale is used to depict the mean value in a specific region. When setting <code>bin_heatmap = FALSE</code>, the function <code>plot_APCheatmap</code> shows the average observed values of a metric variable for each observed combination of age and period values (if <code>dimensions = c("period","age")</code>). The borders of groups along the diagonal can be marked using argument <code>markLines_list</code>.</p>
+<p>Similar to density matrices, heatmaps simultaneously visualize all
+three APC dimensions. Instead of individual distributions in separated
+categories, however, a color scale is used to depict the mean value in a
+specific region. When setting <code>bin_heatmap = FALSE</code>, the
+function <code>plot_APCheatmap</code> shows the average observed values
+of a metric variable for each observed combination of age and period
+values (if <code>dimensions = c("period","age")</code>). The borders of
+groups along the diagonal can be marked using argument
+<code>markLines_list</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APCheatmap.html">plot_APCheatmap</a></span><span class="op">(</span>dat            <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                y_var          <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
@@ -209,7 +285,10 @@ cohort = period - age
 <span>                markLines_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1900</span>,<span class="fl">1920</span>,<span class="fl">1939</span>,<span class="fl">1946</span>,</span>
 <span>                                                 <span class="fl">1966</span>,<span class="fl">1982</span>,<span class="fl">1994</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-8-1.png" width="768"></p>
-<p>By default, the heatmap is binned in five year blocks along the x- and y-axis to focus on larger-scale developments. Note that the grid used for binning can flexibly be defined with the argument <code>bin_heatmapGrid_list</code>.</p>
+<p>By default, the heatmap is binned in five year blocks along the x-
+and y-axis to focus on larger-scale developments. Note that the grid
+used for binning can flexibly be defined with the argument
+<code>bin_heatmapGrid_list</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APCheatmap.html">plot_APCheatmap</a></span><span class="op">(</span>dat            <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                y_var          <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
@@ -221,7 +300,16 @@ cohort = period - age
 <div class="section level3">
 <h3 id="d-hexamaps">2D: Hexamaps<a class="anchor" aria-label="anchor" href="#d-hexamaps"></a>
 </h3>
-<p>As an alternative to classical heatmaps observed developments can also be visualized using <em>hexamaps</em>, i.e. hexagonally binned heatmaps with rotated axes to give all three APC dimensions similar visual weight. This resolves the central problem of classical heatmaps that developments along the diagonal dimension are visually much harder to grasp than developments along the x- or y-axis. Function <code>plot_APChexamap</code> can be called similarly to <code>plot_APCheatmap</code>. Note, however, that hexamaps are currently implemented using the base R plot functions and not based on <code>ggplot2</code>.</p>
+<p>As an alternative to classical heatmaps observed developments can
+also be visualized using <em>hexamaps</em>, i.e. hexagonally binned
+heatmaps with rotated axes to give all three APC dimensions similar
+visual weight. This resolves the central problem of classical heatmaps
+that developments along the diagonal dimension are visually much harder
+to grasp than developments along the x- or y-axis. Function
+<code>plot_APChexamap</code> can be called similarly to
+<code>plot_APCheatmap</code>. Note, however, that hexamaps are currently
+implemented using the base R plot functions and not based on
+<code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APChexamap.html">plot_APChexamap</a></span><span class="op">(</span>dat            <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                y_var          <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
@@ -232,15 +320,36 @@ cohort = period - age
 <div class="section level2">
 <h2 id="model-based-analyses">Model-based analyses<a class="anchor" aria-label="anchor" href="#model-based-analyses"></a>
 </h2>
-<p>After getting a descriptive overview of the data with the functions outlined above, an established approach to analyze APC structures in more detail is to use the semiparametric approach offered by generalized additive regression models (GAMs). This regression-based approach offers several benefits:</p>
+<p>After getting a descriptive overview of the data with the functions
+outlined above, an established approach to analyze APC structures in
+more detail is to use the semiparametric approach offered by generalized
+additive regression models (GAMs). This regression-based approach offers
+several benefits:</p>
 <ul>
-<li>Compared to alternative regression-based APC approaches it circumvents the issue of linear dependency of the APC dimensions by estimating a flexible two-dimensional tensor product surface.</li>
-<li>The model separates the underlying smooth effects of age, period and cohort from random variation in the data and allows for the subsequent visualization of marginal age, period and cohort effects.</li>
-<li>While the above heatmaps and hexamaps can only be used to visualize the observed distribution of <em>metric</em> variables, the regression-based approach also allows for estimating and plotting the mean structure in settings with a categorical response variable, for example by estimating a logistic regression model.</li>
-<li>The regression-based approach allows for accounting for further control variables in the model. E.g., when analyzing how travel distances developed over the last decades, each persons income can be included as a covariate in the model estimation to account for income differences between travelers in different decades.</li>
+<li>Compared to alternative regression-based APC approaches it
+circumvents the issue of linear dependency of the APC dimensions by
+estimating a flexible two-dimensional tensor product surface.</li>
+<li>The model separates the underlying smooth effects of age, period and
+cohort from random variation in the data and allows for the subsequent
+visualization of marginal age, period and cohort effects.</li>
+<li>While the above heatmaps and hexamaps can only be used to visualize
+the observed distribution of <em>metric</em> variables, the
+regression-based approach also allows for estimating and plotting the
+mean structure in settings with a categorical response variable, for
+example by estimating a logistic regression model.</li>
+<li>The regression-based approach allows for accounting for further
+control variables in the model. E.g., when analyzing how travel
+distances developed over the last decades, each persons income can be
+included as a covariate in the model estimation to account for income
+differences between travelers in different decades.</li>
 </ul>
-<p>For estimating a regression model we utilize the function <code>gam</code> implemented in package <code>mgcv</code>. For further methodological details see Weigert et al. (2021).</p>
-<p>Let’s fit two GAM models, one without and one with further control variables. See <code><a href="../reference/travel.html">?travel</a></code> for an explanation of the used variables. The tensor product surface is estimated with two marginal P-spline bases with eight basis functions each.</p>
+<p>For estimating a regression model we utilize the function
+<code>gam</code> implemented in package <code>mgcv</code>. For further
+methodological details see Weigert et al. (2021).</p>
+<p>Let’s fit two GAM models, one without and one with further control
+variables. See <code><a href="../reference/travel.html">?travel</a></code> for an explanation of the used
+variables. The tensor product surface is estimated with two marginal
+P-spline bases with eight basis functions each.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># GAM without covariates</span></span>
 <span><span class="va">model_pure</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></span><span class="op">(</span><span class="va">mainTrip_distance</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/te.html" class="external-link">te</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">period</span>, bs <span class="op">=</span> <span class="st">"ps"</span>, k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>,<span class="fl">8</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -257,7 +366,10 @@ cohort = period - age
 <div class="section level3">
 <h3 id="heatmaps">Heatmaps<a class="anchor" aria-label="anchor" href="#heatmaps"></a>
 </h3>
-<p>Similary to the descriptive visualization outlined above, the tensor product surface estimated with the regression model can be created with <code>plot_APCheatmap</code>, by passing the model object as argument <code>model</code> to the function.</p>
+<p>Similary to the descriptive visualization outlined above, the tensor
+product surface estimated with the regression model can be created with
+<code>plot_APCheatmap</code>, by passing the model object as argument
+<code>model</code> to the function.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APCheatmap.html">plot_APCheatmap</a></span><span class="op">(</span>dat   <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                model <span class="op">=</span> <span class="va">model_pure</span><span class="op">)</span></span></code></pre></div>
@@ -266,7 +378,9 @@ cohort = period - age
 <div class="section level3">
 <h3 id="hexamaps">Hexamaps<a class="anchor" aria-label="anchor" href="#hexamaps"></a>
 </h3>
-<p>The same applies to the hexamaps. By calling <code>plot_APChexamap</code> and specifying the <code>model</code> argument, a hexamap of the estimated mean structure is created.</p>
+<p>The same applies to the hexamaps. By calling
+<code>plot_APChexamap</code> and specifying the <code>model</code>
+argument, a hexamap of the estimated mean structure is created.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APChexamap.html">plot_APChexamap</a></span><span class="op">(</span>dat   <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                model <span class="op">=</span> <span class="va">model_pure</span><span class="op">)</span></span></code></pre></div>
@@ -275,13 +389,17 @@ cohort = period - age
 <div class="section level3">
 <h3 id="marginal-apc-effects">Marginal APC effects<a class="anchor" aria-label="anchor" href="#marginal-apc-effects"></a>
 </h3>
-<p>Based on the tensor product surface estimated through the regression model, marginal effects can be extracted by taking the average of all values on the surface along one dimension. Marginal effects can be visualized using <code>plot_marginalAPCeffects</code>.</p>
+<p>Based on the tensor product surface estimated through the regression
+model, marginal effects can be extracted by taking the average of all
+values on the surface along one dimension. Marginal effects can be
+visualized using <code>plot_marginalAPCeffects</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_marginalAPCeffects.html">plot_marginalAPCeffects</a></span><span class="op">(</span>model    <span class="op">=</span> <span class="va">model_pure</span>,</span>
 <span>                        dat      <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                        variable <span class="op">=</span> <span class="st">"age"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-14-1.png" width="960"></p>
-<p>The marginal effects of multiple models can also be visualized in one plot using <code>plot_jointMarginalAPCeffects</code>.</p>
+<p>The marginal effects of multiple models can also be visualized in one
+plot using <code>plot_jointMarginalAPCeffects</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_jointMarginalAPCeffects.html">plot_jointMarginalAPCeffects</a></span><span class="op">(</span>model_list  <span class="op">=</span> <span class="va">model_list</span>,</span>
 <span>                             dat         <span class="op">=</span> <span class="va">travel</span>,</span>
@@ -293,8 +411,17 @@ cohort = period - age
 <div class="section level3">
 <h3 id="partial-apc-plots">Partial APC plots<a class="anchor" aria-label="anchor" href="#partial-apc-plots"></a>
 </h3>
-<p>partial APC plots can be used to get deeper insights into a specific temporal effect and the interrelations between the temporal dimensions. These plots show the estimated effect for one temporal dimension dependent on the remaining two dimensions. The mean marginal effect is marked as a bold blue line, and one grayscale line is added for each partial effect, that is, for the estimated differences when just focusing on a specific age, period or cohort group.</p>
-<p>In the following example, the period effect is visualized, dependent on different age groups and cohorts. See <a href="https://doi.org/10.1177/1354816620987198" class="external-link">Weigert et al. (2021)</a> for details on the interpretation of partial APC plots.</p>
+<p>partial APC plots can be used to get deeper insights into a specific
+temporal effect and the interrelations between the temporal dimensions.
+These plots show the estimated effect for one temporal dimension
+dependent on the remaining two dimensions. The mean marginal effect is
+marked as a bold blue line, and one grayscale line is added for each
+partial effect, that is, for the estimated differences when just
+focusing on a specific age, period or cohort group.</p>
+<p>In the following example, the period effect is visualized, dependent
+on different age groups and cohorts. See <a href="https://doi.org/10.1177/1354816620987198" class="external-link">Weigert et
+al. (2021)</a> for details on the interpretation of partial APC
+plots.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_partialAPCeffects.html">plot_partialAPCeffects</a></span><span class="op">(</span>model    <span class="op">=</span> <span class="va">model_pure</span>,</span>
 <span>                       dat      <span class="op">=</span> <span class="va">travel</span>,</span>
@@ -304,7 +431,10 @@ cohort = period - age
 <div class="section level3">
 <h3 id="apc-summary-table">APC summary table<a class="anchor" aria-label="anchor" href="#apc-summary-table"></a>
 </h3>
-<p>The function <code>create_APCsummary</code> can be used to get a compact overview of the magnitude of the individual APC effects. It extracts information about the minimum and maximum values of the marginal APC effects and computes the overall size of each effect.</p>
+<p>The function <code>create_APCsummary</code> can be used to get a
+compact overview of the magnitude of the individual APC effects. It
+extracts information about the minimum and maximum values of the
+marginal APC effects and computes the overall size of each effect.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_APCsummary.html">create_APCsummary</a></span><span class="op">(</span>model_list <span class="op">=</span> <span class="va">model_list</span>,</span>
 <span>                  dat        <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></code></pre></div>
@@ -388,7 +518,11 @@ cohort = period - age
 <div class="section level3">
 <h3 id="covariate-effect-plots">Covariate effect plots<a class="anchor" aria-label="anchor" href="#covariate-effect-plots"></a>
 </h3>
-<p>Control variables in the regression models can be visualized using the functions <code>plot_linearEffects</code> and <code>plot_1Dsmooth</code> which create an effect plot of all linear effects in a model and a line plot of a one-dimensional smooth effect, respectively.</p>
+<p>Control variables in the regression models can be visualized using
+the functions <code>plot_linearEffects</code> and
+<code>plot_1Dsmooth</code> which create an effect plot of all linear
+effects in a model and a line plot of a one-dimensional smooth effect,
+respectively.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">APCtools</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_linearEffects.html">plot_linearEffects</a></span><span class="op">(</span><span class="va">model_cov</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-18-1.png" width="960"></p>
@@ -399,7 +533,11 @@ cohort = period - age
 <div class="section level3">
 <h3 id="model-summary-tables">Model summary tables<a class="anchor" aria-label="anchor" href="#model-summary-tables"></a>
 </h3>
-<p>The function <code>create_modelSummary</code> can be used to create publication-ready tables of the full model results. It can either be applied to a list of multiple models or a list of a single model, and returns a list with both a table for all linear coefficients and all nonlinear estimates.</p>
+<p>The function <code>create_modelSummary</code> can be used to create
+publication-ready tables of the full model results. It can either be
+applied to a list of multiple models or a list of a single model, and
+returns a list with both a table for all linear coefficients and all
+nonlinear estimates.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_modelSummary.html">create_modelSummary</a></span><span class="op">(</span><span class="va">model_list</span><span class="op">)</span></span>
 <span><span class="va">summary_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
