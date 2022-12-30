@@ -1,6 +1,7 @@
 # APCtools 1.0.4 (2022-11)
 
 - Fixed a bug in plot_1Dsmooth, which caused the confidence bounds to be twice as wide as they should be (on the level of the linear predictor)
+- Added option to include the reference category in the plot output of plot_linearEffects
 
 
 # APCtools 1.0.3 (2022-04)
