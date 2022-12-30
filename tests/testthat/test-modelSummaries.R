@@ -64,9 +64,13 @@ test_that("create_modelSummary", {
   # extract_summary_linearEffects
   tab1 <- APCtools:::extract_summary_linearEffects(model)
   tab2 <- APCtools:::extract_summary_linearEffects(model_logLink)
+  tab3 <- APCtools:::extract_summary_linearEffects(model_logLink,
+                                                   method_expTransform = "delta")
   
   expect_s3_class(tab1, "data.frame")
   expect_s3_class(tab2, "data.frame")
+  expect_s3_class(tab3, "data.frame")
   expect_identical(colnames(tab1)[1:3], c("param","coef","se"))
   expect_identical(colnames(tab2)[1:3], c("param","coef","se"))
+  expect_identical(colnames(tab3)[1:3], c("param", "coef", "se"))
 })

@@ -19,11 +19,13 @@ test_that("plot_linearEffects", {
                             variables = c("residence_region", "household_size"))
   gg3 <- plot_linearEffects(model_logLink)
   gg4 <- plot_linearEffects(model_logLink, refCat = TRUE)
+  gg5 <- plot_linearEffects(model, refCat= TRUE)
   
   expect_s3_class(gg1, class = c("gg","ggplot"))
   expect_s3_class(gg2, class = c("gg","ggplot"))
   expect_s3_class(gg3, class = c("gg", "ggplot"))
   expect_s3_class(gg4, class = c("gg", "ggplot"))
+  expect_s3_class(gg5, class = c("gg", "ggplot"))
   
   # plot_linearEffects - return_plotData
   gg_dat1 <- plot_linearEffects(model, return_plotData = TRUE)
@@ -51,10 +53,12 @@ test_that("plot_1Dsmooth", {
   #expect_warning({
     gg2 <- plot_1Dsmooth(model_logLink, select = 2, alpha = 0.5,
                          method_expTransform = "delta")
+    gg3 <- plot_1Dsmooth(model_logLink, select = 2, alpha = 0.5)
   #})
   
   expect_s3_class(gg1, class = c("gg","ggplot"))
   expect_s3_class(gg2, class = c("gg","ggplot"))
+  expect_s3_class(gg3, class = c("gg","ggplot"))
   
   expect_error(plot_1Dsmooth(model, select = 20))
   
