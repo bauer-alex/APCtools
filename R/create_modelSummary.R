@@ -20,6 +20,7 @@
 #' @param model_list list of APC models
 #' @param digits number of displayed digits
 #' @param ... additional arguments to \code{\link[knitr]{kable}}
+#' @inheritParams extract_summary_linearEffects
 #' 
 #' @return List of tables created with \code{\link[knitr]{kable}}.
 #' 
@@ -39,7 +40,8 @@
 #' 
 #' create_modelSummary(list(model), dat = travel)
 #' 
-create_modelSummary <- function(model_list, digits = 2, ...) {
+create_modelSummary <- function(model_list, digits = 2,
+                                method_expTransform = "simple", ...) {
   
   checkmate::assert_list(model_list, types = "gam")
   checkmate::assert_number(digits, lower = 0)
@@ -59,7 +61,8 @@ create_modelSummary <- function(model_list, digits = 2, ...) {
   # create the summary table for all linear effects
   tab_linear <- lapply(1:length(model_list), function(i) {
     
-    extract_summary_linearEffects(model_list[[i]]) %>% 
+    extract_summary_linearEffects(model_list[[i]],
+                                  method_expTransform = method_expTransform) %>% 
       mutate(model = model_labels[i]) %>% 
       select(model, everything()) %>% 
       mutate(pvalue = case_when(param == "(Intercept)" ~ "-",

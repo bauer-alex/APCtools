@@ -4,12 +4,23 @@
 \alias{create_modelSummary}
 \title{Create model summary tables for multiple estimated GAM models}
 \usage{
-create_modelSummary(model_list, digits = 2, ...)
+create_modelSummary(
+  model_list,
+  digits = 2,
+  method_expTransform = "simple",
+  ...
+)
 }
 \arguments{
 \item{model_list}{list of APC models}
 
 \item{digits}{number of displayed digits}
+
+\item{method_expTransform}{One of \code{c("simple","delta")}, stating if
+standard errors and confidence interval limits should be transformed by
+a simple exp transformation or using the delta method. The delta method can
+be unstable in situations and lead to negative confidence interval limits.
+Only used when the model was estimated with a log or logit link.}
 
 \item{...}{additional arguments to \code{\link[knitr]{kable}}}
 }
