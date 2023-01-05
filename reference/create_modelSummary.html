@@ -66,7 +66,12 @@ The output format of the tables can be adjusted by passing arguments to
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_modelSummary</span><span class="op">(</span><span class="va">model_list</span>, digits <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_modelSummary</span><span class="op">(</span></span>
+<span>  <span class="va">model_list</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  method_expTransform <span class="op">=</span> <span class="st">"simple"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -77,6 +82,14 @@ The output format of the tables can be adjusted by passing arguments to
 
 <dt>digits</dt>
 <dd><p>number of displayed digits</p></dd>
+
+
+<dt>method_expTransform</dt>
+<dd><p>One of <code>c("simple","delta")</code>, stating if
+standard errors and confidence interval limits should be transformed by
+a simple exp transformation or using the delta method. The delta method can
+be unstable in situations and lead to negative confidence interval limits.
+Only used when the model was estimated with a log or logit link.</p></dd>
 
 
 <dt>...</dt>
