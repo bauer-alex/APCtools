@@ -2,7 +2,7 @@
 #' Data from the German Reiseanalyse survey
 #' 
 #' This dataset from the
-#' \href{https://reiseanalyse.de/home/}{Reiseanalyse survey} comprises travel
+#' \href{https://reiseanalyse.de/en/}{Reiseanalyse survey} comprises travel
 #' information on German travelers between 1971 and 2018. Data were collected
 #' in a yearly repeated cross-sectional survey of German pleasure travels,
 #' based on a sample representative for the (West) German citizens (until 2009)
@@ -13,7 +13,7 @@
 #' 
 #' The data are a 10% random sample of all respondents who undertook at least
 #' one trip in the respective year, between 1971 and 2018. We thank the
-#' \href{https://reiseanalyse.de/about-us/}{Forschungsgemeinschaft Urlaub und Reisen e.V.}
+#' \href{https://reiseanalyse.de/en/}{Forschungsgemeinschaft Urlaub und Reisen e.V.}
 #' for allowing us to publish this sample.
 #' 
 #' @docType data
@@ -53,8 +53,8 @@
 #' 
 #' Forschungsgemeinschaft Urlaub und Reisen e.V. (FUR) (2020b) \emph{Survey of
 #' tourist demand in Germany for holiday travel and short breaks}. Available at:
-#' \href{https://reiseanalyse.de/wp-content/uploads/2019/08/RA2020_Infoflyer_EN.pdf}{https://reiseanalyse.de/wp-content/uploads/2019/08/RA2020_Infoflyer_EN.pdf}
-#' (accessed 22 November 2021).
+#' \href{https://reiseanalyse.de/wp-content/uploads/2022/11/RA2020_First-results_EN.pdf}{https://reiseanalyse.de/wp-content/uploads/2022/11/RA2020_First-results_EN.pdf}
+#' (accessed 13 January 2023).
 #' 
 #' @keywords datasets
 #' 

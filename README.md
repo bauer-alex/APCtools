@@ -15,11 +15,11 @@ license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://open
 Routines for Descriptive and Model-Based APC Analysis
 
   - Authors: [Alexander
-    Bauer](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/bauer1/index.html),
+    Bauer](https://github.com/bauer-alex),
     [Maximilian
     Weigert](https://www.en.stablab.stat.uni-muenchen.de/people/doktoranden/weigert/index.html),
     [Hawre
-    Jalal](https://www.publichealth.pitt.edu/home/directory/hawre-jalal)
+    Jalal](https://med.uottawa.ca/epidemiology/people/jalal-hawre)
   - Version: 1.0.4
 
 ## Aim of this Package
