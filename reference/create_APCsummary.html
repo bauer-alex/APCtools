@@ -66,7 +66,14 @@ arguments to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="ext
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_APCsummary</span><span class="op">(</span><span class="va">model_list</span>, <span class="va">dat</span>, digits <span class="op">=</span> <span class="fl">2</span>, apc_range <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_APCsummary</span><span class="op">(</span></span>
+<span>  <span class="va">model_list</span>,</span>
+<span>  <span class="va">dat</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  apc_range <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  kable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -89,7 +96,12 @@ is specified, the dataset must have been used for model estimation with
 
 
 <dt>apc_range</dt>
-<dd><p>Optional list with one or multiple elements with names
+<dd><p>Optional list with one or multiple elements with names</p></dd>
+
+
+<dt>kable</dt>
+<dd><p>Should the output be a table in kable style? Defaults to
+<code>TRUE</code>.
 <code>"age","period","cohort"</code> to filter the data. Each element should
 contain a numeric vector of values for the respective variable that should
 be kept in the data. All other values are deleted before producing the table.</p></dd>
@@ -120,7 +132,7 @@ automatically performs an exponential transformation of the effect.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bauer-alex.github.io/APCtools/" class="external-link">APCtools</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mgcv</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: nlme</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> This is mgcv 1.8-41. For overview type 'help("mgcv-package")'.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> This is mgcv 1.8-42. For overview type 'help("mgcv-package")'.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">travel</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
