@@ -12,6 +12,8 @@
 #' @inheritParams plot_jointMarginalAPCeffects
 #' @param digits Number of digits for numeric columns. Defaults to 2.
 #' @param apc_range Optional list with one or multiple elements with names
+#' @param kable Should the output be a table in kable style? Defaults to
+#' \code{TRUE}.
 #' \code{"age","period","cohort"} to filter the data. Each element should
 #' contain a numeric vector of values for the respective variable that should
 #' be kept in the data. All other values are deleted before producing the table.
@@ -43,7 +45,7 @@
 #' create_APCsummary(model_list, dat = travel)
 #' 
 create_APCsummary <- function(model_list, dat, digits = 2, apc_range = NULL,
-                              ...) {
+                              kable = TRUE, ...) {
   
   checkmate::assert_choice(class(model_list)[1], choices = c("list","gam"))
   if (class(model_list)[1] == "list") {
@@ -87,8 +89,12 @@ create_APCsummary <- function(model_list, dat, digits = 2, apc_range = NULL,
     tab <- tab %>% select(-model)
   }
   
-  
-  return(knitr::kable(tab, digits = digits, ...))
+  if (kable == TRUE) {
+    return(knitr::kable(tab, digits = digits, ...))
+  }
+  else {
+    return(tab)
+  }
 }
 
 

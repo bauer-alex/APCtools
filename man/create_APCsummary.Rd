@@ -4,7 +4,14 @@
 \alias{create_APCsummary}
 \title{Create a summary table for multiple estimated GAM models}
 \usage{
-create_APCsummary(model_list, dat, digits = 2, apc_range = NULL, ...)
+create_APCsummary(
+  model_list,
+  dat,
+  digits = 2,
+  apc_range = NULL,
+  kable = TRUE,
+  ...
+)
 }
 \arguments{
 \item{model_list}{A list of regression models estimated with
@@ -18,7 +25,10 @@ is specified, the dataset must have been used for model estimation with
 
 \item{digits}{Number of digits for numeric columns. Defaults to 2.}
 
-\item{apc_range}{Optional list with one or multiple elements with names
+\item{apc_range}{Optional list with one or multiple elements with names}
+
+\item{kable}{Should the output be a table in kable style? Defaults to
+\code{TRUE}.
 \code{"age","period","cohort"} to filter the data. Each element should
 contain a numeric vector of values for the respective variable that should
 be kept in the data. All other values are deleted before producing the table.}
