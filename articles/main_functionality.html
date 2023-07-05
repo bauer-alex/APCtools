@@ -75,7 +75,7 @@
                         <h4 data-toc-skip class="author">Alexander
 Bauer, Maximilian Weigert</h4>
             
-            <h4 data-toc-skip class="date">27.March 2023</h4>
+            <h4 data-toc-skip class="date">05.July 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bauer-alex/APCtools/blob/HEAD/vignettes/main_functionality.Rmd" class="external-link"><code>vignettes/main_functionality.Rmd</code></a></small>
       <div class="d-none name"><code>main_functionality.Rmd</code></div>
@@ -220,11 +220,18 @@ by specifying two of the arguments <code>age_groups</code>,
 <span>                   age_groups       <span class="op">=</span> <span class="va">age_groups</span>,</span>
 <span>                   period_groups    <span class="op">=</span> <span class="va">period_groups</span>,</span>
 <span>                   log_scale        <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: The `facets` argument of `facet_grid()` is deprecated as of ggplot2 2.2.0.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use the `rows` argument instead.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">APCtools</span> package.</span></span>
+<span><span class="co">##   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/bauer-alex/APCtools/issues&gt;</span>.</span></span>
+<span><span class="co">## <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-4-1.png" width="768"></p>
 <p>To highlight the effect of the variable depicted on the diagonal
 (here: cohort), different diagonals can be highlighted using argument
 <code>highlight_diagonals</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_densityMatrix.html">plot_densityMatrix</a></span><span class="op">(</span>dat                 <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                   y_var               <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span>                   age_groups          <span class="op">=</span> <span class="va">age_groups</span>,</span>
@@ -237,7 +244,7 @@ by specifying two of the arguments <code>age_groups</code>,
 the density function (arguments <code>y_var_cat_breaks</code> and
 <code>y_var_cat_labels</code>) to highlight local developments over the
 APC dimensions.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dist_cat_breaks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">500</span>,<span class="fl">1000</span>,<span class="fl">2000</span>,<span class="fl">6000</span>,<span class="fl">100000</span><span class="op">)</span></span>
 <span><span class="va">dist_cat_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt; 500 km"</span>,<span class="st">"500 - 1,000 km"</span>, <span class="st">"1,000 - 2,000 km"</span>, <span class="st">"2,000 - 6,000 km"</span>, <span class="st">"&gt; 6,000 km"</span><span class="op">)</span></span>
 <span></span>
@@ -256,7 +263,7 @@ APC dimensions.</p>
 metric variables can also be visualized using boxplots by specifying
 <code>plot_type = "boxplot"</code>. Categorical variables are
 automatically plotted using conditional bar plots.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_densityMatrix.html">plot_densityMatrix</a></span><span class="op">(</span>dat                 <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                   y_var               <span class="op">=</span> <span class="st">"household_size"</span>,</span>
 <span>                   age_groups          <span class="op">=</span> <span class="va">age_groups</span>,</span>
@@ -277,7 +284,7 @@ of a metric variable for each observed combination of age and period
 values (if <code>dimensions = c("period","age")</code>). The borders of
 groups along the diagonal can be marked using argument
 <code>markLines_list</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APCheatmap.html">plot_APCheatmap</a></span><span class="op">(</span>dat            <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                y_var          <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span>                y_var_logScale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -289,7 +296,7 @@ groups along the diagonal can be marked using argument
 and y-axis to focus on larger-scale developments. Note that the grid
 used for binning can flexibly be defined with the argument
 <code>bin_heatmapGrid_list</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APCheatmap.html">plot_APCheatmap</a></span><span class="op">(</span>dat            <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                y_var          <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span>                y_var_logScale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -310,7 +317,7 @@ to grasp than developments along the x- or y-axis. Function
 <code>plot_APCheatmap</code>. Note, however, that hexamaps are currently
 implemented using the base R plot functions and not based on
 <code>ggplot2</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APChexamap.html">plot_APChexamap</a></span><span class="op">(</span>dat            <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                y_var          <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span>                y_var_logScale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -350,7 +357,7 @@ methodological details see Weigert et al. (2021).</p>
 variables. See <code><a href="../reference/travel.html">?travel</a></code> for an explanation of the used
 variables. The tensor product surface is estimated with two marginal
 P-spline bases with eight basis functions each.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># GAM without covariates</span></span>
 <span><span class="va">model_pure</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></span><span class="op">(</span><span class="va">mainTrip_distance</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/te.html" class="external-link">te</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">period</span>, bs <span class="op">=</span> <span class="st">"ps"</span>, k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>,<span class="fl">8</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                  data <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span>
@@ -370,7 +377,7 @@ P-spline bases with eight basis functions each.</p>
 product surface estimated with the regression model can be created with
 <code>plot_APCheatmap</code>, by passing the model object as argument
 <code>model</code> to the function.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APCheatmap.html">plot_APCheatmap</a></span><span class="op">(</span>dat   <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                model <span class="op">=</span> <span class="va">model_pure</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-12-1.png" width="768"></p>
@@ -381,7 +388,7 @@ product surface estimated with the regression model can be created with
 <p>The same applies to the hexamaps. By calling
 <code>plot_APChexamap</code> and specifying the <code>model</code>
 argument, a hexamap of the estimated mean structure is created.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APChexamap.html">plot_APChexamap</a></span><span class="op">(</span>dat   <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                model <span class="op">=</span> <span class="va">model_pure</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-13-1.png" width="960"></p>
@@ -393,14 +400,14 @@ argument, a hexamap of the estimated mean structure is created.</p>
 model, marginal effects can be extracted by taking the average of all
 values on the surface along one dimension. Marginal effects can be
 visualized using <code>plot_marginalAPCeffects</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_marginalAPCeffects.html">plot_marginalAPCeffects</a></span><span class="op">(</span>model    <span class="op">=</span> <span class="va">model_pure</span>,</span>
 <span>                        dat      <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                        variable <span class="op">=</span> <span class="st">"age"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-14-1.png" width="960"></p>
 <p>The marginal effects of multiple models can also be visualized in one
 plot using <code>plot_jointMarginalAPCeffects</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_jointMarginalAPCeffects.html">plot_jointMarginalAPCeffects</a></span><span class="op">(</span>model_list  <span class="op">=</span> <span class="va">model_list</span>,</span>
 <span>                             dat         <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                             vlines_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"cohort"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1900</span>,<span class="fl">1920</span>,<span class="fl">1939</span>,</span>
@@ -422,7 +429,7 @@ focusing on a specific age, period or cohort group.</p>
 on different age groups and cohorts. See <a href="https://doi.org/10.1177/1354816620987198" class="external-link">Weigert et
 al. (2021)</a> for details on the interpretation of partial APC
 plots.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_partialAPCeffects.html">plot_partialAPCeffects</a></span><span class="op">(</span>model    <span class="op">=</span> <span class="va">model_pure</span>,</span>
 <span>                       dat      <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                       variable <span class="op">=</span> <span class="st">"period"</span><span class="op">)</span></span></code></pre></div>
@@ -435,7 +442,7 @@ plots.</p>
 compact overview of the magnitude of the individual APC effects. It
 extracts information about the minimum and maximum values of the
 marginal APC effects and computes the overall size of each effect.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_APCsummary.html">create_APCsummary</a></span><span class="op">(</span>model_list <span class="op">=</span> <span class="va">model_list</span>,</span>
 <span>                  dat        <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -523,10 +530,10 @@ the functions <code>plot_linearEffects</code> and
 <code>plot_1Dsmooth</code> which create an effect plot of all linear
 effects in a model and a line plot of a one-dimensional smooth effect,
 respectively.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">APCtools</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_linearEffects.html">plot_linearEffects</a></span><span class="op">(</span><span class="va">model_cov</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-18-1.png" width="960"></p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">APCtools</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_1Dsmooth.html">plot_1Dsmooth</a></span><span class="op">(</span><span class="va">model_cov</span>, select <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="main_functionality_files/figure-html/unnamed-chunk-18-2.png" width="960"></p>
 </div>
@@ -538,7 +545,7 @@ publication-ready tables of the full model results. It can either be
 applied to a list of multiple models or a list of a single model, and
 returns a list with both a table for all linear coefficients and all
 nonlinear estimates.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_modelSummary.html">create_modelSummary</a></span><span class="op">(</span><span class="va">model_list</span><span class="op">)</span></span>
 <span><span class="va">summary_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <table class="table">
@@ -626,7 +633,7 @@ nonlinear estimates.</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary_list</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
