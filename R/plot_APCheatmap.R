@@ -225,8 +225,8 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
       mutate(effect = as.vector(prediction$fit),
              se     = as.vector(prediction$se.fit)) %>% 
       mutate(effect = effect - mean(effect)) %>% 
-      mutate(lower  = effect - qnorm(0.95) * se,
-             upper  = effect + qnorm(0.95) * se)
+      mutate(lower  = effect - qnorm(0.975) * se,
+             upper  = effect + qnorm(0.975) * se)
     
     used_logLink <- (model$family[[2]] %in% c("log","logit")) |
       grepl("Ordered Categorical", model$family[[1]])
