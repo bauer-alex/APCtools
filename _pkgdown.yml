@@ -49,3 +49,4 @@ reference:
       - gg_highlightDiagonals
       - plot_density_categorical
       - plot_density_metric
+      - compute_marginalAPCeffects

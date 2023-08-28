@@ -9,7 +9,8 @@ plot_jointMarginalAPCeffects(
   dat,
   vlines_list = NULL,
   ylab = NULL,
-  ylim = NULL
+  ylim = NULL,
+  plot_CI = FALSE
 )
 }
 \arguments{
@@ -29,6 +30,9 @@ The list can maximally have three elements and must have names out of
 \code{c("age","period","cohort"}.}
 
 \item{ylab, ylim}{Optional ggplot2 styling arguments.}
+
+\item{plot_CI}{Indicator if 95\% confidence intervals should be plotted.
+Defaults to FALSE.}
 }
 \value{
 Plot grid created with \code{\link[ggpubr]{ggarrange}}.

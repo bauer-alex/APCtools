@@ -43,10 +43,20 @@ test_that("plot_partialAPCeffects and plot_marginalAPCeffects", {
   gg7 <- plot_marginalAPCeffects(model, dat = drug_deaths, variable = "age")
   gg8 <- plot_marginalAPCeffects(model, dat = drug_deaths, variable = "period")
   gg9 <- plot_marginalAPCeffects(model, dat = drug_deaths, variable = "cohort")
+  gg10 <- plot_marginalAPCeffects(model, dat = drug_deaths, variable = "cohort",
+                                  plot_CI = TRUE)
+  gg11 <- plot_marginalAPCeffects(model_logLink, dat = drug_deaths, variable = "cohort",
+                                  plot_CI = TRUE)
   
   expect_s3_class(gg7, class = c("gg","ggplot"))
   expect_s3_class(gg8, class = c("gg","ggplot"))
   expect_s3_class(gg9, class = c("gg","ggplot"))
+  expect_s3_class(gg10, class = c("gg", "ggplot"))
+  expect_s3_class(gg11, class = c("gg", "ggplot"))
+  
+  # warning CI with partial effects:
+  expect_warning(plot_partialAPCeffects(model, dat = drug_deaths,
+                                        variable = "age", plot_CI = TRUE))
   
   # return the dataset
   dat_list2 <- plot_marginalAPCeffects(model, dat = drug_deaths, variable = "period",
@@ -57,7 +67,6 @@ test_that("plot_partialAPCeffects and plot_marginalAPCeffects", {
   expect_identical(names(dat_list2), c("dat_overallEffect","dat_age","dat_period",
                                        "dat_cohort"))
 })
-
 
 
 test_that("plot_jointMarginalAPCeffects", {
@@ -72,9 +81,18 @@ test_that("plot_jointMarginalAPCeffects", {
   
   model_list <- list("Model A" = model1, "Model B" = model2)
   
-  gg <- plot_jointMarginalAPCeffects(model_list, dat = drug_deaths,
+  gg1 <- plot_jointMarginalAPCeffects(model_list, dat = drug_deaths,
                                      vlines_list = list("age"    = c(20,50),
                                                         "cohort" = c(1950,1980)))
+  gg2 <- plot_jointMarginalAPCeffects(model_list, dat = drug_deaths,
+                                      vlines_list = list("age"    = c(20,50),
+                                                         "cohort" = c(1950,1980)),
+                                      plot_CI = TRUE)
   
-  expect_s3_class(gg, class = c("gg","ggplot"))
+  expect_s3_class(gg1, class = c("gg","ggplot"))
+  expect_s3_class(gg2, class = c("gg","ggplot"))
 })
+
+
+
+

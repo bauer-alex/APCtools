@@ -8,6 +8,8 @@
 #' called with argument \code{hide_partialEffects = TRUE}.
 #' 
 #' @inheritParams plot_partialAPCeffects
+#' @param plot_CI Indicator if 95% confidence intervals should be plotted.
+#' Defaults to FALSE.
 #' 
 #' @return ggplot object
 #' 
@@ -36,13 +38,15 @@
 #'                         vlines_vec = c(1966.5,1982.5,1994.5))
 #' 
 plot_marginalAPCeffects <- function(model, dat, variable = "age",
-                                    vlines_vec = NULL, return_plotData = FALSE) {
+                                    vlines_vec = NULL, plot_CI = FALSE,
+                                    return_plotData = FALSE) {
   
   plot_partialAPCeffects(model               = model,
                          dat                 = dat,
                          variable            = variable,
                          hide_partialEffects = TRUE,
                          vlines_vec          = vlines_vec,
+                         plot_CI             = plot_CI,
                          return_plotData     = return_plotData)
   
 }
@@ -64,6 +68,9 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' @param vlines_vec Optional numeric vector of values on the x-axis where
 #' vertical lines should be drawn. Can be used to highlight the borders of
 #' specific age groups, time intervals or cohorts.
+#' @param plot_CI Indicator if 95% confidence intervals for marginal APC effects
+#' should be plotted. Only used if \code{hide_partialEffects} is set to TRUE.
+#'  Defaults to FALSE.
 #' @param return_plotData If TRUE, a list of the datasets prepared for plotting
 #' is returned instead of the ggplot object. The list contains one dataset each
 #' for the overall effect (= evaluations of the APC surface to plot the partial
@@ -102,18 +109,29 @@ plot_marginalAPCeffects <- function(model, dat, variable = "age",
 #' 
 plot_partialAPCeffects <- function(model, dat, variable = "age",
                                    hide_partialEffects = FALSE,
-                                   vlines_vec = NULL, return_plotData = FALSE) {
+                                   vlines_vec = NULL,
+                                   plot_CI = FALSE, 
+                                   return_plotData = FALSE) {
   
   checkmate::assert_class(model, classes = "gam")
   checkmate::assert_data_frame(dat)
   checkmate::assert_choice(variable, choices = c("age","period","cohort"))
   checkmate::assert_logical(hide_partialEffects)
   checkmate::assert_numeric(vlines_vec, min.len = 1, null.ok = TRUE)
+  checkmate::assert_logical(plot_CI)
   checkmate::assert_logical(return_plotData)
+  
+  # Warning if confidence intervals are supposed to be added when plotting
+  # partial effects:
+  if (plot_CI == TRUE & hide_partialEffects == FALSE) {
+    plot_CI <- FALSE
+    warning("Confidence intervals can only be shown for marginal effects.
+            Please specify 'hide_partialEffects == TRUE' in this case." )
+  }
   
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
-  period <- age <- effect <- cohort <- exp_effect <- value <- NULL
+  period <- age <- effect <- cohort <- exp_effect <- value <- lower <- upper <- NULL
   
   
   # create a dataset for predicting the values of the APC surface
@@ -154,21 +172,14 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
     dat_overallEffect <- dat_overallEffect %>% mutate(exp_effect = exp(effect))
   }
   
-  # calculate the mean effects per age / period / cohort
-  dat_age <- dat_overallEffect %>%
-    group_by(age) %>% summarize(effect = mean(effect)) %>% ungroup() %>%
-    mutate(variable = "Age") %>% dplyr::rename(value = age)
-  dat_period <- dat_overallEffect %>%
-    group_by(period) %>% summarize(effect = mean(effect)) %>% ungroup() %>%
-    mutate(variable   = "Period") %>% dplyr::rename(value = period)
-  dat_cohort <- dat_overallEffect %>%
-    group_by(cohort) %>% summarize(effect = mean(effect)) %>% ungroup() %>%
-    mutate(variable = "Cohort") %>% dplyr::rename(value = cohort)
-  if (used_logLink) {
-    dat_age    <- dat_age    %>% mutate(exp_effect = exp(effect))
-    dat_period <- dat_period %>% mutate(exp_effect = exp(effect))
-    dat_cohort <- dat_cohort %>% mutate(exp_effect = exp(effect))
-  }
+  # Calculate the mean effects per age / period / cohort and optionally
+  # their confidence intervals:
+  dat_age <- compute_marginal_APCeffects(dat = dat_overallEffect, model = model,
+                                         variable = "age", plot_CI = plot_CI)
+  dat_period <- compute_marginal_APCeffects(dat = dat_overallEffect, model = model,
+                                         variable = "period", plot_CI = plot_CI)
+  dat_cohort <- compute_marginal_APCeffects(dat = dat_overallEffect, model = model,
+                                         variable = "cohort", plot_CI = plot_CI)
   
   # define the theme
   theme <- theme(text             = element_text(size = 16),
@@ -185,10 +196,8 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   
   # final preparations
   if (used_logLink) {
-    dat_overallEffect <- dat_overallEffect %>% select(-effect) %>% dplyr::rename(effect = exp_effect)
-    dat_age           <- dat_age           %>% select(-effect) %>% dplyr::rename(effect = exp_effect)
-    dat_period        <- dat_period        %>% select(-effect) %>% dplyr::rename(effect = exp_effect)
-    dat_cohort        <- dat_cohort        %>% select(-effect) %>% dplyr::rename(effect = exp_effect)
+    dat_overallEffect <- dat_overallEffect %>% select(-effect) %>%
+      dplyr::rename(effect = exp_effect)
   }
   y_lab <- ifelse(used_logLink, "Exp effect", "Effect")
   
@@ -214,6 +223,14 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
     
     if (hide_partialEffects) { # plot with only the marginal age effect
       
+      if (plot_CI == TRUE) {
+        gg <- gg +
+          geom_ribbon(data = dat_age,
+                      mapping = aes(x = value, ymin = lower, ymax = upper,
+                                    fill = "")) +
+          scale_fill_manual(values = gray(0.75)) +
+          theme(legend.position = "none")
+      }
       gg_final <- gg +
         geom_line(data = dat_age, mapping = aes(x = value, y = effect)) +
         scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
@@ -256,6 +273,18 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
     
     if (hide_partialEffects) { # plot with only the marginal age effect
       
+      if (plot_CI == TRUE) {
+        gg <- gg +
+          geom_ribbon(data = dat_period,
+                      mapping = aes(x = value, ymin = lower, ymax = upper,
+                                    fill = "")) +
+          scale_fill_manual(values = gray(0.75)) +
+          theme(legend.position = "none")
+      }
+      gg_final <- gg +
+        geom_line(data = dat_age, mapping = aes(x = value, y = effect)) +
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
+        ylab(y_lab) + xlab("Age") + theme + ggtitle("Marginal age effect")
       gg_final <- gg +
         geom_line(data = dat_period, mapping = aes(x = value, y = effect)) +
         scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) + 
@@ -299,6 +328,18 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
     
     if (hide_partialEffects) { # plot with only the marginal age effect
       
+      if (plot_CI == TRUE) {
+        gg <- gg +
+          geom_ribbon(data = dat_cohort,
+                      mapping = aes(x = value, ymin = lower, ymax = upper,
+                                    fill = "")) +
+          scale_fill_manual(values = gray(0.75)) +
+          theme(legend.position = "none")
+      }
+      gg_final <- gg +
+        geom_line(data = dat_age, mapping = aes(x = value, y = effect)) +
+        scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
+        ylab(y_lab) + xlab("Age") + theme + ggtitle("Marginal age effect")
       gg_final <- gg +
         geom_line(data = dat_cohort, mapping = aes(x = value, y = effect)) +
         scale_x_continuous(guide = guide_axis(check.overlap = TRUE)) +
@@ -340,4 +381,94 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   }
   
   return(gg_final)
+}
+
+
+
+#' Internal helper to compute marginal APC effects and their
+#' confidence intervals 
+#' 
+#' Internal helper function to add lower and upper confidence boundaries
+#' pointwise
+#' 
+#' If the model was estimated with a log or logit link, the function
+#' automatically performs an exponential transformation of the effect.
+#' 
+#' @param model Model fitted with \code{\link[mgcv]{gam}} or \code{\link[mgcv]{bam}}.
+#' @param dat Dataset containing predicted effects for a grid of all APC
+#' dimensions and covariates used in the model.
+#' @param variable One of \code{c("age","period","cohort")}, specifying the
+#' temporal dimension for which the partial effect plots should be created.
+#' @param plot_CI Indicator if 95% confidence intervals for marginal APC effects
+#' should be computed. Defaults to FALSE.
+
+#' @import checkmate dplyr
+#' @importFrom mgcv summary.gam
+#' 
+compute_marginal_APCeffects <- function(dat, model, variable, plot_CI = FALSE) {
+  
+  checkmate::assert_data_frame(dat)
+  checkmate::assert_class(model, classes = "gam")
+  
+  # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
+  effect <- lower <- upper <- exp_effect <- exp_lower <- exp_upper <- NULL
+  
+  used_logLink <- (model$family[[2]] %in% c("log","logit")) |
+    grepl("Ordered Categorical", model$family[[1]])
+  
+  # Compute marginal effects:
+  dat_marginal <- dat %>% group_by(!!sym(variable)) %>%
+    summarize(effect = mean(effect)) %>% ungroup() %>%
+    mutate(variable = variable) %>% dplyr::rename(value = !!sym(variable))
+  
+  # Exponentiate effects in case of log link:
+  if (used_logLink) {
+    dat_marginal <- dat_marginal %>% mutate(exp_effect = exp(effect))
   }
+  
+  if (plot_CI == TRUE) {
+    # Compute standard error for sum of age effects:
+    se <- c()
+    for (a in sort(unique(dat[, variable]))) {
+      dat_temp <- dat %>% filter(!!sym(variable) == a)
+      pred <- mgcv::predict.gam(object  = model, newdata = dat_temp,
+                                type = "lpmatrix")
+      col1 <- rep(1, nrow(pred))
+      Xs <- t(col1) %*% pred
+      var.sum <- Xs %*% model$Vp %*% t(Xs)
+      var.mean <- var.sum / (nrow(dat_temp)^2)
+      sqrt.mean <- sqrt(var.mean)
+      se[which(sort(unique(unique(dat[, variable]))) == a)] <- sqrt.mean
+    }
+    # Compute confidence intervals:
+    dat_marginal <- dat_marginal %>%
+      mutate(se = se, lower = effect - qnorm(0.975) * se,
+             upper = effect + qnorm(0.975) * se) %>%
+      select(-se)
+    # Exponentiate boundaries in case of log link:
+    if (used_logLink) {
+      dat_marginal <- dat_marginal %>%
+        mutate(exp_lower = exp(lower), exp_upper = exp(upper))
+    }
+  }
+  
+  # Final preparations:
+  if (used_logLink) {
+    if (plot_CI == TRUE) {
+      dat_marginal <- dat_marginal %>% select(-effect, -lower, -upper) %>% 
+        dplyr::rename(effect = exp_effect, lower = exp_lower, upper = exp_upper)
+    }
+    else {
+      dat_marginal <- dat_marginal %>% select(-effect) %>% 
+        dplyr::rename(effect = exp_effect)
+    }
+  }
+
+  return(dat_marginal)
+}
+
+
+
+
+
+

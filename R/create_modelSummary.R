@@ -147,7 +147,6 @@ extract_summary_linearEffects <- function(model, method_expTransform = "simple")
     if (method_expTransform == "simple") {
       dat <- dat %>%
         mutate(coef_exp     = exp(coef),
-               #se_exp       = exp(se),
                CI_lower_exp = exp(CI_lower),
                CI_upper_exp = exp(CI_upper)) %>%
         select(param, coef, se, CI_lower, CI_upper,

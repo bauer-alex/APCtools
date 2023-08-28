@@ -26,6 +26,8 @@
 #' The list can maximally have three elements and must have names out of
 #' \code{c("age","period","cohort"}.
 #' @param ylab,ylim Optional ggplot2 styling arguments.
+#' @param plot_CI Indicator if 95% confidence intervals should be plotted.
+#' Defaults to FALSE.
 #' 
 #' @return Plot grid created with \code{\link[ggpubr]{ggarrange}}.
 #' 
@@ -58,7 +60,8 @@
 #'                              vlines_list = list("cohort" = c(1966.5,1982.5,1994.5)))
 #' 
 plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
-                                         ylab = NULL, ylim = NULL) {
+                                         ylab = NULL, ylim = NULL,
+                                         plot_CI = FALSE) {
   
   checkmate::assert_choice(class(model_list)[1], choices = c("list","gam"))
   if (class(model_list)[1] == "list") {
@@ -70,10 +73,11 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
   checkmate::assert_subset(names(vlines_list), choices = c("age","period","cohort"))
   checkmate::assert_character(ylab, len = 1, null.ok = TRUE)
   checkmate::assert_numeric(ylim, len = 2, null.ok = TRUE)
+  checkmate::assert_logical(plot_CI)
   
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
-  effect <- type <- value <- NULL
+  effect <- type <- value <- lower <- upper <- NULL
   
   
   # reformat 'model_list' to a list, if only one model object was specified
@@ -90,12 +94,19 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
   
   # retrieve datasets with the marginal effects
   datList_list <- lapply(model_list, function(x) {
-    plot_marginalAPCeffects(x, dat, return_plotData = TRUE)
+    plot_marginalAPCeffects(x, dat, plot_CI = plot_CI, return_plotData = TRUE)
   })
   
   if (is.null(ylim)) {
-    ylim <- lapply(datList_list, function(x) { dplyr::bind_rows(x) }) %>% 
-      dplyr::bind_rows() %>% pull(effect) %>% range()
+    if (plot_CI == TRUE) {
+      ylim <- lapply(datList_list, function(x) { dplyr::bind_rows(x) }) %>% 
+        dplyr::bind_rows() %>% select(effect, lower, upper) %>%
+        range(na.rm = TRUE)
+    }
+    else {
+      ylim <- lapply(datList_list, function(x) { dplyr::bind_rows(x) }) %>% 
+        dplyr::bind_rows() %>% pull(effect) %>% range()
+    }
   }
   
   used_logLink <- (model_list[[1]]$family[[2]] %in% c("log","logit")) |
@@ -118,7 +129,15 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
   }
   
   gg_age <- gg_age +
-    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
+    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2)
+  
+  if (plot_CI == TRUE) {
+    gg_age <- gg_age +
+      geom_ribbon(data = dat_age,
+                  mapping = aes(x = value, ymin = lower, ymax = upper,
+                                fill = type), alpha = 0.2)
+  }
+  gg_age <- gg_age +
     geom_line(data = dat_age, aes(x = value, y = effect, col = type)) +
     xlab("Age") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
@@ -136,7 +155,15 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
   }
   
   gg_period <- gg_period +
-    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
+    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2)
+  
+  if (plot_CI == TRUE) {
+    gg_period <- gg_period +
+      geom_ribbon(data = dat_period,
+                  mapping = aes(x = value, ymin = lower, ymax = upper,
+                                fill = type), alpha = 0.2)
+  }
+  gg_period <- gg_period +
     geom_line(data = dat_period, aes(x = value, y = effect, col = type)) +
     xlab("Period") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),
@@ -157,7 +184,15 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
   }
   
   gg_cohort <- gg_cohort +
-    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2) +
+    geom_hline(yintercept = ifelse(used_logLink, 1, 0), col = gray(0.3), lty = 2)
+  
+  if (plot_CI == TRUE) {
+    gg_cohort <- gg_cohort +
+      geom_ribbon(data = dat_cohort,
+                  mapping = aes(x = value, ymin = lower, ymax = upper,
+                                fill = type), alpha = 0.2)
+  }
+  gg_cohort <- gg_cohort +
     geom_line(data = dat_cohort, aes(x = value, y = effect, col = type)) +
     xlab("Cohort") +
     scale_y_continuous(trans = ifelse(used_logLink, "log2", "identity"),

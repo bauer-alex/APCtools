@@ -98,11 +98,9 @@ plot_linearEffects <- function(model, variables = NULL,
                             plot_dat[min_index:nrow(plot_dat), ])
           plot_dat <- plot_dat %>%
             mutate(coef = as.numeric(coef),
-                   #se = as.numeric(se),
                    CI_lower = as.numeric(CI_lower),
                    CI_upper = as.numeric(CI_upper),
                    coef_exp = as.numeric(coef_exp),
-                   #se_exp = as.numeric(se_exp),
                    CI_lower_exp = as.numeric(CI_lower_exp),
                    CI_upper_exp = as.numeric(CI_upper_exp),
                    value = as.numeric(pvalue))

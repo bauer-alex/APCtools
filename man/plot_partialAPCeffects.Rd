@@ -10,6 +10,7 @@ plot_partialAPCeffects(
   variable = "age",
   hide_partialEffects = FALSE,
   vlines_vec = NULL,
+  plot_CI = FALSE,
   return_plotData = FALSE
 )
 }
@@ -33,6 +34,10 @@ Defaults to FALSE.}
 \item{vlines_vec}{Optional numeric vector of values on the x-axis where
 vertical lines should be drawn. Can be used to highlight the borders of
 specific age groups, time intervals or cohorts.}
+
+\item{plot_CI}{Indicator if 95\% confidence intervals for marginal APC effects
+should be plotted. Only used if \code{hide_partialEffects} is set to TRUE.
+Defaults to FALSE.}
 
 \item{return_plotData}{If TRUE, a list of the datasets prepared for plotting
 is returned instead of the ggplot object. The list contains one dataset each

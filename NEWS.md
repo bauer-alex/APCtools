@@ -1,3 +1,10 @@
+# APCtools 1.0.5 (2023-08)
+
+- Added option to plot 95% confidence intervals for marginal APC effects
+in `plot_marginalAPCeffects` and `plot_jointMarginalAPCeffects`
+- Added simple exponentiation of boundaries as second and default option for
+confidence intervals with log link also to `plot_APCheatmap` 
+
 # APCtools 1.0.4 (2022-12)
 
 - Fixed a bug in `plot_1Dsmooth`, which caused the confidence bounds to be twice as wide as they should be (on the level of the linear predictor)

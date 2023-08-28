@@ -9,6 +9,7 @@ plot_marginalAPCeffects(
   dat,
   variable = "age",
   vlines_vec = NULL,
+  plot_CI = FALSE,
   return_plotData = FALSE
 )
 }
@@ -29,6 +30,9 @@ temporal dimension for which the partial effect plots should be created.}
 \item{vlines_vec}{Optional numeric vector of values on the x-axis where
 vertical lines should be drawn. Can be used to highlight the borders of
 specific age groups, time intervals or cohorts.}
+
+\item{plot_CI}{Indicator if 95\% confidence intervals should be plotted.
+Defaults to FALSE.}
 
 \item{return_plotData}{If TRUE, a list of the datasets prepared for plotting
 is returned instead of the ggplot object. The list contains one dataset each
