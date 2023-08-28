@@ -12,7 +12,7 @@ additive regression model with gam or bam."><!-- mathjax --><script src="https:/
     
     <a class="navbar-brand me-2" href="../index.html">APCtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,6 +66,7 @@ additive regression model with <code><a href="https://rdrr.io/pkg/mgcv/man/gam.h
 <span>  variable <span class="op">=</span> <span class="st">"age"</span>,</span>
 <span>  hide_partialEffects <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vlines_vec <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot_CI <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_plotData <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -100,6 +101,12 @@ Defaults to FALSE.</p></dd>
 <dd><p>Optional numeric vector of values on the x-axis where
 vertical lines should be drawn. Can be used to highlight the borders of
 specific age groups, time intervals or cohorts.</p></dd>
+
+
+<dt>plot_CI</dt>
+<dd><p>Indicator if 95% confidence intervals for marginal APC effects
+should be plotted. Only used if <code>hide_partialEffects</code> is set to TRUE.
+Defaults to FALSE.</p></dd>
 
 
 <dt>return_plotData</dt>

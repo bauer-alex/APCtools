@@ -14,7 +14,7 @@ cohort effect, each containing one lines for each estimated model."><!-- mathjax
     
     <a class="navbar-brand me-2" href="../index.html">APCtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,8 @@ cohort effect, each containing one lines for each estimated model.</p>
 <span>  <span class="va">dat</span>,</span>
 <span>  vlines_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ylab <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  ylim <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  ylim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot_CI <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -97,6 +98,11 @@ The list can maximally have three elements and must have names out of
 
 <dt>ylab, ylim</dt>
 <dd><p>Optional ggplot2 styling arguments.</p></dd>
+
+
+<dt>plot_CI</dt>
+<dd><p>Indicator if 95% confidence intervals should be plotted.
+Defaults to FALSE.</p></dd>
 
 </dl></div>
     <div class="section level2">
