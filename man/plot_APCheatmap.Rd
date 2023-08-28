@@ -16,6 +16,7 @@ plot_APCheatmap(
   markLines_displayLabels = c("age", "period", "cohort"),
   y_var_logScale = FALSE,
   plot_CI = TRUE,
+  method_expTransform = "simple",
   legend_limits = NULL
 )
 }
@@ -67,6 +68,13 @@ Only used if \code{y_var} is specified. Defaults to FALSE.}
 
 \item{plot_CI}{Indicator if the confidence intervals should be plotted.
 Only used if \code{y_var} is not specified. Defaults to TRUE.}
+
+\item{method_expTransform}{One of \code{c("simple","delta")}, stating if
+confidence interval limits should be transformed by
+a simple exp transformation or using the delta method. The delta method can
+be unstable in situations and lead to negative confidence interval limits.
+Only used when the model was estimated with a log or logit link and
+confidence intervals are supposed to be plotted. Defaults to \code{simple}.}
 
 \item{legend_limits}{Optional numeric vector passed as argument \code{limits}
 to \code{\link[ggplot2]{scale_fill_gradient2}}.}

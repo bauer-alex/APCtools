@@ -17,10 +17,17 @@ test_that("plot_APCheatmap", {
                                                "period" = c(1990,2010),
                                                "cohort" = c(1985,1993)),
                          apc_range = list("cohort" = 1980:2010))
+  gg4 <- plot_APCheatmap(dat = drug_deaths, y_var = "mortality_rate",
+                         markLines_list = list("age"    = c(20,70),
+                                               "period" = c(1990,2010),
+                                               "cohort" = c(1985,1993)),
+                         apc_range = list("cohort" = 1980:2010),
+                         plot_CI = FALSE)
   
   expect_s3_class(gg1, class = c("gg","ggplot"))
   expect_s3_class(gg2, class = c("gg","ggplot"))
   expect_s3_class(gg3, class = c("gg","ggplot"))
+  expect_s3_class(gg4, class = c("gg","ggplot"))
   
   
   # plot heatmap of smoothed structure
@@ -31,9 +38,12 @@ test_that("plot_APCheatmap", {
   
   gg1 <- plot_APCheatmap(dat = drug_deaths, model = model)
   gg2 <- plot_APCheatmap(dat = drug_deaths, model = model_logLink)
+  gg3 <- plot_APCheatmap(dat = drug_deaths, model = model_logLink,
+                         method_expTransform = "delta")
   
   expect_s3_class(gg1, class = c("gg","ggplot"))
   expect_s3_class(gg2, class = c("gg","ggplot"))
+  expect_s3_class(gg3, class = c("gg","ggplot"))
 })
 
 
