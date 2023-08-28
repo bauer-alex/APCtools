@@ -174,11 +174,11 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
   
   # Calculate the mean effects per age / period / cohort and optionally
   # their confidence intervals:
-  dat_age <- compute_marginal_APCeffects(dat = dat_overallEffect, model = model,
+  dat_age <- compute_marginalAPCeffects(dat = dat_overallEffect, model = model,
                                          variable = "age", plot_CI = plot_CI)
-  dat_period <- compute_marginal_APCeffects(dat = dat_overallEffect, model = model,
+  dat_period <- compute_marginalAPCeffects(dat = dat_overallEffect, model = model,
                                          variable = "period", plot_CI = plot_CI)
-  dat_cohort <- compute_marginal_APCeffects(dat = dat_overallEffect, model = model,
+  dat_cohort <- compute_marginalAPCeffects(dat = dat_overallEffect, model = model,
                                          variable = "cohort", plot_CI = plot_CI)
   
   # define the theme
@@ -405,7 +405,7 @@ plot_partialAPCeffects <- function(model, dat, variable = "age",
 #' @import checkmate dplyr
 #' @importFrom mgcv summary.gam
 #' 
-compute_marginal_APCeffects <- function(dat, model, variable, plot_CI = FALSE) {
+compute_marginalAPCeffects <- function(dat, model, variable, plot_CI = FALSE) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_class(model, classes = "gam")
