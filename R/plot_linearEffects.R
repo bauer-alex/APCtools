@@ -59,6 +59,15 @@ plot_linearEffects <- function(model, variables = NULL,
   # extract model information
   plot_dat <- extract_summary_linearEffects(model, ...) %>%
     mutate(param = as.character(param))
+  if (used_logLink == FALSE) {
+    plot_dat <- plot_dat %>%
+      dplyr::select(param, coef, CI_lower, CI_upper, pvalue)
+  }
+  else {
+    plot_dat <- plot_dat %>%
+      dplyr::select(param, coef, CI_lower, CI_upper, coef_exp, CI_lower_exp,
+                    CI_upper_exp, pvalue)
+  }
   plot_dat$vargroup <- NA
   
   # categorize the coefficients in groups (one for each variable)
@@ -75,24 +84,25 @@ plot_linearEffects <- function(model, variables = NULL,
         ref <- varnames[!(varnames %in% plot_dat$param)]
         min_index <- which(plot_dat$param %in% varnames)[1]
         if (used_logLink == FALSE) {
-          new_row <- c(ref, 0, 0, 0, 0, 0, i)
+          new_row <- c(ref, 0, 0, 0, 0, i)
           plot_dat <- rbind(plot_dat[1:(min_index - 1), ], new_row,
                             plot_dat[min_index:nrow(plot_dat), ])
           plot_dat <- plot_dat %>%
-            mutate(coef = as.numeric(coef), se = as.numeric(se),
+            mutate(coef = as.numeric(coef), #se = as.numeric(se),
                    CI_lower = as.numeric(CI_lower),
                    CI_upper = as.numeric(CI_upper), pvalue = as.numeric(pvalue))
         }
         else {
-          new_row <- c(ref, 0, 0, 0, 0, 1, 0, 1, 1, 0, i)
+          new_row <- c(ref, 0, 0, 0, 1, 0, 1, 0, i)
           plot_dat <- rbind(plot_dat[1:(min_index - 1), ], new_row,
                             plot_dat[min_index:nrow(plot_dat), ])
           plot_dat <- plot_dat %>%
-            mutate(coef = as.numeric(coef), se = as.numeric(se),
+            mutate(coef = as.numeric(coef),
+                   #se = as.numeric(se),
                    CI_lower = as.numeric(CI_lower),
                    CI_upper = as.numeric(CI_upper),
                    coef_exp = as.numeric(coef_exp),
-                   se_exp = as.numeric(se_exp),
+                   #se_exp = as.numeric(se_exp),
                    CI_lower_exp = as.numeric(CI_lower_exp),
                    CI_upper_exp = as.numeric(CI_upper_exp),
                    value = as.numeric(pvalue))
@@ -137,8 +147,7 @@ plot_linearEffects <- function(model, variables = NULL,
       plot_dat$CI_lower_exp[plot_dat$CI_lower_exp < 0] <- 0.01
     }
     
-    plot_dat <- plot_dat %>% select(-coef, -se, -CI_lower, -CI_upper) #%>%
-      #dplyr::rename(coef = coef_exp, CI_lower = CI_lower_exp, CI_upper = CI_upper_exp)
+    plot_dat <- plot_dat %>% select(-coef, -CI_lower, -CI_upper) 
   }
   
   if (return_plotData) {

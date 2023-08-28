@@ -147,11 +147,11 @@ extract_summary_linearEffects <- function(model, method_expTransform = "simple")
     if (method_expTransform == "simple") {
       dat <- dat %>%
         mutate(coef_exp     = exp(coef),
-               se_exp       = exp(se),
+               #se_exp       = exp(se),
                CI_lower_exp = exp(CI_lower),
                CI_upper_exp = exp(CI_upper)) %>%
         select(param, coef, se, CI_lower, CI_upper,
-               coef_exp, se_exp, CI_lower_exp, CI_upper_exp, pvalue)
+               coef_exp, CI_lower_exp, CI_upper_exp, pvalue)
       
     } else { # method_expTransform == "delta"
       # confidence intervals on exp scale are computed based on delta method
