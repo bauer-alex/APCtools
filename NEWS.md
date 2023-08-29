@@ -3,7 +3,8 @@
 - Added option to plot 95% confidence intervals for marginal APC effects
 in `plot_marginalAPCeffects` and `plot_jointMarginalAPCeffects`
 - Added simple exponentiation of boundaries as second and default option for
-confidence intervals with log link also to `plot_APCheatmap` 
+confidence intervals with log link also to `plot_APCheatmap`
+- Fixed a bug in the handling of missing values for APC variables in `plot_APCheatmap`
 
 # APCtools 1.0.4 (2022-12)
 
