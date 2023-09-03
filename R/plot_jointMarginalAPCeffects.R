@@ -207,6 +207,11 @@ plot_jointMarginalAPCeffects <- function(model_list, dat, vlines_list = NULL,
     gg_age    <- gg_age    + scale_color_manual(values = gray(0.2))
     gg_period <- gg_period + scale_color_manual(values = gray(0.2))
     gg_cohort <- gg_cohort + scale_color_manual(values = gray(0.2))
+    if (plot_CI == TRUE) {
+      gg_age    <- gg_age    + scale_fill_manual(values = gray(0.2))
+      gg_period <- gg_period + scale_fill_manual(values = gray(0.2))
+      gg_cohort <- gg_cohort + scale_fill_manual(values = gray(0.2))
+    }
   }
   
   # joint plot
