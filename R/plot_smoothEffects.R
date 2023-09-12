@@ -157,15 +157,8 @@ get_plotGAMobject <- function(model) {
   
   checkmate::assert_class(model, classes = "gam")
   
-  
-  # Idea: Save the plot in a temporal png file, which is deleted right
-  #       afterwards.
-  png("temp.png")
-  # plot.gam returns all terms by default, select and rug are set only to decrease evaluation time
-  plot.df <- mgcv::plot.gam(model, select = 1, rug = FALSE)
-  dev.off()
-  unlink("temp.png", recursive = TRUE)
-  
+  # Extract plot object:
+  plot.df <- mgcv::plot.gam(model, select = 0, rug = FALSE)
   # delete 'raw' elements as they are very large but not necessary for plotting the effects
   plot.df <- lapply(plot.df, function(x) {
     x$raw <- NULL
