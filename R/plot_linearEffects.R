@@ -93,7 +93,7 @@ plot_linearEffects <- function(model, variables = NULL,
                    CI_upper = as.numeric(CI_upper), pvalue = as.numeric(pvalue))
         }
         else {
-          new_row <- c(ref, 0, 0, 0, 1, 0, 1, 0, i)
+          new_row <- c(ref, 0, 0, 0, 1, 1, 1, 0, i)
           plot_dat <- rbind(plot_dat[1:(min_index - 1), ], new_row,
                             plot_dat[min_index:nrow(plot_dat), ])
           plot_dat <- plot_dat %>%
