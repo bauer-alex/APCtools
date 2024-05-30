@@ -1,3 +1,7 @@
+# APCtools 1.0.6 (2024-05)
+
+- Added argument `legend_title` to `plot_APCheatmap`.
+
 # APCtools 1.0.5 (2023-08)
 
 - Added option to plot 95% confidence intervals for marginal APC effects

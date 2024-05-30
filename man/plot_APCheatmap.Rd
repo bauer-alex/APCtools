@@ -17,7 +17,8 @@ plot_APCheatmap(
   y_var_logScale = FALSE,
   plot_CI = TRUE,
   method_expTransform = "simple",
-  legend_limits = NULL
+  legend_limits = NULL,
+  legend_title = NULL
 )
 }
 \arguments{
@@ -78,6 +79,8 @@ confidence intervals are supposed to be plotted. Defaults to \code{simple}.}
 
 \item{legend_limits}{Optional numeric vector passed as argument \code{limits}
 to \code{\link[ggplot2]{scale_fill_gradient2}}.}
+
+\item{legend_title}{Optional character legend title.}
 }
 \value{
 Plot grid created with \code{\link[ggpubr]{ggarrange}} (if

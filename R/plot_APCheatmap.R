@@ -61,6 +61,7 @@
 #' confidence intervals are supposed to be plotted. Defaults to \code{simple}.
 #' @param legend_limits Optional numeric vector passed as argument \code{limits}
 #' to \code{\link[ggplot2]{scale_fill_gradient2}}.
+#' @param legend_title Optional character legend title.
 #' 
 #' @return Plot grid created with \code{\link[ggpubr]{ggarrange}} (if
 #' \code{plot_CI} is TRUE) or a \code{ggplot2} object (if \code{plot_CI} is
@@ -133,7 +134,7 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
                             markLines_displayLabels = c("age","period","cohort"),
                             y_var_logScale = FALSE, plot_CI = TRUE,
                             method_expTransform = "simple",
-                            legend_limits = NULL) {
+                            legend_limits = NULL, legend_title = NULL) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_true(!is.null(y_var) | !is.null(model))
@@ -156,8 +157,9 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   checkmate::assert_subset(markLines_displayLabels, choices = c("age","period","cohort"))
   checkmate::assert_logical(y_var_logScale, len = 1)
   checkmate::assert_logical(plot_CI, len = 1)
-  checkmate::assert_numeric(legend_limits, len = 2, null.ok = TRUE)
   checkmate::assert_choice(method_expTransform, choices = c("simple","delta"))
+  checkmate::assert_numeric(legend_limits, len = 2, null.ok = TRUE)
+  checkmate::assert_character(legend_title, len = 1, null.ok = TRUE)
   
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
@@ -197,8 +199,10 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
     
     plot_CI      <- FALSE
     used_logLink <- FALSE
-    legend_title <- ifelse(!y_var_logScale, paste0("average ",y_var),
-                           paste0("average log10(",y_var,")"))
+    if (is.null(legend_title)) {
+      legend_title <- ifelse(!y_var_logScale, paste0("average ",y_var),
+                             paste0("average log10(",y_var,")"))
+    }
     y_trans      <- "identity"
     
     
@@ -238,7 +242,9 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
     
     used_logLink <- (model$family[[2]] %in% c("log","logit")) |
       grepl("Ordered Categorical", model$family[[1]])
-    legend_title <- ifelse(used_logLink, "Mean exp effect", "Mean effect")
+    if (is.null(legend_title)) {
+      legend_title <- ifelse(used_logLink, "Mean exp effect", "Mean effect")
+    }
     y_trans      <- ifelse(used_logLink, "log", "identity")
     
     # Create lower and upper confidence surfaces:
