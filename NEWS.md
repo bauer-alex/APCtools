@@ -1,3 +1,7 @@
+# APCtools 1.0.7 (2025-03)
+
+- Slightly optimized the `plot_hexamap` plot borders by adding `xpd = TRUE` to `par()`.
+
 # APCtools 1.0.6 (2024-05)
 
 - Added argument `legend_title` to `plot_APCheatmap`.
