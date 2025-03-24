@@ -1,114 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/main_functionality.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/calc_density.html</loc>
-  </url>
-  <url>
-    <loc>/reference/capitalize_firstLetter.html</loc>
-  </url>
-  <url>
-    <loc>/reference/compute_marginalAPCeffects.html</loc>
-  </url>
-  <url>
-    <loc>/reference/compute_xCoordinate.html</loc>
-  </url>
-  <url>
-    <loc>/reference/compute_yCoordinate.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_APCsummary.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_groupVariable.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_highlightDiagonalData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_modelSummary.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_oneAPCsummaryTable.html</loc>
-  </url>
-  <url>
-    <loc>/reference/drug_deaths.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ensure_segmentsInPlotRange.html</loc>
-  </url>
-  <url>
-    <loc>/reference/extract_summary_linearEffects.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_plotGAMobject.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gg_addReferenceLines.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gg_highlightDiagonals.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_1Dsmooth.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_APCheatmap.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_APChexamap.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_density.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_densityMatrix.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_density_categorical.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_density_metric.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_jointMarginalAPCeffects.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_linearEffects.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_marginalAPCeffects.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_partialAPCeffects.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_variable.html</loc>
-  </url>
-  <url>
-    <loc>/reference/travel.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/main_functionality.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/calc_density.html</loc></url>
+<url><loc>/reference/capitalize_firstLetter.html</loc></url>
+<url><loc>/reference/compute_marginalAPCeffects.html</loc></url>
+<url><loc>/reference/compute_xCoordinate.html</loc></url>
+<url><loc>/reference/compute_yCoordinate.html</loc></url>
+<url><loc>/reference/create_APCsummary.html</loc></url>
+<url><loc>/reference/create_groupVariable.html</loc></url>
+<url><loc>/reference/create_highlightDiagonalData.html</loc></url>
+<url><loc>/reference/create_modelSummary.html</loc></url>
+<url><loc>/reference/create_oneAPCsummaryTable.html</loc></url>
+<url><loc>/reference/drug_deaths.html</loc></url>
+<url><loc>/reference/ensure_segmentsInPlotRange.html</loc></url>
+<url><loc>/reference/extract_summary_linearEffects.html</loc></url>
+<url><loc>/reference/get_plotGAMobject.html</loc></url>
+<url><loc>/reference/gg_addReferenceLines.html</loc></url>
+<url><loc>/reference/gg_highlightDiagonals.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/plot_1Dsmooth.html</loc></url>
+<url><loc>/reference/plot_APCheatmap.html</loc></url>
+<url><loc>/reference/plot_APChexamap.html</loc></url>
+<url><loc>/reference/plot_density.html</loc></url>
+<url><loc>/reference/plot_densityMatrix.html</loc></url>
+<url><loc>/reference/plot_density_categorical.html</loc></url>
+<url><loc>/reference/plot_density_metric.html</loc></url>
+<url><loc>/reference/plot_jointMarginalAPCeffects.html</loc></url>
+<url><loc>/reference/plot_linearEffects.html</loc></url>
+<url><loc>/reference/plot_marginalAPCeffects.html</loc></url>
+<url><loc>/reference/plot_partialAPCeffects.html</loc></url>
+<url><loc>/reference/plot_variable.html</loc></url>
+<url><loc>/reference/travel.html</loc></url>
 </urlset>
+
