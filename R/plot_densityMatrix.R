@@ -228,7 +228,7 @@ plot_densityMatrix <- function(dat, y_var, dimensions = c("period","age"),
                      log_scale           = log_scale,
                      legend_title        = legend_title,
                      ...) +
-    facet_grid(facets = facet_formula, switch = "y") +
+    facet_grid(rows = facet_formula, switch = "y") +
     labs(subtitle = x_lab, x = main_lab, y = y_lab) +
     theme(axis.text.y       = element_blank(),
           axis.ticks.y      = element_blank(),

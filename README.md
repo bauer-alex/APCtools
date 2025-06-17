@@ -17,7 +17,7 @@ Routines for Descriptive and Model-Based APC Analysis
 - Authors: [Alexander Bauer](https://github.com/bauer-alex), Maximilian
   Weigert, [Hawre
   Jalal](https://med.uottawa.ca/epidemiology/people/jalal-hawre)
-- Version: 1.0.7
+- Version: 1.0.8
 
 ## Aim of this Package
 

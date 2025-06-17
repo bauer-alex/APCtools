@@ -218,10 +218,14 @@ plot_density_metric <- function(dat, y_var, plot_type = "density",
     }
     
     gg <- gg +
-      ylab(ylab) + labs(fill = legend_title) +
+      ylab(ylab) + 
       scale_x_continuous(xlab, labels = label_function, limits = xlim,
                          guide = guide_axis(check.overlap = TRUE)) +
       theme(legend.position = "bottom")
+    
+    if (!is.null(legend_title)) {
+      gg <- gg + labs(fill = legend_title)
+    }
     
   } else { # plot_type == "boxplot"
     
@@ -269,7 +273,7 @@ plot_density_categorical <- function(dat, y_var, dat_highlightDiagonals = NULL,
                                      ylab = NULL) {
   
   # some NULL definitions to appease CRAN checks regarding use of dplyr/ggplot2
-  x <- weight <- ..count.. <- NULL
+  x <- weight <- NULL
   
   
   # make sure the main variable is encoded as factor
@@ -300,7 +304,7 @@ plot_density_categorical <- function(dat, y_var, dat_highlightDiagonals = NULL,
   
   # main plot
   gg <- gg +
-    geom_bar(data = dat, aes(x = x, y = ..count../sum(..count..),
+    geom_bar(data = dat, aes(x = x, y = after_stat(count),
                              weight = weight, fill = x)) +
     scale_fill_brewer(y_var, palette = "Set2") +
     xlab(xlab) + ylab(ylab) +

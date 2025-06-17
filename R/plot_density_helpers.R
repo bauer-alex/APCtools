@@ -121,7 +121,7 @@ gg_highlightDiagonals <- function(gg, dat, dat_highlightDiagonals) {
   
   gg <- gg +
     geom_rect(data = dat_highlightDiagonals, aes(col = col_group),
-              size = 2, fill = "transparent",
+              linewidth = 2, fill = "transparent",
               xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) +
     scale_color_manual(diag_dimension, values = col_vector)
   

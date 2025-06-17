@@ -1,3 +1,7 @@
+# APCtools 1.0.8 (2025-06)
+
+- updated some ggplot2 dependencies in the plot_density functions to prevent the use of now deprecated ggplot2 arguments
+
 # APCtools 1.0.7 (2025-03)
 
 - Slightly optimized the `plot_hexamap` plot borders by adding `xpd = TRUE` to `par()`.
