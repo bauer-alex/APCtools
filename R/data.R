@@ -103,8 +103,8 @@
 #' released in 2020. Data are from the Multiple Cause of Death Files, 1999-2019,
 #' as compiled from data provided by the 57 vital statistics jurisdictions
 #' through the Vital Statistics Cooperative Program. Accessed at
-#' \href{http://wonder.cdc.gov/ucd-icd10.html}{wonder.cdc.gov/ucd-icd10.html}
-#' on 6 December 2021.
+#' \href{https://wonder.cdc.gov/ucd-icd10.html}{wonder.cdc.gov/ucd-icd10.html}
+#' on 18 June 2025.
 #' 
 #' @keywords datasets
 #' 
