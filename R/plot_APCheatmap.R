@@ -62,6 +62,8 @@
 #' @param legend_limits Optional numeric vector passed as argument \code{limits}
 #' to \code{\link[ggplot2]{scale_fill_gradient2}}.
 #' @param legend_title Optional character legend title.
+#' @param return_data Defaults to FALSE. If set to TRUE no plot will be
+#' generated and instead the dataset prepared for plotting will be returned.
 #' 
 #' @return Plot grid created with \code{\link[ggpubr]{ggarrange}} (if
 #' \code{plot_CI} is TRUE) or a \code{ggplot2} object (if \code{plot_CI} is
@@ -134,7 +136,8 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
                             markLines_displayLabels = c("age","period","cohort"),
                             y_var_logScale = FALSE, plot_CI = TRUE,
                             method_expTransform = "simple",
-                            legend_limits = NULL, legend_title = NULL) {
+                            legend_limits = NULL, legend_title = NULL,
+                            return_data = FALSE) {
   
   checkmate::assert_data_frame(dat)
   checkmate::assert_true(!is.null(y_var) | !is.null(model))
@@ -336,6 +339,10 @@ plot_APCheatmap <- function(dat, y_var = NULL, model = NULL,
   x_lab <- capitalize_firstLetter(dimensions[1])
   y_lab <- capitalize_firstLetter(dimensions[2])
   
+  # return the data prepared for plotting
+  if (return_data) {
+    return(plot_dat)
+  }
   
   # overall theme
   gg_theme <- theme(plot.title       = element_text(hjust = 0.5),

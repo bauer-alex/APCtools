@@ -1,3 +1,7 @@
+# APCtools 1.0.9 (2026-10)
+
+- added argument `return_data` to function `plot_APCheatmap`.
+
 # APCtools 1.0.8 (2025-06)
 
 - updated some ggplot2 dependencies in the plot_density functions to prevent the use of now deprecated ggplot2 arguments

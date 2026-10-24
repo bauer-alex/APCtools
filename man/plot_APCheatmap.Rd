@@ -18,7 +18,8 @@ plot_APCheatmap(
   plot_CI = TRUE,
   method_expTransform = "simple",
   legend_limits = NULL,
-  legend_title = NULL
+  legend_title = NULL,
+  return_data = FALSE
 )
 }
 \arguments{
@@ -81,6 +82,9 @@ confidence intervals are supposed to be plotted. Defaults to \code{simple}.}
 to \code{\link[ggplot2]{scale_fill_gradient2}}.}
 
 \item{legend_title}{Optional character legend title.}
+
+\item{return_data}{Defaults to FALSE. If set to TRUE no plot will be
+generated and instead the dataset prepared for plotting will be returned.}
 }
 \value{
 Plot grid created with \code{\link[ggpubr]{ggarrange}} (if
