@@ -1,0 +1,198 @@
+# APCtools ![](reference/figures/hex-sticker/hex-sticker.svg)
+
+Routines for Descriptive and Model-Based APC Analysis
+
+- Authors: [Alexander Bauer](https://github.com/bauer-alex), Maximilian
+  Weigert, [Hawre
+  Jalal](https://www.uottawa.ca/faculty-medicine/dr-hawre-jalal)
+- Version: 1.0.8
+
+## Aim of this Package
+
+Age-Period-Cohort (APC) analysis aims to determine relevant drivers for
+long-term developments and is used in many fields of science. The main
+focus is on disentangling the interconnected effects of age, period, and
+cohort. Long-term developments of some characteristic can either be
+associated with changes in a person’s life cycle (age), macro-level
+developments over the years that simultaneously affect all age groups
+(period), or the generational membership of an individual, shaped by
+similar socialization processes and historical experiences (cohort). The
+critical challenge in APC analysis is the linear dependency of the
+components age, period, and cohort (cohort = period - age). Accordingly,
+flexible methods and visualization techniques are needed to properly
+disentangle observed temporal association structures.
+
+In contrast to other software packages, `APCtools` builds on a flexible
+and robust semiparametric regression approach to circumvent this
+identification problem. The package includes modern visualization
+techniques and general routines to facilitate the interpretability of
+the estimated temporal structures and simplify the workflow of an APC
+analysis.
+
+## Main Functionality
+
+Sophisticated functions are available both for descriptive and
+regression model-based analyses. For the former, we use density (or
+ridgeline) matrices, classical heatmaps and *hexamaps* (hexagonally
+binned heatmaps) as innovative visualization techniques building on the
+concept of Lexis diagrams. Model-based analyses build on the separation
+of the temporal dimensions based on generalized additive models, where a
+tensor product interaction surface (usually between age and period) is
+utilized to represent the third dimension (usually cohort) on its
+diagonal. Such tensor product surfaces can also be estimated while
+accounting for further covariates in the regression model.
+
+## Documentation and Useful Materials
+
+- To get an overview of the functionalities of the package, check out
+  the [JOSS
+  publication](https://joss.theoj.org/papers/10.21105/joss.04056) or the
+  [package
+  vignette](https://bauer-alex.github.io/APCtools/articles/main_functionality.html).
+
+- See [Weigert et al. (2021)](https://doi.org/10.1177/1354816620987198)
+  or our corresponding [research
+  poster](https://www.researchgate.net/publication/353852226_Visualization_techniques_for_semiparametric_APC_analysis_Using_Generalized_Additive_Models_to_examine_touristic_travel_distances)
+  for methodological details.
+
+- Hexamaps as a concept for the visualization of APC structures are
+  outlined in [Jalal & Burke
+  (2020)](https://doi.org/10.1097/EDE.0000000000001236).
+
+## Installation
+
+The most current version from GitHub can be installed via
+
+``` r
+
+devtools::install_github("bauer-alex/APCtools")
+```
+
+## How to Contribute
+
+If you encounter problems with the package, find bugs or have
+suggestions for additional functionalities please open a [GitHub
+issue](https://github.com/bauer-alex/APCtools/issues). Alternatively,
+feel free to contact us directly via email.
+
+Contributions (via pull requests or otherwise) are welcome. Before you
+open a pull request or share your updates with us, please make sure that
+all unit tests pass without errors or warning messages. You can run the
+unit tests by calling
+
+``` r
+
+devtools::test()
+```
+
+## References
+
+Bauer, A., Weigert, M., and Jalal, H. (2022). APCtools: Descriptive and
+Model-based Age-Period-Cohort Analysis. Journal of Open Source Software,
+7(73), 4056, <https://doi.org/10.21105/joss.04056>.
+
+Weigert, M., Bauer, A., Gernert, J., Karl, M., Nalmpatian, A.,
+Küchenhoff, H., and Schmude, J. (2021). Semiparametric APC analysis of
+destination choice patterns: Using generalized additive models to
+quantify the impact of age, period, and cohort on travel distances.
+*Tourism Economics*. <https://doi.org/10.1177/1354816620987198>.
+
+Jalal, H., Burke, D. (2020). Hexamaps for Age–Period–Cohort Data
+Visualization and Implementation in R. *Epidemiology*, 31 (6), e47-e49.
+doi: <https://doi.org/10.1097/EDE.0000000000001236>.
+
+# Package index
+
+## Visualizing observed structures
+
+Functions to visualize structures observed in the data.
+
+- [`plot_variable()`](plot_variable.md) : Distribution plot of one
+  variable against one APC dimension
+- [`plot_density()`](plot_density.md) : Plot the density of one metric
+  or categorical variable
+- [`plot_densityMatrix()`](plot_densityMatrix.md) : Create a matrix of
+  density plots
+- [`plot_APCheatmap()`](plot_APCheatmap.md) : Heatmap of an APC surface
+- [`plot_APChexamap()`](plot_APChexamap.md) : Hexamap of an APC surface
+
+## Visualizing and summarizing model-based results
+
+Functions to visualize and summarize estimation results based on
+generalized additive regression models (GAMs), where the APC effects
+were estimated with a tensor product surface.
+
+- [`plot_partialAPCeffects()`](plot_partialAPCeffects.md) : Partial APC
+  plots based on an estimated GAM model
+
+- [`plot_marginalAPCeffects()`](plot_marginalAPCeffects.md) : Plot of
+  marginal APC effects based on an estimated GAM model
+
+- [`plot_jointMarginalAPCeffects()`](plot_jointMarginalAPCeffects.md) :
+  Joint plot to compare the marginal APC effects of multiple models
+
+- [`create_APCsummary()`](create_APCsummary.md) : Create a summary table
+  for multiple estimated GAM models
+
+- [`plot_linearEffects()`](plot_linearEffects.md) : Plot linear effects
+  of a gam in an effect plot
+
+- [`plot_1Dsmooth()`](plot_1Dsmooth.md) :
+
+  Plot 1D smooth effects for
+  [`gam`](https://rdrr.io/pkg/mgcv/man/gam.html) models
+
+- [`create_modelSummary()`](create_modelSummary.md) : Create model
+  summary tables for multiple estimated GAM models
+
+## Datasets
+
+Internal datasets to showcase the package functionalities.
+
+- [`travel`](travel.md) : Data from the German Reiseanalyse survey
+- [`drug_deaths`](drug_deaths.md) : Drug deaths of white men in the
+  United States
+
+## Internal functions
+
+Further internal functions that are not specifically meant for general
+use.
+
+- [`calc_density()`](calc_density.md) : Internal helper to calculate the
+  (group-specific) density of a variable
+- [`capitalize_firstLetter()`](capitalize_firstLetter.md) : Internal
+  function to capitalize the first letter of a character
+- [`compute_xCoordinate()`](compute_xCoordinate.md) : Internal helper to
+  tilt the x-axis for the hexamap plot
+- [`compute_yCoordinate()`](compute_yCoordinate.md) : Internal helper to
+  tilt the x-axis for the hexamap plot
+- [`create_groupVariable()`](create_groupVariable.md) : Internal helper
+  to create a group variable as base for a density matrix
+- [`create_highlightDiagonalData()`](create_highlightDiagonalData.md) :
+  Internal helper to create a dataset for ggplot2 to highlight diagonals
+- [`create_oneAPCsummaryTable()`](create_oneAPCsummaryTable.md) :
+  Internal helper to create a summary table for one estimated GAM model
+- [`ensure_segmentsInPlotRange()`](ensure_segmentsInPlotRange.md) :
+  Internal helper for gg_addReferenceLines to keep diagonal lines in the
+  plot range
+- [`extract_summary_linearEffects()`](extract_summary_linearEffects.md)
+  : Internal helper to extract summary of linear effects in a gam model
+- [`get_plotGAMobject()`](get_plotGAMobject.md) : Extract returned
+  values of plot.gam() while suppressing creation of the plot
+- [`gg_addReferenceLines()`](gg_addReferenceLines.md) : Internal helper
+  to add reference lines in an APC heatmap
+- [`gg_highlightDiagonals()`](gg_highlightDiagonals.md) : Internal
+  helper to add the diagonal highlighting to a ggplot
+- [`plot_density_categorical()`](plot_density_categorical.md) : Internal
+  helper to plot a categorical density
+- [`plot_density_metric()`](plot_density_metric.md) : Internal helper to
+  plot a metric density
+- [`compute_marginalAPCeffects()`](compute_marginalAPCeffects.md) :
+  Internal helper to compute marginal APC effects and their confidence
+  intervals
+
+# Articles
+
+### All vignettes
+
+- [APC Analysis with APCtools](main_functionality.md):

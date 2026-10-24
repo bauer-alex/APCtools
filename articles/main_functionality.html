@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>APC Analysis with APCtools • APCtools</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="APC Analysis with APCtools">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">APCtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@
                         <h4 data-toc-skip class="author">Alexander
 Bauer, Maximilian Weigert</h4>
             
-            <h4 data-toc-skip class="date">18.June 2025</h4>
+            <h4 data-toc-skip class="date">24.October 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bauer-alex/APCtools/blob/main/vignettes/main_functionality.Rmd" class="external-link"><code>vignettes/main_functionality.Rmd</code></a></small>
       <div class="d-none name"><code>main_functionality.Rmd</code></div>
@@ -110,7 +110,7 @@ analyses.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/" class="external-link">ggpubr</a></span><span class="op">)</span>   <span class="co"># arranging multiple ggplots in a grid with ggarrange()</span></span>
 <span></span>
 <span><span class="co"># set the global theme of all plots</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/get_theme.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a>
@@ -153,7 +153,7 @@ using a bar chart.</p>
 <span><span class="va">gg3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_density.html">plot_density</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">travel</span>, y_var <span class="op">=</span> <span class="st">"household_size"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggpubr</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html" class="external-link">ggarrange</a></span><span class="op">(</span><span class="va">gg1</span>, <span class="va">gg2</span>, <span class="va">gg3</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-2-1.png" width="960"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="960"></p>
 </div>
 <div class="section level3">
 <h3 id="d-one-variable-against-age-period-or-cohort">1D: One variable against age, period or cohort<a class="anchor" aria-label="anchor" href="#d-one-variable-against-age-period-or-cohort"></a>
@@ -168,10 +168,14 @@ be changed to show absolute numbers by specifying argument
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_variable.html">plot_variable</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">travel</span>, y_var <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span>              apc_dimension <span class="op">=</span> <span class="st">"period"</span>, plot_type <span class="op">=</span> <span class="st">"line"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-3-1.png" width="960"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Warning in fortify(data, ...): Arguments in `...` must be used.</span></span>
+<span><span class="co">## <span style="color: #BB0000;">✖</span> Problematic argument:</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">•</span> col = gray(0.3)</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Did you misspell an argument name?</span></span></code></pre>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="960"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_variable.html">plot_variable</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">travel</span>, y_var <span class="op">=</span> <span class="st">"household_size"</span>, apc_dimension <span class="op">=</span> <span class="st">"period"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-3-2.png" width="960"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-3-2.png" class="r-plt" alt="" width="960"></p>
 </div>
 <div class="section level3">
 <h3 id="d-density-matrices">2D: Density matrices<a class="anchor" aria-label="anchor" href="#d-density-matrices"></a>
@@ -192,7 +196,7 @@ category.</p>
 respectively, and cohort on the diagonals. The categorization is defined
 by specifying two of the arguments <code>age_groups</code>,
 <code>period_groups</code> and <code>cohort_groups</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">age_groups</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>,<span class="fl">89</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">70</span>,<span class="fl">79</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>,<span class="fl">69</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>,<span class="fl">59</span><span class="op">)</span>,</span>
 <span>                      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">49</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">39</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">29</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">period_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1970</span>,<span class="fl">1979</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1980</span>,<span class="fl">1989</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1990</span>,<span class="fl">1999</span><span class="op">)</span>,</span>
@@ -203,11 +207,11 @@ by specifying two of the arguments <code>age_groups</code>,
 <span>                   age_groups       <span class="op">=</span> <span class="va">age_groups</span>,</span>
 <span>                   period_groups    <span class="op">=</span> <span class="va">period_groups</span>,</span>
 <span>                   log_scale        <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-4-1.png" width="768"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="768"></p>
 <p>To highlight the effect of the variable depicted on the diagonal
 (here: cohort), different diagonals can be highlighted using argument
 <code>highlight_diagonals</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_densityMatrix.html">plot_densityMatrix</a></span><span class="op">(</span>dat                 <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                   y_var               <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span>                   age_groups          <span class="op">=</span> <span class="va">age_groups</span>,</span>
@@ -215,12 +219,12 @@ by specifying two of the arguments <code>age_groups</code>,
 <span>                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"born 1950 - 1959"</span> <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>                                              <span class="st">"born 1970 - 1979"</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>                   log_scale           <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-5-1.png" width="960"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="960"></p>
 <p>For metric variables it is further possible to use a color scale for
 the density function (arguments <code>y_var_cat_breaks</code> and
 <code>y_var_cat_labels</code>) to highlight local developments over the
 APC dimensions.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dist_cat_breaks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">500</span>,<span class="fl">1000</span>,<span class="fl">2000</span>,<span class="fl">6000</span>,<span class="fl">100000</span><span class="op">)</span></span>
 <span><span class="va">dist_cat_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt; 500 km"</span>,<span class="st">"500 - 1,000 km"</span>, <span class="st">"1,000 - 2,000 km"</span>, <span class="st">"2,000 - 6,000 km"</span>, <span class="st">"&gt; 6,000 km"</span><span class="op">)</span></span>
 <span></span>
@@ -234,19 +238,19 @@ APC dimensions.</p>
 <span>                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"born 1950 - 1959"</span> <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>                                              <span class="st">"born 1970 - 1979"</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>                   legend_title     <span class="op">=</span> <span class="st">"Distance category"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-6-1.png" width="960"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="960"></p>
 <p>Alternatively to plotting a conditional density in each matrix cell,
 metric variables can also be visualized using boxplots by specifying
 <code>plot_type = "boxplot"</code>. Categorical variables are
 automatically plotted using conditional bar plots.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_densityMatrix.html">plot_densityMatrix</a></span><span class="op">(</span>dat                 <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                   y_var               <span class="op">=</span> <span class="st">"household_size"</span>,</span>
 <span>                   age_groups          <span class="op">=</span> <span class="va">age_groups</span>,</span>
 <span>                   period_groups       <span class="op">=</span> <span class="va">period_groups</span>,</span>
 <span>                   highlight_diagonals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"born 1950 - 1959"</span> <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>                                              <span class="st">"born 1970 - 1979"</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-7-1.png" width="960"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="960"></p>
 </div>
 <div class="section level3">
 <h3 id="d-heatmaps">2D: Heatmaps<a class="anchor" aria-label="anchor" href="#d-heatmaps"></a>
@@ -260,25 +264,25 @@ of a metric variable for each observed combination of age and period
 values (if <code>dimensions = c("period","age")</code>). The borders of
 groups along the diagonal can be marked using argument
 <code>markLines_list</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APCheatmap.html">plot_APCheatmap</a></span><span class="op">(</span>dat            <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                y_var          <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span>                y_var_logScale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                bin_heatmap    <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                markLines_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1900</span>,<span class="fl">1920</span>,<span class="fl">1939</span>,<span class="fl">1946</span>,</span>
 <span>                                                 <span class="fl">1966</span>,<span class="fl">1982</span>,<span class="fl">1994</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-8-1.png" width="768"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="768"></p>
 <p>By default, the heatmap is binned in five year blocks along the x-
 and y-axis to focus on larger-scale developments. Note that the grid
 used for binning can flexibly be defined with the argument
 <code>bin_heatmapGrid_list</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APCheatmap.html">plot_APCheatmap</a></span><span class="op">(</span>dat            <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                y_var          <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span>                y_var_logScale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                markLines_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cohort <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1900</span>,<span class="fl">1920</span>,<span class="fl">1939</span>,<span class="fl">1946</span>,</span>
 <span>                                                 <span class="fl">1966</span>,<span class="fl">1982</span>,<span class="fl">1994</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-9-1.png" width="768"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="d-hexamaps">2D: Hexamaps<a class="anchor" aria-label="anchor" href="#d-hexamaps"></a>
@@ -293,11 +297,11 @@ to grasp than developments along the x- or y-axis. Function
 <code>plot_APCheatmap</code>. Note, however, that hexamaps are currently
 implemented using the base R plot functions and not based on
 <code>ggplot2</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APChexamap.html">plot_APChexamap</a></span><span class="op">(</span>dat            <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                y_var          <span class="op">=</span> <span class="st">"mainTrip_distance"</span>,</span>
 <span>                y_var_logScale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-10-1.png" width="960"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="960"></p>
 </div>
 </div>
 <div class="section level2">
@@ -333,7 +337,7 @@ methodological details see Weigert et al. (2021).</p>
 variables. See <code><a href="../reference/travel.html">?travel</a></code> for an explanation of the used
 variables. The tensor product surface is estimated with two marginal
 P-spline bases with eight basis functions each.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># GAM without covariates</span></span>
 <span><span class="va">model_pure</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></span><span class="op">(</span><span class="va">mainTrip_distance</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/te.html" class="external-link">te</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">period</span>, bs <span class="op">=</span> <span class="st">"ps"</span>, k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>,<span class="fl">8</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                  data <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span>
@@ -353,10 +357,10 @@ P-spline bases with eight basis functions each.</p>
 product surface estimated with the regression model can be created with
 <code>plot_APCheatmap</code>, by passing the model object as argument
 <code>model</code> to the function.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APCheatmap.html">plot_APCheatmap</a></span><span class="op">(</span>dat   <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                model <span class="op">=</span> <span class="va">model_pure</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-12-1.png" width="768"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="hexamaps">Hexamaps<a class="anchor" aria-label="anchor" href="#hexamaps"></a>
@@ -364,10 +368,10 @@ product surface estimated with the regression model can be created with
 <p>The same applies to the hexamaps. By calling
 <code>plot_APChexamap</code> and specifying the <code>model</code>
 argument, a hexamap of the estimated mean structure is created.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_APChexamap.html">plot_APChexamap</a></span><span class="op">(</span>dat   <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                model <span class="op">=</span> <span class="va">model_pure</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-13-1.png" width="960"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="960"></p>
 </div>
 <div class="section level3">
 <h3 id="marginal-apc-effects">Marginal APC effects<a class="anchor" aria-label="anchor" href="#marginal-apc-effects"></a>
@@ -376,20 +380,20 @@ argument, a hexamap of the estimated mean structure is created.</p>
 model, marginal effects can be extracted by taking the average of all
 values on the surface along one dimension. Marginal effects can be
 visualized using <code>plot_marginalAPCeffects</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_marginalAPCeffects.html">plot_marginalAPCeffects</a></span><span class="op">(</span>model    <span class="op">=</span> <span class="va">model_pure</span>,</span>
 <span>                        dat      <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                        variable <span class="op">=</span> <span class="st">"age"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-14-1.png" width="960"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="960"></p>
 <p>The marginal effects of multiple models can also be visualized in one
 plot using <code>plot_jointMarginalAPCeffects</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_jointMarginalAPCeffects.html">plot_jointMarginalAPCeffects</a></span><span class="op">(</span>model_list  <span class="op">=</span> <span class="va">model_list</span>,</span>
 <span>                             dat         <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                             vlines_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"cohort"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1900</span>,<span class="fl">1920</span>,<span class="fl">1939</span>,</span>
 <span>                                                             <span class="fl">1946</span>,<span class="fl">1966</span>,<span class="fl">1982</span>,</span>
 <span>                                                             <span class="fl">1994</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-15-1.png" width="960"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="960"></p>
 </div>
 <div class="section level3">
 <h3 id="partial-apc-plots">Partial APC plots<a class="anchor" aria-label="anchor" href="#partial-apc-plots"></a>
@@ -405,11 +409,18 @@ focusing on a specific age, period or cohort group.</p>
 on different age groups and cohorts. See <a href="https://doi.org/10.1177/1354816620987198" class="external-link">Weigert et
 al. (2021)</a> for details on the interpretation of partial APC
 plots.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_partialAPCeffects.html">plot_partialAPCeffects</a></span><span class="op">(</span>model    <span class="op">=</span> <span class="va">model_pure</span>,</span>
 <span>                       dat      <span class="op">=</span> <span class="va">travel</span>,</span>
 <span>                       variable <span class="op">=</span> <span class="st">"period"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-16-1.png" width="960"></p>
+<pre><code><span><span class="co">## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">APCtools</span> package.</span></span>
+<span><span class="co">##   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/bauer-alex/APCtools/issues&gt;</span>.</span></span>
+<span><span class="co">## <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
+<span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="960"></p>
 </div>
 <div class="section level3">
 <h3 id="apc-summary-table">APC summary table<a class="anchor" aria-label="anchor" href="#apc-summary-table"></a>
@@ -418,7 +429,7 @@ plots.</p>
 compact overview of the magnitude of the individual APC effects. It
 extracts information about the minimum and maximum values of the
 marginal APC effects and computes the overall size of each effect.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_APCsummary.html">create_APCsummary</a></span><span class="op">(</span>model_list <span class="op">=</span> <span class="va">model_list</span>,</span>
 <span>                  dat        <span class="op">=</span> <span class="va">travel</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -506,12 +517,12 @@ the functions <code>plot_linearEffects</code> and
 <code>plot_1Dsmooth</code> which create an effect plot of all linear
 effects in a model and a line plot of a one-dimensional smooth effect,
 respectively.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">APCtools</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_linearEffects.html">plot_linearEffects</a></span><span class="op">(</span><span class="va">model_cov</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-18-1.png" width="960"></p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="960"></p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">APCtools</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_1Dsmooth.html">plot_1Dsmooth</a></span><span class="op">(</span><span class="va">model_cov</span>, select <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="main_functionality_files/figure-html/unnamed-chunk-18-2.png" width="960"></p>
+<p><img src="main_functionality_files/figure-html/unnamed-chunk-18-2.png" class="r-plt" alt="" width="960"></p>
 </div>
 <div class="section level3">
 <h3 id="model-summary-tables">Model summary tables<a class="anchor" aria-label="anchor" href="#model-summary-tables"></a>
@@ -521,7 +532,7 @@ publication-ready tables of the full model results. It can either be
 applied to a list of multiple models or a list of a single model, and
 returns a list with both a table for all linear coefficients and all
 nonlinear estimates.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_modelSummary.html">create_modelSummary</a></span><span class="op">(</span><span class="va">model_list</span><span class="op">)</span></span>
 <span><span class="va">summary_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <table class="table">
@@ -609,7 +620,7 @@ nonlinear estimates.</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary_list</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -652,7 +663,7 @@ nonlinear estimates.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
